@@ -61,3 +61,25 @@ body::before {
 iframe.skiptranslate {
     display: none !important;
 }
+
+@utility bg-300% {
+    background-size: 300% 300%;
+}
+
+@utility animate-gradient {
+    animation: gradient 8s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
