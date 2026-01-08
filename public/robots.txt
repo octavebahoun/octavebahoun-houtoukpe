@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://octavebahoun.com/sitemap.xml
+Sitemap: https://octavebahoun-houtoukpe.vercel.app/sitemap.xml

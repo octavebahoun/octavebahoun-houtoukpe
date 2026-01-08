@@ -1,18 +1,54 @@
 import { motion as Motion, AnimatePresence } from "framer-motion";
-import { Github, ExternalLink, Code2, Layers } from "lucide-react";
-import { useState } from "react";
+import { Github, ExternalLink, Code2, Layers, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
 import projectsData from "../projects.json";
 import { Helmet } from "react-helmet-async";
+import { supabase } from "../lib/supabase";
 
 export default function Projects() {
   const [filter, setFilter] = useState("tous");
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const categories = ["tous", "python", "web", "logiciel", "iot", "design"];
 
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("projects")
+          .select("*")
+          .order("id", { ascending: false });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          // Normalisation des noms de colonnes (Supabase lowercase -> camelCase)
+          const normalizedData = data.map((p) => ({
+            ...p,
+            demoUrl: p.demourl || p.demoUrl,
+            githubUrl: p.githuburl || p.githubUrl,
+          }));
+          setProjects(normalizedData);
+        } else {
+          // Fallback sur le JSON si la table est vide
+          setProjects(projectsData);
+        }
+      } catch (err) {
+        console.error("Error fetching projects from Supabase:", err);
+        setProjects(projectsData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
   const filteredProjects =
     filter === "tous"
-      ? projectsData
-      : projectsData.filter((p) => p.category === filter);
+      ? projects
+      : projects.filter((p) => p.category === filter);
 
   return (
     <div className="py-20 px-4 md:px-0">
@@ -56,16 +92,25 @@ export default function Projects() {
       </div>
 
       {/* Projects Grid */}
-      <Motion.div
-        layout
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
-      >
-        <AnimatePresence mode="popLayout">
-          {filteredProjects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
-          ))}
-        </AnimatePresence>
-      </Motion.div>
+      {loading ? (
+        <div className="flex flex-col items-center justify-center py-20 gap-4">
+          <Loader2 className="animate-spin text-blue-500" size={40} />
+          <p className="text-gray-500 font-mono text-xs uppercase tracking-widest animate-pulse">
+            Syncing with database...
+          </p>
+        </div>
+      ) : (
+        <Motion.div
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
+            ))}
+          </AnimatePresence>
+        </Motion.div>
+      )}
 
       {filteredProjects.length === 0 && (
         <Motion.div
