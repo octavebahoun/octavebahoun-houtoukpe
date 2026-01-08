@@ -39,32 +39,61 @@ export default function Accueil() {
       <AnimatePresence>
         {loading && (
           <Motion.div
-            key="loader"
-            initial={{ opacity: 1 }}
+            key="loader-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6 }}
-            className="fixed inset-0 z-[100] bg-[#030303] flex flex-col items-center justify-center font-mono"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-md"
           >
-            <div className="w-full max-w-xs space-y-4">
-              <div className="flex items-center space-x-2 text-xs text-blue-500">
-                <span className="animate-pulse">●</span>
-                <span className="tracking-[0.2em] uppercase">
-                  Booting System...
-                </span>
+            <Motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 1.1, opacity: 0 }}
+              className="bg-[#0a0a0a] border border-white/10 p-8 rounded-2xl shadow-2xl max-w-sm w-full font-mono relative overflow-hidden"
+            >
+              {/* Scanline effect for the modal */}
+              <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-white/5 to-transparent h-20 w-full animate-scanline opacity-20" />
+              
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex space-x-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
+                </div>
+                <span className="text-[10px] text-gray-500 uppercase tracking-tighter">System Diagnostic</span>
               </div>
-              <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                <Motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 2, ease: "easeInOut" }}
-                  className="h-full bg-gradient-to-r from-blue-500 to-purple-600 shadow-[0_0_15px_rgba(59,130,246,0.5)]"
-                />
+
+              <div className="space-y-6">
+                <div className="flex items-center space-x-3 text-blue-400">
+                  <div className="relative">
+                    <div className="w-4 h-4 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
+                  </div>
+                  <span className="text-xs font-bold uppercase tracking-[0.2em]">Initializing v4.0</span>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+                    <Motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 2.2, ease: "linear" }}
+                      className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-400"
+                    />
+                  </div>
+                  <div className="flex justify-between text-[9px] text-gray-500 font-bold">
+                    <span className="animate-pulse">PARSING_ASSETS...</span>
+                    <span>100%</span>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-white/5 text-[9px] text-gray-600 grid grid-cols-2 gap-2 uppercase">
+                  <div>Status: <span className="text-green-500/70">Online</span></div>
+                  <div>CPU: <span className="text-blue-500/70">Optimal</span></div>
+                  <div>Cache: <span className="text-purple-500/70">Valid</span></div>
+                  <div>Auth: <span className="text-yellow-500/70">Guest</span></div>
+                </div>
               </div>
-              <div className="flex justify-between text-[10px] text-gray-500 uppercase tracking-widest">
-                <span>Octav.OS v4.0</span>
-                <span>100% Complete</span>
-              </div>
-            </div>
+            </Motion.div>
           </Motion.div>
         )}
       </AnimatePresence>
