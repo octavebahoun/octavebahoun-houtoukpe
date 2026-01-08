@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://octavebahoun.com/</loc>
+    <lastmod>2026-01-08</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://octavebahoun.com/about</loc>
+    <lastmod>2026-01-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://octavebahoun.com/projects</loc>
+    <lastmod>2026-01-08</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://octavebahoun.com/contact</loc>
+    <lastmod>2026-01-08</lastmod>
+    <priority>0.7</priority>
+  </url>
+    <!-- Projets en ligne -->
+  <url>
+    <loc>https://trading-2cf04.web.app/</loc>
+    <lastmod>2025-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://app-quiz-758e0.web.app/</loc>
+    <lastmod>2025-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://pixel-hzlm.onrender.com/</loc>
+    <lastmod>2025-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>

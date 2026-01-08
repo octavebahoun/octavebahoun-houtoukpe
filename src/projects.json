@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "title": "Portfolio V4",
+    "description": "A modern portfolio developed with React, Framer Motion, and Tailwind CSS, focusing on fluid animations and premium design.",
+    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop",
+    "stacks": [
+      "React",
+      "Framer Motion",
+      "Tailwind"
+    ],
+    "category": "web",
+    "status": "Completed",
+    "demoUrl": "https://portfv-4.web.app/",
+    "githubUrl": "https://github.com/octavebahoun/Portf_v4"
+  },
+  {
+    "id": 2,
+    "title": "Wget-Web-Manager",
+    "description": "Download videos and files via a remote server with aria2c + ffmpeg. Supports: DASH / HLS / MP4 / Vimeo / sites with custom headers.",
+    "image": "https://i.postimg.cc/SxhHLHJy/Capture-d-ecran-du-2026-01-02-02-47-42.png",
+    "stacks": [
+      "Node.js",
+      "Express",
+      "vanilla"
+    ],
+    "category": "web",
+    "status": "Completed",
+    "githubUrl": "https://github.com/octavebahoun/Wget-manager-new"
+  },
+  {
+    "id": 3,
+    "title": "Interactive Quiz App",
+    "description": "Responsive quiz application with timer modes, dynamic scoring, and performance statistics.",
+    "image": "https://octavebahoun.github.io/Portefeuille/static/image/quiz.jpg",
+    "stacks": [
+      "Vue.js",
+      "Tailwind"
+    ],
+    "category": "web",
+    "status": "Completed",
+    "demoUrl": "https://app-quiz-758e0.web.app/",
+    "githubUrl": "https://github.com/octavebahoun/quiz-app"
+  },
+  {
+    "id": 4,
+    "title": "Smart Home Hub",
+    "description": "IoT system for controlling home devices via Raspberry Pi and MQTT protocol.",
+    "image": "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?q=80&w=2070&auto=format&fit=crop",
+    "stacks": [
+      "C++",
+      "MQTT",
+      "Arduino",
+      "WebSockets"
+    ],
+    "category": "iot",
+    "status": "In Progress",
+    "demoUrl": "https://homeline-caa2b.web.app/",
+    "githubUrl": "https://github.com/octavebahoun"
+  },
+  {
+    "id": 5,
+    "title": "Trading Academy Software",
+    "description": "Interactive platform for paid trading courses with payment system and course management.",
+    "image": "https://octavebahoun.github.io/Portefeuille/static/image/trading.jpg",
+    "stacks": [
+      "Vue.js",
+      "Firebase",
+      "Tailwind",
+      "KikyaPay"
+    ],
+    "category": "web",
+    "status": "Maintenance",
+    "demoUrl": "https://trading-2cf04.web.app/",
+    "githubUrl": "https://github.com/octavebahoun"
+  },
+  {
+    "id": 6,
+    "title": "Logo Rebrand Concept",
+    "description": "Case study on visual identity redesign for a tech startup, including brand guidelines and UI Kit.",
+    "image": "https://images.unsplash.com/photo-1586717791821-3f44a563dc4c?q=80&w=2070&auto=format&fit=crop",
+    "stacks": [
+      "Figma",
+      "Photoshop"
+    ],
+    "category": "design",
+    "status": "Completed",
+    "demoUrl": "https://example.com",
+    "githubUrl": "https://github.com/octavebahoun"
+  },
+  {
+    "id": 7,
+    "title": "Dynamic LED Matrix",
+    "description": "Creation of a dynamic display using LED matrices.",
+    "image": "https://octavebahoun.github.io/Portefeuille/static/image/led.jpeg",
+    "stacks": [
+      "C++",
+      "Arduino",
+      "Firebase",
+      "WebSockets"
+    ],
+    "category": "iot",
+    "status": "Completed",
+    "demoUrl": "https://esp32-matrix-6e832.web.app/",
+    "githubUrl": "https://github.com/octavebahoun"
+  },
+  {
+    "id": 8,
+    "title": "Pixel Verse",
+    "description": "Smart online wallpaper gallery with advanced search and collection system.",
+    "image": "https://octavebahoun.github.io/Portefeuille/static/image/pixel.jpg",
+    "stacks": [
+      "Python Flask",
+      "HTML/CSS",
+      "JavaScript"
+    ],
+    "category": "design",
+    "status": "Completed",
+    "demoUrl": "https://pixel-hzlm.onrender.com/",
+    "githubUrl": "https://github.com/octavebahoun/PixelVerse"
+  }
+]

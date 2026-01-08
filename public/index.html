@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>portfolio_v4</title>
+  <style>
+    /* CRITIQUE : !important est INDISPENSABLE car Google injecte ses styles après le chargement */
+    #google_translate_element,
+    .goog-te-gadget {
+      display: none !important;
+    }
+
+    .goog-te-banner-frame,
+    .goog-te-banner-frame.skiptranslate,
+    #goog-gt-tt,
+    .goog-te-balloon-frame {
+      display: none !important;
+      visibility: hidden !important;
+    }
+
+    html {
+      padding-top: 0px !important;
+    }
+
+    body {
+      top: 0px !important;
+      position: static !important;
+    }
+
+    .goog-tooltip,
+    .goog-tooltip:hover {
+      display: none !important;
+    }
+
+    .goog-text-highlight {
+      background-color: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+  </style>
+
+  <script type="text/javascript">
+    function forceCleanup() {
+      // Force le layout sur html et body
+      document.documentElement.style.setProperty('padding-top', '0px', 'important');
+      document.body.style.setProperty('top', '0px', 'important');
+
+      // Supprime les iframes et éléments de l'UI Google Translate
+      const selectors = [
+        '.goog-te-banner-frame',
+        '.goog-te-banner',
+        '.goog-te-balloon-frame',
+        '#goog-gt-tt',
+        '.goog-tooltip',
+        '.goog-text-highlight',
+        'iframe.skiptranslate'
+      ];
+
+      selectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(el => el.remove());
+      });
+    }
+
+    // Observer pour réagir aux injections dynamiques
+    const observer = new MutationObserver(forceCleanup);
+    observer.observe(document.documentElement, { attributes: true, childList: true, subtree: true });
+
+    // Intervalle de sécurité pour les premières secondes
+    const cleanInterval = setInterval(forceCleanup, 300);
+    setTimeout(() => clearInterval(cleanInterval), 5000);
+
+    window.addEventListener('load', forceCleanup);
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+  <div id="google_translate_element"></div>
+
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement(
+        {
+          pageLanguage: 'en',
+          includedLanguages: 'fr',
+          autoDisplay: false
+        },
+        'google_translate_element'
+      );
+    }
+  </script>
+
+  <script type="text/javascript"
+    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
+
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
