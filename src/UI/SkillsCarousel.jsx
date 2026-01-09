@@ -53,17 +53,26 @@ const skills = [
   },
 ];
 
-export default function SkillsCarousel({ title = "My Technical Expertise", isLarge = false }) {
+export default function SkillsCarousel({
+  title = "My Technical Expertise",
+  isLarge = false,
+}) {
   const duplicatedSkills = [...skills, ...skills];
 
   return (
-    <div className={`${isLarge ? "py-12" : "py-24"} overflow-hidden bg-transparent`}>
+    <div
+      className={`${
+        isLarge ? "py-12" : "py-24"
+      } overflow-hidden bg-transparent`}
+    >
       {title && (
         <div className="container mx-auto px-6 mb-12 text-center">
           <motion.h2
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            className={`${isLarge ? "text-4xl md:text-5xl" : "text-3xl"} font-bold bg-gradient-to-r from-gray-100 to-gray-500 bg-clip-text text-transparent inline-block transition-colors duration-500`}
+            className={`${
+              isLarge ? "text-4xl md:text-5xl" : "text-3xl"
+            } font-bold bg-gradient-to-r from-gray-100 to-gray-500 bg-clip-text text-transparent inline-block transition-colors duration-500`}
           >
             {title}
           </motion.h2>
@@ -72,7 +81,7 @@ export default function SkillsCarousel({ title = "My Technical Expertise", isLar
 
       <div className="relative flex overflow-hidden group">
         <motion.div
-          className="flex whitespace-nowrap"
+          className="flex whitespace-nowrap will-change-transform"
           animate={{ x: [0, "-50%"] }}
           transition={{
             x: {
@@ -86,21 +95,35 @@ export default function SkillsCarousel({ title = "My Technical Expertise", isLar
           {duplicatedSkills.map((skill, idx) => (
             <div
               key={idx}
-              className={`flex-shrink-0 ${isLarge ? "w-80 h-52 lg:w-96 lg:h-64" : "w-72 h-44"} mx-4 p-8 bg-[#0a0a0a] border border-white/5 rounded-2xl flex flex-col justify-between hover:bg-white/[0.03] transition-colors duration-500 group/card relative overflow-hidden`}
+              className={`flex-shrink-0 ${
+                isLarge ? "w-80 h-52 lg:w-96 lg:h-64" : "w-72 h-44"
+              } mx-4 p-8 bg-[#0a0a0a] border border-white/5 rounded-2xl flex flex-col justify-between hover:bg-white/[0.03] transition-colors duration-500 group/card relative overflow-hidden`}
             >
               {/* Subtle background glow */}
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl blur-lg opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
 
               <div className="relative z-10">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className={`p-3 bg-white/5 rounded-xl border border-white/5 group-hover/card:scale-110 transition-transform duration-500 ${isLarge ? "scale-110" : ""}`}>
+                  <div
+                    className={`p-3 bg-white/5 rounded-xl border border-white/5 group-hover/card:scale-110 transition-transform duration-500 ${
+                      isLarge ? "scale-110" : ""
+                    }`}
+                  >
                     {skill.icon}
                   </div>
-                  <h3 className={`${isLarge ? "text-xl font-extrabold" : "text-lg font-bold"} text-white group-hover/card:text-blue-400 transition-colors`}>
+                  <h3
+                    className={`${
+                      isLarge ? "text-xl font-extrabold" : "text-lg font-bold"
+                    } text-white group-hover/card:text-blue-400 transition-colors`}
+                  >
                     {skill.name}
                   </h3>
                 </div>
-                <p className={`${isLarge ? "text-sm" : "text-xs"} text-gray-400 leading-relaxed whitespace-normal line-clamp-3 font-light`}>
+                <p
+                  className={`${
+                    isLarge ? "text-sm" : "text-xs"
+                  } text-gray-400 leading-relaxed whitespace-normal line-clamp-3 font-light`}
+                >
                   {skill.desc}
                 </p>
               </div>

@@ -140,7 +140,9 @@ function ProjectCard({ project }) {
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-30 group-hover:grayscale-0"
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-30 group-hover:grayscale-0 will-change-transform"
         />
         <div className="absolute inset-0 bg-linear-to-t from-dark-card via-transparent to-transparent opacity-60" />
 

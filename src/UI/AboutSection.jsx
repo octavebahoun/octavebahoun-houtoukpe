@@ -126,8 +126,9 @@ export default function AboutSection() {
           <Motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="space-y-8 text-gray-300"
+            className="space-y-8 text-gray-300 will-change-transform"
           >
             <div className="flex items-start space-x-4">
               <div className="mt-1 flex-shrink-0">
