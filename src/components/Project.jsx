@@ -208,6 +208,27 @@ function ProjectCard({ project }) {
             </div>
           ))}
         </div>
+
+        {/* Mobile Action Buttons - Visible on touch devices/small screens */}
+        <div className="flex gap-3 mt-6 md:hidden">
+          <a
+            href={project.demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-600 rounded-xl text-white text-xs font-bold shadow-lg shadow-blue-500/20"
+          >
+            <ExternalLink size={14} />
+            Preview
+          </a>
+          <a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 flex items-center justify-center py-3 bg-white/5 border border-white/10 rounded-xl text-white text-xs font-bold"
+          >
+            <Github size={14} />
+          </a>
+        </div>
       </div>
 
       {/* Animation de bordure subtile */}

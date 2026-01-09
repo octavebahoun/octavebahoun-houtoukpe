@@ -9,6 +9,7 @@ import Contact from "./components/Contact";
 import Login from "./components/Login";
 import Admin from "./components/Admin";
 import { useLocation } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const location = useLocation();
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-dark-bg text-white selection:bg-blue-500/30 font-sans">
+      <ScrollToTop />
       <div className="fixed inset-0 bg-grid pointer-events-none opacity-40" />
 
       {/* Dynamic Background Glows */}
