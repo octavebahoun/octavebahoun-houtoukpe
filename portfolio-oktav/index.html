@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portfolio d'Oktav Bahoun — Fullstack Engineer & AI Builder à Cotonou. Projets React, IA, Data." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <title>Oktav Bahoun — Design & Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              ivory: '#FAFAF7',
+              'ivory-50': '#FEFDF9',
+              'ivory-100': '#FAFAF7',
+              dark: '#1a1a2e',
+              'dark-deep': '#0d1b2a',
+              'dark-deeper': '#0a1628',
+              cloud: '#1a2d42',
+              cobalt: '#2563EB',
+              'cobalt-light': '#DBEAFE',
+              amber: '#F59E0B',
+              'text-sec': 'rgba(26, 26, 46, 0.7)',
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+  </head>
+  <body class="bg-ivory dark:bg-dark-deep">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
