@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const Project = require('../models/Project')
-const Blog = require('../models/Blog')
-const Cert = require('../models/Cert')
-const About = require('../models/About')
-const Landing = require('../models/Landing')
+
+const projectController = require('../controllers/projectController')
+const blogController = require('../controllers/blogController')
+const certController = require('../controllers/certController')
+const aboutController = require('../controllers/aboutController')
+const landingController = require('../controllers/landingController')
 
 /**
  * @swagger
@@ -30,14 +31,7 @@ const Landing = require('../models/Landing')
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/projects', async (req, res) => {
-    try {
-        const projects = await Project.find()
-        res.status(200).json(projects)
-    } catch (error) {
-        res.status(500).json({ error: error.message })
-    }
-})
+router.get('/projects', projectController.getAllProjects)
 
 /**
  * @swagger
@@ -67,15 +61,7 @@ router.get('/projects', async (req, res) => {
  *         description: Erreur serveur
  */
 // GET /api/projects/:id
-router.get('/projects/:id', async (req, res) => {
-    try {
-        const project = await Project.findById(req.params.id)
-        if (!project) return res.status(404).json({ error: 'Not found' })
-        res.status(200).json(project)
-    } catch (error) {
-        res.status(500).json({ error: error.message })
-    }
-})
+router.get('/projects/:id', projectController.getProjectById)
 
 /**
  * @swagger
@@ -97,14 +83,7 @@ router.get('/projects/:id', async (req, res) => {
  *       500:
  *         description: Erreur serveur
  */
-router.get('/blog', async (req, res) => {
-    try {
-        const content = await Blog.find({ published: true })
-        res.status(200).json(content)
-    } catch (error) {
-        res.status(500).json({ error: error.message })
-    }
-})
+router.get('/blog', blogController.getPublishedBlogs)
 
 /**
  * @swagger
@@ -133,16 +112,7 @@ router.get('/blog', async (req, res) => {
  *       500:
  *         description: Erreur serveur
  */
-router.get('/blog/:slug', async (req, res) => {
-    try {
-        const data = await Blog.findOne({ slug: req.params.slug })
-        if (!data) return res.status(404).json({ error: 'Not found' })
-        res.status(200).json(data)
-    }
-    catch (error) {
-        res.status(500).json({ error: error.message })
-    }
-})
+router.get('/blog/:slug', blogController.getBlogBySlug)
 
 /**
  * @swagger
@@ -164,14 +134,7 @@ router.get('/blog/:slug', async (req, res) => {
  *       500:
  *         description: Erreur serveur
  */
-router.get('/certs', async (req, res) => {
-    try {
-        const certificats = await Cert.find()
-        res.status(200).json(certificats)
-    } catch (error) {
-        res.status(500).json({ error: error.message })
-    }
-})
+router.get('/certs', certController.getAllCerts)
 
 /**
  * @swagger
@@ -193,17 +156,7 @@ router.get('/certs', async (req, res) => {
  *       500:
  *         description: Erreur serveur
  */
-router.get('/about', async (req, res) => {
-    try {
-        const data = await About.findOne()
-        if (!data) return res.status(404).json({
-            error: 'Not Found'
-        })
-        res.status(200).json(data)
-    } catch (error) {
-        res.status(500).json({ error: error.message })
-    }
-})
+router.get('/about', aboutController.getAbout)
 
 /**
  * @swagger
@@ -239,17 +192,6 @@ router.get('/about', async (req, res) => {
  *       500:
  *         description: Erreur serveur
  */
-router.get('/landing', async (req, res) => {
-    try {
-        const landingFull = await Landing.findOne()
-            .populate('selectedWork.content')
-            .exec();
-        if (!landingFull) return res.status(404).json({
-            error: 'Not Found'
-        })
-        res.status(200).json(landingFull)
-    } catch (error) {
-        res.status(500).json({ error: error.message })
-    }
-})
+router.get('/landing', landingController.getLanding)
+
 module.exports = router
