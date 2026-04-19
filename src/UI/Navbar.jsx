@@ -45,7 +45,8 @@ export default function Navbar() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 text-gray-400 hover:text-white transition-colors"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            className="md:hidden p-2 text-gray-300 hover:text-white transition-colors"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -72,7 +73,7 @@ export default function Navbar() {
                 />
               ))}
               <div className="pt-4 border-t border-white/5 flex justify-between items-center sm:hidden">
-                <span className="text-xs text-gray-500 uppercase font-mono tracking-widest">
+                <span className="text-xs text-gray-300 uppercase font-mono tracking-widest">
                   Language
                 </span>
                 <Translateicon />

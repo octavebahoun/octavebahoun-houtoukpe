@@ -1,4 +1,5 @@
 import { motion as Motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import profilImg from "../assets/profil.webp";
 
 export default function ImgCard() {
   // Premium Tilt Effect logic
@@ -50,7 +51,9 @@ export default function ImgCard() {
         className="relative overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-colors duration-500 bg-black"
       >
         <img
-          src="src/assets/profil.png"
+          src={profilImg}
+          fetchpriority="high"
+          decoding="sync"
           alt="Profile"
           className="w-full h-auto max-w-sm grayscale group-hover:grayscale-0 transition-all duration-700 transform"
           onError={(e) => {

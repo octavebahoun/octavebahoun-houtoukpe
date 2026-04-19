@@ -22,7 +22,7 @@ export default function Footer() {
             <div className="scale-90 origin-left">
               <Logo />
             </div>
-            <p className="text-gray-400 text-sm max-w-sm leading-relaxed">
+            <p className="text-gray-300 text-sm max-w-sm leading-relaxed">
               Crafting innovative digital experiences at the intersection of
               Electrical Engineering, Software Development, and AI. Building the
               future, one line of code at a time.
@@ -32,23 +32,27 @@ export default function Footer() {
                 {
                   icon: <Github size={18} />,
                   href: "https://github.com/octavebahoun",
+                  label: "GitHub"
                 },
                 {
                   icon: <Linkedin size={18} />,
                   href: "https://www.linkedin.com/in/octave-bahoun-b9114b337/",
+                  label: "LinkedIn"
                 },
                 {
                   icon: <Mail size={18} />,
                   href: "mailto:octavebahoun@gmail.com",
+                  label: "Email"
                 },
               ].map((social, i) => (
                 <motion.a
                   key={i}
                   href={social.href}
+                  aria-label={social.label}
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ y: -3, color: "#fff" }}
-                  className="p-2.5 bg-white/5 rounded-full text-gray-400 border border-white/5 transition-colors"
+                  className="p-2.5 bg-white/5 rounded-full text-gray-300 border border-white/5 transition-colors"
                 >
                   {social.icon}
                 </motion.a>
@@ -66,7 +70,7 @@ export default function Footer() {
                 <li key={link}>
                   <Link
                     to={link === "Home" ? "/" : `/${link.toLowerCase()}`}
-                    className="text-gray-400 hover:text-white text-sm transition-colors duration-300 flex items-center group"
+                    className="text-gray-300 hover:text-white text-sm transition-colors duration-300 flex items-center group"
                   >
                     <span className="w-0 group-hover:w-2 h-[1px] bg-blue-500 mr-0 group-hover:mr-2 transition-all duration-300"></span>
                     {link}
@@ -81,11 +85,11 @@ export default function Footer() {
             <h4 className="text-white font-bold text-sm uppercase tracking-widest">
               Status
             </h4>
-            <div className="flex items-center space-x-2 text-sm text-gray-400">
+            <div className="flex items-center space-x-2 text-sm text-gray-300">
               <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
               <span>Available for hire</span>
             </div>
-            <p className="text-xs text-gray-500 leading-relaxed">
+            <p className="text-xs text-gray-300 leading-relaxed">
               Open to worldwide freelance opportunities and collaborations.
             </p>
 
@@ -104,10 +108,10 @@ export default function Footer() {
 
         {/* Bottom Footer */}
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-[10px] sm:text-xs">
+          <p className="text-gray-300 text-[10px] sm:text-xs">
             © {currentYear} Octave Bahoun. All rights reserved.
           </p>
-          <p className="text-gray-500 text-[10px] sm:text-xs font-mono">
+          <p className="text-gray-300 text-[10px] sm:text-xs font-mono">
             DESIGNED WITH <span className="text-red-500 animate-pulse">❤</span>{" "}
             IN LOKOSSA
           </p>

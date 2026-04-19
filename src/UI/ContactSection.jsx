@@ -97,7 +97,7 @@ export default function ContactSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-gray-400 max-w-2xl mx-auto"
+            className="text-gray-300 max-w-2xl mx-auto"
           >
             Ready to start your next project? Let's talk and see how we can
             bring your ideas to life.
@@ -132,7 +132,7 @@ export default function ContactSection() {
                     name="name"
                     type="text"
                     placeholder="Your name"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-green-500/50 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-gray-400 focus:outline-none focus:border-green-500/50 transition-colors"
                   />
                 </div>
                 <div className="space-y-2">
@@ -141,7 +141,7 @@ export default function ContactSection() {
                     name="email"
                     type="email"
                     placeholder="Your email"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-green-500/50 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-gray-400 focus:outline-none focus:border-green-500/50 transition-colors"
                   />
                 </div>
               </div>
@@ -152,7 +152,7 @@ export default function ContactSection() {
                   name="message"
                   rows="5"
                   placeholder="Your message"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-gray-500 focus:outline-none focus:border-green-500/50 transition-colors resize-none"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-gray-400 focus:outline-none focus:border-green-500/50 transition-colors resize-none"
                 ></textarea>
               </div>
 
@@ -229,7 +229,7 @@ export default function ContactSection() {
                       {info.icon}
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500 font-mono uppercase tracking-widest">
+                      <p className="text-xs text-gray-300 font-mono uppercase tracking-widest">
                         {info.label}
                       </p>
                       <p className="text-white text-sm font-medium">
@@ -254,13 +254,14 @@ export default function ContactSection() {
                   <Motion.a
                     key={idx}
                     href={social.href}
+                    aria-label={social.name}
                     whileHover={{
                       scale: 1.03,
                       backgroundColor: "rgba(255,255,255,0.08)",
                     }}
-                    className="flex items-center space-x-3 bg-white/5 border border-white/5 p-4 rounded-xl text-gray-400 hover:text-white transition-all group"
+                    className="flex items-center space-x-3 bg-white/5 border border-white/5 p-4 rounded-xl text-gray-300 hover:text-white transition-all group"
                   >
-                    <div className="text-gray-500 group-hover:text-green-400 transition-colors">
+                    <div className="text-gray-300 group-hover:text-green-400 transition-colors">
                       {social.icon}
                     </div>
                     <span className="text-sm font-medium">{social.name}</span>
@@ -282,7 +283,7 @@ export default function ContactSection() {
                   Available for work
                 </h4>
               </div>
-              <p className="text-xs text-gray-400 leading-relaxed">
+              <p className="text-xs text-gray-300 leading-relaxed">
                 I am currently available for freelance missions and full-time
                 opportunities.
               </p>

@@ -140,8 +140,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     window.addEventListener('load', forceCleanup);
   </script>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;600;800&display=swap" />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;600;800&display=swap"
-    rel="stylesheet">
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;600;800&display=swap"
+      rel="stylesheet">
+  </noscript>
 
   <script type="text/javascript">
     // PROTECTION: Force l'anglais au démarrage si aucune préférence manuelle n'existe
@@ -178,9 +183,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   data-track-outbound="true"
   data-track-forms="true"
 ></script>
-  <script type="text/javascript"
+  <script async defer type="text/javascript"
     src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-    </script>
+  </script>
 
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>

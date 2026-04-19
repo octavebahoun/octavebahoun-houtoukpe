@@ -45,7 +45,7 @@ export default function Hero() {
             <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
             <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
           </div>
-          <div className="text-gray-500 text-xs font-mono select-none">
+          <div className="text-gray-300 text-xs font-mono select-none">
             zsh — 80x24
           </div>
         </div>
@@ -76,7 +76,7 @@ export default function Hero() {
                 transition={{ delay: 1 + index * 0.15 }}
                 className="mb-6 last:mb-0"
               >
-                <div className="flex items-center text-gray-500 mb-1 group">
+                <div className="flex items-center text-gray-300 mb-1 group">
                   <span className="mr-2 text-[#16a34a] dark:text-[#4ade80] opacity-50 group-hover:opacity-100 transition-opacity">
                     ›
                   </span>
@@ -104,7 +104,7 @@ export default function Hero() {
                 <span className="text-[#16a34a] dark:text-[#4ade80] opacity-0 group-hover:opacity-100 transition-opacity">
                   ›
                 </span>
-                <span className="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors duration-500">
+                <span className="text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-500">
                   {link}
                   {index === footerLinks.length - 1 ? "_" : ""}
                 </span>
@@ -135,8 +135,9 @@ export default function Hero() {
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={social.label}
               whileHover={{ y: -2, scale: 1.1 }}
-              className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white transition-all duration-300"
+              className="text-gray-300 hover:text-blue-600 dark:text-gray-300 dark:hover:text-white transition-all duration-300"
             >
               {social.icon}
             </Motion.a>
@@ -148,7 +149,7 @@ export default function Hero() {
           {skills.map((skill, i) => (
             <div
               key={i}
-              className="flex items-center text-[11px] font-medium tracking-[0.15em] text-gray-500 dark:text-gray-500"
+              className="flex items-center text-[11px] font-medium tracking-[0.15em] text-gray-300 dark:text-gray-300"
             >
               <span>{skill}</span>
               {i < skills.length - 1 && (

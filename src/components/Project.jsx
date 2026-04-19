@@ -67,7 +67,7 @@ export default function Projects() {
         <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent inline-block">
           My Projects
         </h2>
-        <p className="text-gray-400 mt-3 font-mono text-xs md:text-sm tracking-[0.2em] opacity-60 uppercase">
+        <p className="text-gray-300 mt-3 font-mono text-xs md:text-sm tracking-[0.2em] opacity-80 uppercase">
           Crafting solutions through code and creativity
         </p>
       </Motion.div>
@@ -83,7 +83,7 @@ export default function Projects() {
             className={`px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-300 border ${
               filter === cat
                 ? "bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20"
-                : "bg-white/5 border-white/10 text-gray-400 hover:border-white/20 hover:text-white"
+                : "bg-white/5 border-white/10 text-gray-300 hover:border-white/20 hover:text-white"
             }`}
           >
             {cat === "tous" ? "All" : cat === "logiciel" ? "Software" : cat}
@@ -95,7 +95,7 @@ export default function Projects() {
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
           <Loader2 className="animate-spin text-blue-500" size={40} />
-          <p className="text-gray-500 font-mono text-xs uppercase tracking-widest animate-pulse">
+          <p className="text-gray-300 font-mono text-xs uppercase tracking-widest animate-pulse">
             Syncing with database...
           </p>
         </div>
@@ -116,7 +116,7 @@ export default function Projects() {
         <Motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-center py-32 text-gray-500 font-mono text-sm"
+          className="text-center py-32 text-gray-300 font-mono text-sm"
         >
           No projects found in this category.
         </Motion.div>
@@ -167,6 +167,7 @@ function ProjectCard({ project }) {
             href={project.demoUrl}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`Live Demo of ${project.title}`}
             whileHover={{ scale: 1.1, backgroundColor: "#2563eb" }}
             whileTap={{ scale: 0.9 }}
             className="p-3 bg-blue-600 rounded-full text-white shadow-lg shadow-blue-500/20"
@@ -177,6 +178,7 @@ function ProjectCard({ project }) {
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`GitHub Repository for ${project.title}`}
             whileHover={{
               scale: 1.1,
               backgroundColor: "rgba(255,255,255,0.2)",
@@ -194,7 +196,7 @@ function ProjectCard({ project }) {
         <h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors text-white">
           {project.title}
         </h3>
-        <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3">
+        <p className="text-gray-300 text-sm leading-relaxed mb-6 line-clamp-3">
           {project.description}
         </p>
 
@@ -203,7 +205,7 @@ function ProjectCard({ project }) {
           {project.stacks.map((stack) => (
             <div
               key={stack}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/5 text-[10px] font-medium text-gray-400 group-hover:border-blue-500/20 group-hover:text-blue-200 transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/5 text-[10px] font-medium text-gray-300 group-hover:border-blue-500/20 group-hover:text-blue-200 transition-colors"
             >
               <Code2 size={11} className="text-blue-500/50" />
               {stack}
@@ -217,6 +219,7 @@ function ProjectCard({ project }) {
             href={project.demoUrl}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`Live Demo of ${project.title}`}
             className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-600 rounded-xl text-white text-xs font-bold shadow-lg shadow-blue-500/20"
           >
             <ExternalLink size={14} />
@@ -226,6 +229,7 @@ function ProjectCard({ project }) {
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`GitHub Repository for ${project.title}`}
             className="px-4 flex items-center justify-center py-3 bg-white/5 border border-white/10 rounded-xl text-white text-xs font-bold"
           >
             <Github size={14} />

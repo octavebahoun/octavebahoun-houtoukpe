@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Logo() {
   return (
-    <Link to="/">
+    <Link to="/" aria-label="Go to homepage">
       <motion.div
         className="flex items-center cursor-pointer group space-x-2"
         whileHover={{ scale: 1.05 }}

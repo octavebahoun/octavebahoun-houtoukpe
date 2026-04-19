@@ -112,7 +112,7 @@ export default function Contact() {
           >
             Let's <span className="text-green-500">Connect</span>
           </Motion.h1>
-          <p className="text-gray-500 max-w-xl font-light">
+          <p className="text-gray-300 max-w-xl font-light">
             I'm currently available for freelance work and new opportunities.
             Feel free to reach out for a project or just a friendly chat.
           </p>
@@ -136,7 +136,7 @@ export default function Contact() {
                     <info.icon size={22} />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500 uppercase tracking-widest font-mono">
+                    <p className="text-xs text-gray-300 uppercase tracking-widest font-mono">
                       {info.label}
                     </p>
                     <p className="text-white font-medium">{info.value}</p>
@@ -160,6 +160,7 @@ export default function Contact() {
                   <a
                     key={i}
                     href={social.href}
+                    aria-label={social.name}
                     className="p-2 bg-white/20 hover:bg-white/40 rounded-lg transition-colors"
                     title={social.name}
                   >
@@ -182,7 +183,7 @@ export default function Contact() {
                 />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-xs font-mono text-gray-400 uppercase tracking-widest ml-1">
+                    <label className="text-xs font-mono text-gray-300 uppercase tracking-widest ml-1">
                       Full Name
                     </label>
                     <input
@@ -190,11 +191,11 @@ export default function Contact() {
                       required
                       type="text"
                       placeholder="Octave Bahoun"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-hidden focus:border-green-500/50 transition-all placeholder:text-gray-600"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-hidden focus:border-green-500/50 transition-all placeholder:text-gray-400"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-mono text-gray-400 uppercase tracking-widest ml-1">
+                    <label className="text-xs font-mono text-gray-300 uppercase tracking-widest ml-1">
                       Email Address
                     </label>
                     <input
@@ -202,13 +203,13 @@ export default function Contact() {
                       required
                       type="email"
                       placeholder="octave@example.com"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-hidden focus:border-green-500/50 transition-all placeholder:text-gray-600"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-hidden focus:border-green-500/50 transition-all placeholder:text-gray-400"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-mono text-gray-400 uppercase tracking-widest ml-1">
+                  <label className="text-xs font-mono text-gray-300 uppercase tracking-widest ml-1">
                     Your Message
                   </label>
                   <textarea
@@ -216,7 +217,7 @@ export default function Contact() {
                     required
                     rows="5"
                     placeholder="Tell me about your project..."
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-hidden focus:border-green-500/50 transition-all placeholder:text-gray-600 resize-none"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-hidden focus:border-green-500/50 transition-all placeholder:text-gray-400 resize-none"
                   ></textarea>
                 </div>
 
