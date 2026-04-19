@@ -12,8 +12,8 @@
     /* CSS Custom Properties for SVG icons and inline styles */
     --primary: #22D3EE;
     --primary-strong: #06B6D4;
-    background-color: #070B14 !important;
-    color: #f8fafc !important;
+    background-color: #070B14;
+    color: #f8fafc;
     font-family: 'Outfit', 'Inter', sans-serif;
 }
 
@@ -23,6 +23,91 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     background-color: #070B14;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* ============================================
+   LIGHT MODE OVERRIDES
+   ============================================ */
+html.light body {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+html.light .bg-dark-bg {
+    background-color: #f8fafc !important;
+}
+
+html.light .bg-dark-card {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1) !important;
+}
+
+/* Text colors */
+html.light .text-white {
+    color: #0f172a !important;
+}
+
+/* Keep button text white */
+html.light .bg-cyan-600.text-white, 
+html.light .bg-cyan-500.text-white,
+html.light button.text-white,
+html.light a.bg-cyan-600 {
+    color: #ffffff !important;
+}
+
+html.light .text-gray-300 {
+    color: #334155 !important;
+}
+
+html.light .text-gray-400 {
+    color: #475569 !important;
+}
+
+html.light .text-gray-500 {
+    color: #64748b !important;
+}
+
+/* Borders and Opacity Backgrounds */
+html.light .border-white\/5, 
+html.light .border-white\/10, 
+html.light .border-white\/20 {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+html.light .bg-white\/5, 
+html.light .bg-white\/10 {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light .bg-black\/40, 
+html.light .bg-black\/50, 
+html.light .bg-black\/60 {
+    background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Glass Card */
+html.light .glass-card {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+html.light .glass-card::before {
+    background: conic-gradient(from var(--border-angle), transparent 70%, #06B6D4 100%);
+    opacity: 0.5;
+}
+
+/* Aurora adjustments */
+html.light .aurora-bg::before, 
+html.light .aurora-bg::after {
+    opacity: 0.15 !important; /* Softer in light mode */
+}
+
+/* Noise overlay */
+html.light body::before {
+    opacity: 0.05;
+    filter: invert(1);
 }
 
 /* Effet de grain "Premium Noise" */

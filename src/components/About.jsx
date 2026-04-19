@@ -81,8 +81,16 @@ const journey = [
     iconColor: "bg-pink-500",
     title: "Ongoing IT & Telecom Studies",
     subtitle: "INSTI, Lokossa",
-    desc: "Continuing my studies in Electrical and Computer Engineering with a specialization in Computer Science and Telecommunications.",
+    desc: "Continuing my Second Year  in Electrical and Computer Engineering with a specialization in Computer Science and Telecommunications.",
   },
+  {
+    year: "2025",
+    icon: AnimatedOffice,
+    iconColor: "bg-purple-500",
+    title: "Second Internship",
+    subtitle: "Pro Technologie Plus",
+    desc: "Worked as a AI engineer in the development of an AI-powered application.",
+  }
 ];
 
 export default function About() {

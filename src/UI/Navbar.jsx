@@ -3,6 +3,7 @@ import { motion as Motion, AnimatePresence } from "framer-motion";
 import Logo from "./Logo";
 import NavItem from "./NavItem";
 import Translateicon from "./Translateicon";
+import ThemeToggle from "./ThemeToggle";
 import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
@@ -52,8 +53,9 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Translate + Mobile Toggle */}
+          {/* Controls: Theme + Translate + Mobile Toggle */}
           <div className="flex items-center gap-2 sm:gap-3">
+            <ThemeToggle />
             <div className="hidden sm:block">
               <Translateicon />
             </div>
