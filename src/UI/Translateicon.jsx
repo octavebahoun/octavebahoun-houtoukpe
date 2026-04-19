@@ -41,7 +41,7 @@ export default function Translateicon() {
       onClick={handleTranslate}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      className="relative px-4 py-1.5 rounded-full border border-black/10 dark:border-white/20 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors shadow-lg"
+      className="notranslate relative px-4 py-1.5 rounded-full border border-black/10 dark:border-white/20 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors shadow-lg"
     >
       <AnimatePresence mode="wait">
         <Motion.span

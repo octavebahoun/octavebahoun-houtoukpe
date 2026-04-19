@@ -56,9 +56,7 @@ export default function Navbar() {
           {/* Controls: Theme + Translate + Mobile Toggle */}
           <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
-            <div className="hidden sm:block">
-              <Translateicon />
-            </div>
+            <Translateicon />
 
             {/* Mobile Menu Toggle */}
             <button
@@ -98,17 +96,6 @@ export default function Navbar() {
                   />
                 </Motion.div>
               ))}
-              <Motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="pt-6 border-t border-white/10 flex items-center gap-4 sm:hidden"
-              >
-                <span className="text-xs text-gray-400 uppercase font-mono tracking-widest">
-                  Language
-                </span>
-                <Translateicon />
-              </Motion.div>
             </div>
           </Motion.div>
         )}

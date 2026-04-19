@@ -145,6 +145,24 @@ body::before {
     animation: aurora-drift 15s ease-in-out infinite alternate;
 }
 
+/* Mobile Performance Optimizations */
+@media (max-width: 768px) {
+    body::before {
+        display: none; /* Noise filter is too heavy for mobile */
+    }
+    
+    .aurora-bg::before,
+    .aurora-bg::after,
+    .aurora-orb {
+        animation: none !important; /* Disable continuous repaints */
+        filter: blur(80px); /* Reduce blur radius slightly for better GPU performance */
+    }
+    
+    .glass-card::before {
+        animation: none !important; /* Disable rotating border animation on mobile */
+    }
+}
+
 .aurora-bg::before {
     width: 60vw;
     height: 60vw;
