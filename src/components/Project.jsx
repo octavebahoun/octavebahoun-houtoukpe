@@ -59,18 +59,13 @@ export default function Projects() {
           content="Explore my portfolio of software development and AI projects, including web apps, IoT systems, and software solutions."
         />
       </Helmet>
-      <Motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+      <SectionTitle
+        number="03"
+        label="PORTFOLIO"
+        title="My Projects"
+        highlight="Projects"
         className="mb-12"
-      >
-        <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-500 bg-clip-text text-transparent inline-block">
-          My Projects
-        </h2>
-        <p className="text-gray-300 mt-3 font-mono text-xs md:text-sm tracking-[0.2em] opacity-80 uppercase">
-          Crafting solutions through code and creativity
-        </p>
-      </Motion.div>
+      />
 
       {/* Filter Bar */}
       <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-12 overflow-x-auto pb-4 no-scrollbar">
@@ -133,7 +128,7 @@ function ProjectCard({ project }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.4 }}
-      className="group relative bg-dark-card border border-white/5 rounded-2xl overflow-hidden hover:border-cyan-500/30 transition-all duration-500 shadow-xl flex flex-col h-full"
+      className="group relative glass-card rounded-2xl overflow-hidden transition-all duration-500 shadow-xl flex flex-col h-full"
     >
       {/* Partie visuelle - Image */}
       <div className="relative h-52 overflow-hidden">
@@ -144,7 +139,7 @@ function ProjectCard({ project }) {
           decoding="async"
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-30 group-hover:grayscale-0 will-change-transform"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-dark-card via-transparent to-transparent opacity-60" />
+        <div className="absolute inset-0 bg-linear-to-t from-[#0F1629] via-transparent to-transparent opacity-80" />
 
         {/* Catégorie Badge (Small) */}
         <div className="absolute top-4 left-4">
@@ -168,9 +163,9 @@ function ProjectCard({ project }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Live Demo of ${project.title}`}
-            whileHover={{ scale: 1.1, backgroundColor: "#2563eb" }}
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            className="p-3 bg-cyan-600 rounded-full text-white shadow-lg shadow-cyan-500/20"
+            className="p-3 bg-cyan-600 hover:bg-cyan-500 rounded-full text-white shadow-lg shadow-cyan-500/30 transition-colors"
           >
             <ExternalLink size={20} />
           </Motion.a>
@@ -179,12 +174,9 @@ function ProjectCard({ project }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`GitHub Repository for ${project.title}`}
-            whileHover={{
-              scale: 1.1,
-              backgroundColor: "rgba(255,255,255,0.2)",
-            }}
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            className="p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white"
+            className="p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full text-white transition-colors"
           >
             <Github size={20} />
           </Motion.a>
@@ -236,9 +228,6 @@ function ProjectCard({ project }) {
           </a>
         </div>
       </div>
-
-      {/* Animation de bordure subtile */}
-      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-linear-to-r from-cyan-500 to-emerald-500 group-hover:w-full transition-all duration-700" />
     </Motion.div>
   );
 }

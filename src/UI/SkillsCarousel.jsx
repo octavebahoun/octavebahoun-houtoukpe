@@ -1,4 +1,6 @@
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import SectionTitle from "./SectionTitle";
 import {
   Code2,
   Cpu,
@@ -6,137 +8,136 @@ import {
   Layout,
   Database,
   Terminal,
-  Smartphone,
   BrainCircuit,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 
 const skills = [
   {
     name: "React.js",
-    icon: <Globe className="text-blue-400" />,
-    desc: "Building dynamic and interactive user interfaces with modern React hooks and patterns.",
+    icon: <Globe className="text-blue-400 w-8 h-8" />,
+    desc: "Building dynamic and interactive user interfaces with modern React hooks.",
   },
   {
     name: "Python",
-    icon: <Terminal className="text-yellow-500" />,
+    icon: <Terminal className="text-yellow-500 w-8 h-8" />,
     desc: "Data processing, automation scripts, and AI/ML model integration.",
   },
   {
     name: "C++",
-    icon: <Code2 className="text-blue-600" />,
+    icon: <Code2 className="text-blue-600 w-8 h-8" />,
     desc: "Embedded systems and high-performance software development.",
   },
   {
     name: "Node.js",
-    icon: <Database className="text-green-500" />,
+    icon: <Database className="text-green-500 w-8 h-8" />,
     desc: "Scalable backend services and RESTful API development.",
   },
   {
     name: "Tailwind CSS",
-    icon: <Layout className="text-cyan-400" />,
+    icon: <Layout className="text-cyan-400 w-8 h-8" />,
     desc: "Rapid styling with utility-first CSS for responsive designs.",
   },
   {
-    name: "MongoDB",
-    icon: <Database className="text-green-600" />,
-    desc: "NoSQL database management for flexible data structures.",
-  },
-  {
-    name: "IoT Systems",
-    icon: <Cpu className="text-purple-500" />,
-    desc: "Connecting hardware to software via Arduino and Raspberry Pi.",
-  },
-  {
     name: "AI / ML",
-    icon: <BrainCircuit className="text-pink-500" />,
+    icon: <BrainCircuit className="text-pink-500 w-8 h-8" />,
     desc: "Implementing intelligent features and data analysis workflows.",
   },
 ];
 
-export default function SkillsCarousel({
-  title = "My Technical Expertise",
-  isLarge = false,
-}) {
-  const duplicatedSkills = [...skills, ...skills];
+export default function App({ title = "My Technical Expertise" }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % skills.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev === 0 ? skills.length - 1 : prev - 1));
+  };
 
   return (
-    <div
-      className={`${
-        isLarge ? "py-12" : "py-24"
-      } overflow-hidden bg-transparent`}
-    >
+    <div className="flex flex-col items-center w-full overflow-hidden py-12 bg-transparent">
       {title && (
-        <div className="container mx-auto px-6 mb-12 text-center">
-          <motion.h2
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            className={`${
-              isLarge ? "text-4xl md:text-5xl" : "text-3xl"
-            } font-bold bg-gradient-to-r from-gray-100 to-gray-500 bg-clip-text text-transparent inline-block transition-colors duration-500`}
-          >
-            {title}
-          </motion.h2>
-        </div>
+        <SectionTitle
+          number="02"
+          label="EXPERTISE"
+          title={title}
+          highlight="Expertise"
+          className="flex flex-col items-center text-center"
+        />
       )}
 
-      <div className="relative flex overflow-hidden group">
-        <motion.div
-          className="flex whitespace-nowrap will-change-transform"
-          animate={{ x: [0, "-50%"] }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: isLarge ? 45 : 35,
-              ease: "linear",
-            },
-          }}
-        >
-          {duplicatedSkills.map((skill, idx) => (
-            <div
-              key={idx}
-              className={`flex-shrink-0 ${
-                isLarge ? "w-80 h-52 lg:w-96 lg:h-64" : "w-72 h-44"
-              } mx-4 p-8 bg-dark-card border border-white/5 rounded-2xl flex flex-col justify-between hover:bg-white/[0.03] transition-colors duration-500 group/card relative overflow-hidden`}
-            >
-              {/* Subtle background glow */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/10 to-emerald-500/10 rounded-2xl blur-lg opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+      <div className="relative flex items-center justify-center w-full max-w-4xl h-80">
+        <AnimatePresence mode="popLayout">
+          {skills.map((skill, index) => {
+            let offset = index - currentIndex;
+            // Gérer le bouclage circulaire des positions
+            if (offset < -Math.floor(skills.length / 2)) offset += skills.length;
+            if (offset > Math.floor(skills.length / 2)) offset -= skills.length;
 
-              <div className="relative z-10">
-                <div className="flex items-center gap-4 mb-6">
-                  <div
-                    className={`p-3 bg-white/5 rounded-xl border border-white/5 group-hover/card:scale-110 transition-transform duration-500 ${
-                      isLarge ? "scale-110" : ""
-                    }`}
-                  >
-                    {skill.icon}
-                  </div>
-                  <h3
-                    className={`${
-                      isLarge ? "text-xl font-extrabold" : "text-lg font-bold"
-                    } text-white group-hover/card:text-cyan-400 transition-colors`}
-                  >
-                    {skill.name}
-                  </h3>
+            // Masquer les éléments trop éloignés du centre
+            if (Math.abs(offset) > 2) return null;
+
+            const isCenter = offset === 0;
+            const xOffset = offset * 140; 
+            const scale = isCenter ? 1 : 0.8 - Math.abs(offset) * 0.1;
+            const zIndex = 10 - Math.abs(offset);
+            const opacity = isCenter ? 1 : 0.4 - Math.abs(offset) * 0.1;
+
+            return (
+              <motion.div
+                key={skill.name}
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{
+                  x: xOffset,
+                  scale: scale,
+                  zIndex: zIndex,
+                  opacity: opacity,
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className={`absolute w-72 md:w-80 h-56 p-6 rounded-2xl border border-white/5 flex flex-col justify-center items-center text-center shadow-2xl backdrop-blur-md cursor-pointer ${
+                  isCenter ? "bg-slate-800/90" : "bg-slate-800/40"
+                }`}
+                onClick={() => setCurrentIndex(index)}
+              >
+                <div className={`p-4 rounded-full mb-4 bg-slate-700/50 ${isCenter ? "shadow-[0_0_15px_rgba(34,211,238,0.2)]" : ""}`}>
+                  {skill.icon}
                 </div>
-                <p
-                  className={`${
-                    isLarge ? "text-sm" : "text-xs"
-                  } text-gray-400 leading-relaxed whitespace-normal line-clamp-3 font-light`}
-                >
-                  {skill.desc}
-                </p>
-              </div>
+                <h3 className={`text-xl font-bold text-white mb-2 ${isCenter ? "" : "truncate w-full"}`}>
+                  {skill.name}
+                </h3>
+                {isCenter && (
+                  <motion.p 
+                    initial={{ opacity: 0 }} 
+                    animate={{ opacity: 1 }} 
+                    transition={{ delay: 0.2 }}
+                    className="text-sm text-slate-400 font-light"
+                  >
+                    {skill.desc}
+                  </motion.p>
+                )}
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
 
-              {/* Minimalist animated indicator */}
-              <div className="w-1/6 h-[2px] bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-full group-hover/card:w-full transition-all duration-700 ease-out" />
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Shadow overlays for smooth edge fading */}
-        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-dark-bg to-transparent z-10 pointer-events-none transition-colors duration-500" />
-        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-dark-bg to-transparent z-10 pointer-events-none transition-colors duration-500" />
+        {/* Boutons de navigation */}
+        <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 md:px-12 z-20 pointer-events-none">
+          <button
+            onClick={prevSlide}
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800/80 text-white hover:bg-cyan-500 hover:text-slate-900 border border-white/5 transition-colors pointer-events-auto shadow-lg"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-800/80 text-white hover:bg-cyan-500 hover:text-slate-900 border border-white/5 transition-colors pointer-events-auto shadow-lg"
+          >
+            <ChevronRight size={20} />
+          </button>
+        </div>
       </div>
     </div>
   );

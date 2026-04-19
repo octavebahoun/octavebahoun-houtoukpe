@@ -14,10 +14,12 @@ export default function Accueil() {
   useEffect(() => {
     const referrer = document.referrer;
     const oldPortfolioUrl = "https://octavebahoun.github.io/Portefeuille/";
+    const hasLoaded = sessionStorage.getItem("portfolio_loader_shown");
 
-    // Si la personne ne vient pas de l'ancien portfolio, on active le chargement
-    if (!referrer.includes(oldPortfolioUrl)) {
+    // Si la personne ne vient pas de l'ancien portfolio et n'a pas encore vu le loader
+    if (!referrer.includes(oldPortfolioUrl) && !hasLoaded) {
       setLoading(true);
+      sessionStorage.setItem("portfolio_loader_shown", "true");
       const timer = setTimeout(() => {
         setLoading(false);
       }, 2500); // 2.5 secondes de simulation

@@ -1,8 +1,10 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { AnimatePresence } from "framer-motion";
 import "./App.css";
 import Navbar from "./UI/Navbar";
 import Footer from "./UI/Footer";
+import PageTransition from "./UI/PageTransition";
 import ScrollToTop from "./components/ScrollToTop";
 import { Loader2 } from "lucide-react";
 
@@ -17,7 +19,7 @@ const Admin = lazy(() => import("./components/Admin"));
 // Loading fallback component
 const PageLoader = () => (
   <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
-    <Loader2 className="animate-spin text-blue-500" size={40} />
+    <Loader2 className="animate-spin text-cyan-500" size={40} />
     <span className="text-[10px] uppercase tracking-[0.3em] text-gray-500 font-mono animate-pulse">
       Loading Module...
     </span>
@@ -34,20 +36,10 @@ function App() {
       <ScrollToTop />
       <div className="fixed inset-0 bg-grid pointer-events-none opacity-40" />
 
-      {/* Dynamic Background Glows */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div
-          className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/8 rounded-full blur-[140px] animate-pulse will-change-transform"
-          style={{ transform: "translate3d(0,0,0)" }}
-        />
-        <div
-          className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-teal-600/8 rounded-full blur-[140px] animate-pulse will-change-transform"
-          style={{ animationDelay: "2s", transform: "translate3d(0,0,0)" }}
-        />
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30%] h-[30%] bg-emerald-500/5 rounded-full blur-[120px] will-change-transform"
-          style={{ transform: "translate3d(-50%, -50%, 0)" }}
-        />
+      {/* Aurora Boreale — Animated Mesh Background */}
+      <div className="aurora-bg">
+        <div className="aurora-orb aurora-orb--1" />
+        <div className="aurora-orb aurora-orb--2" />
       </div>
 
       {!isAdminPage && <Navbar />}
@@ -58,14 +50,16 @@ function App() {
         } pb-20`}
       >
         <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Accueil />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/admin" element={<Admin />} />
-          </Routes>
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<PageTransition><Accueil /></PageTransition>} />
+              <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+              <Route path="/projects" element={<PageTransition><Projects /></PageTransition>} />
+              <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
+              <Route path="/login" element={<PageTransition><Login /></PageTransition>} />
+              <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
+            </Routes>
+          </AnimatePresence>
         </Suspense>
       </main>
 

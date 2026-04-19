@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion as Motion, AnimatePresence } from "framer-motion";
+import SectionTitle from "./SectionTitle";
 import {
   Mail,
   MapPin,
@@ -85,14 +86,14 @@ export default function ContactSection() {
   return (
     <section className="py-24 relative" id="contact">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <Motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-500 bg-clip-text text-transparent inline-block mb-4"
-          >
-            Contact Me
-          </Motion.h2>
+        <div className="flex flex-col items-center mb-16 text-center">
+          <SectionTitle
+            number="04"
+            label="LET'S TALK"
+            title="Contact Me"
+            highlight="Me"
+            className="flex flex-col items-center text-center"
+          />
           <Motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

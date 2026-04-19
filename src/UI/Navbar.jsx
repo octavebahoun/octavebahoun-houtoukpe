@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import Logo from "./Logo";
 import NavItem from "./NavItem";
@@ -7,6 +7,13 @@ import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const links = [
     { label: "Home", path: "/" },
@@ -16,72 +23,94 @@ export default function Navbar() {
   ];
 
   return (
-    <Motion.nav
-      className="sticky top-0 z-[60] w-full bg-black/40 backdrop-blur-xl border-b border-white/5 transition-all duration-500"
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ type: "spring", stiffness: 100, damping: 20 }}
+    <Motion.header
+      className="fixed top-0 left-0 right-0 z-[60] flex justify-center pointer-events-none"
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
     >
-      <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-        <Logo />
+      <nav
+        className={`pointer-events-auto mt-4 mx-4 px-3 sm:px-5 py-2.5 rounded-2xl border transition-all duration-500 ${
+          scrolled
+            ? "bg-dark-bg/70 backdrop-blur-2xl border-white/10 shadow-lg shadow-black/20"
+            : "bg-transparent border-transparent"
+        }`}
+      >
+        <div className="flex items-center gap-3 sm:gap-6">
+          {/* Logo */}
+          <Logo />
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center bg-white/5 border border-white/10 space-x-1 px-4 py-1.5 rounded-full shadow-inner shadow-white/5">
-          {links.map((link, i) => (
-            <NavItem
-              key={link.label}
-              label={link.label}
-              href={link.path}
-              index={i}
-            />
-          ))}
-        </div>
-
-        <div className="flex items-center space-x-4">
-          <div className="hidden sm:block">
-            <Translateicon />
+          {/* Desktop Navigation — Pill Links */}
+          <div className="hidden md:flex items-center gap-1 px-2 py-1 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+            {links.map((link, i) => (
+              <NavItem
+                key={link.label}
+                label={link.label}
+                href={link.path}
+                index={i}
+              />
+            ))}
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            className="md:hidden p-2 text-gray-300 hover:text-white transition-colors"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-      </div>
+          {/* Translate + Mobile Toggle */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="hidden sm:block">
+              <Translateicon />
+            </div>
 
-      {/* Mobile Menu Portal */}
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label={isOpen ? "Close menu" : "Open menu"}
+              className="md:hidden p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+            >
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Menu — Full Screen Overlay */}
       <AnimatePresence>
         {isOpen && (
           <Motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-dark-card border-b border-white/10 overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="pointer-events-auto fixed inset-0 z-[59] bg-dark-bg/95 backdrop-blur-2xl md:hidden"
           >
-            <div className="flex flex-col p-6 space-y-4">
-              {links.map((link) => (
-                <NavItem
+            <div className="flex flex-col items-center justify-center h-full gap-6">
+              {links.map((link, i) => (
+                <Motion.div
                   key={link.label}
-                  label={link.label}
-                  href={link.path}
-                  index={0}
-                  onClick={() => setIsOpen(false)}
-                />
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.08 }}
+                >
+                  <NavItem
+                    label={link.label}
+                    href={link.path}
+                    index={i}
+                    onClick={() => setIsOpen(false)}
+                  />
+                </Motion.div>
               ))}
-              <div className="pt-4 border-t border-white/5 flex justify-between items-center sm:hidden">
-                <span className="text-xs text-gray-300 uppercase font-mono tracking-widest">
+              <Motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="pt-6 border-t border-white/10 flex items-center gap-4 sm:hidden"
+              >
+                <span className="text-xs text-gray-400 uppercase font-mono tracking-widest">
                   Language
                 </span>
                 <Translateicon />
-              </div>
+              </Motion.div>
             </div>
           </Motion.div>
         )}
       </AnimatePresence>
-    </Motion.nav>
+    </Motion.header>
   );
 }

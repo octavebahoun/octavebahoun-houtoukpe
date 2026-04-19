@@ -1,6 +1,7 @@
 import { motion as Motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import SectionTitle from "./SectionTitle";
 
 export default function AboutSection() {
   const interests = [
@@ -113,13 +114,12 @@ export default function AboutSection() {
   return (
     <section className="py-24 relative overflow-hidden" id="about">
       <div className="container mx-auto px-6">
-        <Motion.h2
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-500 bg-clip-text text-transparent mb-12 inline-block"
-        >
-          About Me
-        </Motion.h2>
+        <SectionTitle
+          number="01"
+          label="GET TO KNOW ME"
+          title="About Me"
+          highlight="Me"
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Text Content */}
