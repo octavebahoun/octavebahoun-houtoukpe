@@ -1,32 +1,13 @@
-import { useState, useEffect } from "react";
 import Hero from "../UI/Hero";
 import ImgCard from "../UI/ImgCard";
 import AboutSection from "../UI/AboutSection";
 import SkillsCarousel from "../UI/SkillsCarousel";
 import ProjectDiscovery from "../UI/ProjectDiscovery";
 import ContactSection from "../UI/ContactSection";
-import { motion as Motion, AnimatePresence } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 
 export default function Accueil() {
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const referrer = document.referrer;
-    const oldPortfolioUrl = "https://octavebahoun.github.io/Portefeuille/";
-    const hasLoaded = sessionStorage.getItem("portfolio_loader_shown");
-
-    // Si la personne ne vient pas de l'ancien portfolio et n'a pas encore vu le loader
-    if (!referrer.includes(oldPortfolioUrl) && !hasLoaded) {
-      setLoading(true);
-      sessionStorage.setItem("portfolio_loader_shown", "true");
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 2500); // 2.5 secondes de simulation
-      return () => clearTimeout(timer);
-    }
-  }, []);
-
   const sectionVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -38,67 +19,6 @@ export default function Accueil() {
 
   return (
     <>
-      <AnimatePresence>
-        {loading && (
-          <Motion.div
-            key="loader-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-md"
-          >
-            <Motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 1.1, opacity: 0 }}
-              className="bg-dark-card border border-white/10 p-8 rounded-2xl shadow-2xl max-w-sm w-full font-mono relative overflow-hidden"
-            >
-              {/* Scanline effect for the modal */}
-              <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-white/5 to-transparent h-20 w-full animate-scanline opacity-20" />
-              
-              <div className="flex items-center justify-between mb-8">
-                <div className="flex space-x-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
-                </div>
-                <span className="text-[10px] text-gray-500 uppercase tracking-tighter">System Diagnostic</span>
-              </div>
-
-              <div className="space-y-6">
-                <div className="flex items-center space-x-3 text-cyan-400">
-                  <div className="relative">
-                    <div className="w-4 h-4 border-2 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin" />
-                  </div>
-                  <span className="text-xs font-bold uppercase tracking-[0.2em]">Initializing v4.0</span>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
-                    <Motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: "100%" }}
-                      transition={{ duration: 2.2, ease: "linear" }}
-                      className="h-full bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-400"
-                    />
-                  </div>
-                  <div className="flex justify-between text-[9px] text-gray-500 font-bold">
-                    <span className="animate-pulse">PARSING_ASSETS...</span>
-                    <span>100%</span>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-white/5 text-[9px] text-gray-600 grid grid-cols-2 gap-2 uppercase">
-                  <div>Status: <span className="text-green-500/70">Online</span></div>
-                  <div>CPU: <span className="text-blue-500/70">Optimal</span></div>
-                  <div>Cache: <span className="text-purple-500/70">Valid</span></div>
-                  <div>Auth: <span className="text-yellow-500/70">Guest</span></div>
-                </div>
-              </div>
-            </Motion.div>
-          </Motion.div>
-        )}
-      </AnimatePresence>
 
       <div className="space-y-24 lg:space-y-32">
         <Helmet>
