@@ -43,7 +43,7 @@ export default function Login() {
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-md"
       >
-        <div className="bg-[#0a0a0a] border border-white/10 p-8 rounded-2xl shadow-2xl relative overflow-hidden group">
+        <div className="bg-dark-card border border-white/10 p-8 rounded-2xl shadow-2xl relative overflow-hidden group">
           {/* Decorative background glow */}
           <div className="absolute -top-24 -right-24 w-48 h-48 bg-blue-600/10 blur-3xl rounded-full" />
           <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-600/10 blur-3xl rounded-full" />

@@ -49,7 +49,7 @@ export default function Accueil() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 1.1, opacity: 0 }}
-              className="bg-[#0a0a0a] border border-white/10 p-8 rounded-2xl shadow-2xl max-w-sm w-full font-mono relative overflow-hidden"
+              className="bg-dark-card border border-white/10 p-8 rounded-2xl shadow-2xl max-w-sm w-full font-mono relative overflow-hidden"
             >
               {/* Scanline effect for the modal */}
               <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-white/5 to-transparent h-20 w-full animate-scanline opacity-20" />
@@ -64,9 +64,9 @@ export default function Accueil() {
               </div>
 
               <div className="space-y-6">
-                <div className="flex items-center space-x-3 text-blue-400">
+                <div className="flex items-center space-x-3 text-cyan-400">
                   <div className="relative">
-                    <div className="w-4 h-4 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
+                    <div className="w-4 h-4 border-2 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin" />
                   </div>
                   <span className="text-xs font-bold uppercase tracking-[0.2em]">Initializing v4.0</span>
                 </div>
@@ -77,7 +77,7 @@ export default function Accueil() {
                       initial={{ width: 0 }}
                       animate={{ width: "100%" }}
                       transition={{ duration: 2.2, ease: "linear" }}
-                      className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-400"
+                      className="h-full bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-400"
                     />
                   </div>
                   <div className="flex justify-between text-[9px] text-gray-500 font-bold">
@@ -119,13 +119,13 @@ export default function Accueil() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase mb-6"
+                className="inline-block px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase mb-6"
               >
                 Building the future through code
               </Motion.span>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-6">
                 Hello, I'm <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-blue-400 bg-300% animate-gradient">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 bg-300% animate-gradient">
                   Octave Bahoun
                 </span>
               </h1>
@@ -136,7 +136,7 @@ export default function Accueil() {
             </Motion.div>
 
             <div className="relative">
-              <div className="absolute -inset-4 bg-blue-500/5 blur-3xl rounded-full pointer-events-none" />
+              <div className="absolute -inset-4 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
               <Hero />
             </div>
           </div>

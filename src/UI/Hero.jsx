@@ -37,7 +37,7 @@ export default function Hero() {
       transition={{ duration: 0.6 }}
       className="w-full max-w-2xl mx-auto"
     >
-      <div className="bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-xl overflow-hidden shadow-2xl transition-colors duration-500">
+      <div className="bg-white/90 dark:bg-dark-card/90 backdrop-blur-xl border border-black/10 dark:border-white/10 rounded-xl overflow-hidden shadow-2xl transition-colors duration-500">
         {/* Terminal Header */}
         <div className="flex items-center justify-between px-4 py-3 bg-black/5 dark:bg-white/5 border-b border-black/5 dark:border-white/10">
           <div className="flex space-x-2">
@@ -54,10 +54,10 @@ export default function Hero() {
         <div className="p-6 font-mono text-sm sm:text-base md:p-8 min-h-[400px] transition-colors duration-500 flex flex-col justify-between">
           <div>
             <div className="mb-6">
-              <span className="text-[#16a34a] dark:text-[#4ade80]">
+              <span className="text-[#06B6D4] dark:text-[#22D3EE]">
                 octave@portfolio
               </span>
-              :<span className="text-[#2563eb] dark:text-[#60a5fa]">~</span>$
+              :<span className="text-[#10B981] dark:text-[#34D399]">~</span>$
               <Motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -77,7 +77,7 @@ export default function Hero() {
                 className="mb-6 last:mb-0"
               >
                 <div className="flex items-center text-gray-300 mb-1 group">
-                  <span className="mr-2 text-[#16a34a] dark:text-[#4ade80] opacity-50 group-hover:opacity-100 transition-opacity">
+                  <span className="mr-2 text-[#06B6D4] dark:text-[#22D3EE] opacity-50 group-hover:opacity-100 transition-opacity">
                     ›
                   </span>
                   <span className="text-gray-700 dark:text-gray-300 font-semibold">
@@ -101,7 +101,7 @@ export default function Hero() {
                 transition={{ delay: 1.8 + index * 0.1 }}
                 className="flex items-center space-x-1 cursor-pointer group"
               >
-                <span className="text-[#16a34a] dark:text-[#4ade80] opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="text-[#06B6D4] dark:text-[#22D3EE] opacity-0 group-hover:opacity-100 transition-opacity">
                   ›
                 </span>
                 <span className="text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-500">
@@ -112,7 +112,7 @@ export default function Hero() {
                   <Motion.span
                     animate={{ opacity: [0, 1, 0] }}
                     transition={{ repeat: Infinity, duration: 0.8 }}
-                    className="w-1.5 h-3.5 bg-[#16a34a] dark:bg-[#4ade80] inline-block align-middle"
+                    className="w-1.5 h-3.5 bg-[#06B6D4] dark:bg-[#22D3EE] inline-block align-middle"
                   />
                 )}
               </Motion.div>

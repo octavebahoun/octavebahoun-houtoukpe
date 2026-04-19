@@ -97,10 +97,10 @@ export default function SkillsCarousel({
               key={idx}
               className={`flex-shrink-0 ${
                 isLarge ? "w-80 h-52 lg:w-96 lg:h-64" : "w-72 h-44"
-              } mx-4 p-8 bg-[#0a0a0a] border border-white/5 rounded-2xl flex flex-col justify-between hover:bg-white/[0.03] transition-colors duration-500 group/card relative overflow-hidden`}
+              } mx-4 p-8 bg-dark-card border border-white/5 rounded-2xl flex flex-col justify-between hover:bg-white/[0.03] transition-colors duration-500 group/card relative overflow-hidden`}
             >
               {/* Subtle background glow */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl blur-lg opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/10 to-emerald-500/10 rounded-2xl blur-lg opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
 
               <div className="relative z-10">
                 <div className="flex items-center gap-4 mb-6">
@@ -114,7 +114,7 @@ export default function SkillsCarousel({
                   <h3
                     className={`${
                       isLarge ? "text-xl font-extrabold" : "text-lg font-bold"
-                    } text-white group-hover/card:text-blue-400 transition-colors`}
+                    } text-white group-hover/card:text-cyan-400 transition-colors`}
                   >
                     {skill.name}
                   </h3>
@@ -129,14 +129,14 @@ export default function SkillsCarousel({
               </div>
 
               {/* Minimalist animated indicator */}
-              <div className="w-1/6 h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 rounded-full group-hover/card:w-full transition-all duration-700 ease-out" />
+              <div className="w-1/6 h-[2px] bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-full group-hover/card:w-full transition-all duration-700 ease-out" />
             </div>
           ))}
         </motion.div>
 
         {/* Shadow overlays for smooth edge fading */}
-        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none transition-colors duration-500" />
-        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none transition-colors duration-500" />
+        <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-dark-bg to-transparent z-10 pointer-events-none transition-colors duration-500" />
+        <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-dark-bg to-transparent z-10 pointer-events-none transition-colors duration-500" />
       </div>
     </div>
   );

@@ -44,7 +44,7 @@ export default function ImgCard() {
       className="relative group cursor-pointer"
     >
       {/* Decorative background glow */}
-      <div className="absolute -inset-8 bg-gradient-to-tr from-blue-500/30 to-purple-500/30 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+      <div className="absolute -inset-8 bg-gradient-to-tr from-cyan-500/30 to-emerald-500/30 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
       <div
         style={{ transform: "translateZ(50px)" }}
@@ -70,7 +70,7 @@ export default function ImgCard() {
         style={{ transform: "translateZ(80px)" }}
         animate={{ y: [0, -10, 0] }}
         transition={{ repeat: Infinity, duration: 4 }}
-        className="absolute -top-6 -right-4 w-12 h-12 bg-blue-500/20 backdrop-blur-xl border border-blue-500/30 rounded-lg flex items-center justify-center text-blue-400 font-mono text-xs font-bold shadow-lg"
+        className="absolute -top-6 -right-4 w-12 h-12 bg-cyan-500/20 backdrop-blur-xl border border-cyan-500/30 rounded-lg flex items-center justify-center text-cyan-400 font-mono text-xs font-bold shadow-lg"
       >
         JS
       </Motion.div>
@@ -78,7 +78,7 @@ export default function ImgCard() {
         style={{ transform: "translateZ(80px)" }}
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 5 }}
-        className="absolute -bottom-6 -left-4 w-12 h-12 bg-purple-500/20 backdrop-blur-xl border border-purple-500/30 rounded-lg flex items-center justify-center text-purple-400 font-mono text-xs font-bold shadow-lg"
+        className="absolute -bottom-6 -left-4 w-12 h-12 bg-emerald-500/20 backdrop-blur-xl border border-emerald-500/30 rounded-lg flex items-center justify-center text-emerald-400 font-mono text-xs font-bold shadow-lg"
       >
         PY
       </Motion.div>

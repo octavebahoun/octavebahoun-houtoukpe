@@ -60,7 +60,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#0a0a0a] border-b border-white/10 overflow-hidden"
+            className="md:hidden bg-dark-card border-b border-white/10 overflow-hidden"
           >
             <div className="flex flex-col p-6 space-y-4">
               {links.map((link) => (

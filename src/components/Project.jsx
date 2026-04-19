@@ -64,7 +64,7 @@ export default function Projects() {
         whileInView={{ opacity: 1, y: 0 }}
         className="mb-12"
       >
-        <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent inline-block">
+        <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-500 bg-clip-text text-transparent inline-block">
           My Projects
         </h2>
         <p className="text-gray-300 mt-3 font-mono text-xs md:text-sm tracking-[0.2em] opacity-80 uppercase">
@@ -82,7 +82,7 @@ export default function Projects() {
             whileTap={{ scale: 0.95 }}
             className={`px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-300 border ${
               filter === cat
-                ? "bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20"
+                ? "bg-cyan-600 border-cyan-500 text-white shadow-lg shadow-cyan-500/20"
                 : "bg-white/5 border-white/10 text-gray-300 hover:border-white/20 hover:text-white"
             }`}
           >
@@ -94,7 +94,7 @@ export default function Projects() {
       {/* Projects Grid */}
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 gap-4">
-          <Loader2 className="animate-spin text-blue-500" size={40} />
+          <Loader2 className="animate-spin text-cyan-500" size={40} />
           <p className="text-gray-300 font-mono text-xs uppercase tracking-widest animate-pulse">
             Syncing with database...
           </p>
@@ -133,7 +133,7 @@ function ProjectCard({ project }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.4 }}
-      className="group relative bg-dark-card border border-white/5 rounded-2xl overflow-hidden hover:border-blue-500/30 transition-all duration-500 shadow-xl flex flex-col h-full"
+      className="group relative bg-dark-card border border-white/5 rounded-2xl overflow-hidden hover:border-cyan-500/30 transition-all duration-500 shadow-xl flex flex-col h-full"
     >
       {/* Partie visuelle - Image */}
       <div className="relative h-52 overflow-hidden">
@@ -148,7 +148,7 @@ function ProjectCard({ project }) {
 
         {/* Catégorie Badge (Small) */}
         <div className="absolute top-4 left-4">
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 backdrop-blur-md border border-blue-500/20 text-[9px] font-black text-blue-400 uppercase tracking-tighter">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 backdrop-blur-md border border-cyan-500/20 text-[9px] font-black text-cyan-400 uppercase tracking-tighter">
             <Layers size={10} />
             {project.category}
           </div>
@@ -170,7 +170,7 @@ function ProjectCard({ project }) {
             aria-label={`Live Demo of ${project.title}`}
             whileHover={{ scale: 1.1, backgroundColor: "#2563eb" }}
             whileTap={{ scale: 0.9 }}
-            className="p-3 bg-blue-600 rounded-full text-white shadow-lg shadow-blue-500/20"
+            className="p-3 bg-cyan-600 rounded-full text-white shadow-lg shadow-cyan-500/20"
           >
             <ExternalLink size={20} />
           </Motion.a>
@@ -193,7 +193,7 @@ function ProjectCard({ project }) {
 
       {/* Contenu - Description et Stacks */}
       <div className="p-6 flex flex-col grow">
-        <h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors text-white">
+        <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition-colors text-white">
           {project.title}
         </h3>
         <p className="text-gray-300 text-sm leading-relaxed mb-6 line-clamp-3">
@@ -205,9 +205,9 @@ function ProjectCard({ project }) {
           {project.stacks.map((stack) => (
             <div
               key={stack}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/5 text-[10px] font-medium text-gray-300 group-hover:border-blue-500/20 group-hover:text-blue-200 transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/5 text-[10px] font-medium text-gray-300 group-hover:border-cyan-500/20 group-hover:text-cyan-200 transition-colors"
             >
-              <Code2 size={11} className="text-blue-500/50" />
+              <Code2 size={11} className="text-cyan-500/50" />
               {stack}
             </div>
           ))}
@@ -220,7 +220,7 @@ function ProjectCard({ project }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Live Demo of ${project.title}`}
-            className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-600 rounded-xl text-white text-xs font-bold shadow-lg shadow-blue-500/20"
+            className="flex-1 flex items-center justify-center gap-2 py-3 bg-cyan-600 rounded-xl text-white text-xs font-bold shadow-lg shadow-cyan-500/20"
           >
             <ExternalLink size={14} />
             Preview
@@ -238,7 +238,7 @@ function ProjectCard({ project }) {
       </div>
 
       {/* Animation de bordure subtile */}
-      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-linear-to-r from-blue-500 to-purple-500 group-hover:w-full transition-all duration-700" />
+      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-linear-to-r from-cyan-500 to-emerald-500 group-hover:w-full transition-all duration-700" />
     </Motion.div>
   );
 }

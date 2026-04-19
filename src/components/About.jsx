@@ -110,7 +110,7 @@ export default function About() {
             GET TO KNOW ME
           </h4>
           <h2 className="text-4xl md:text-5xl font-bold font-sans">
-            About <span className="text-blue-500 font-semibold">me</span>
+            About <span className="text-cyan-500 font-semibold">me</span>
           </h2>
         </Motion.div>
 
@@ -158,7 +158,7 @@ export default function About() {
                     className="flex items-start gap-5 p-4 rounded-xl hover:bg-white/5 transition-colors group"
                   >
                     <div className="flex-shrink-0 mt-1">
-                      <v.icon className="w-5 h-5 text-blue-500 group-hover:scale-110 transition-transform" />
+                      <v.icon className="w-5 h-5 text-cyan-500 group-hover:scale-110 transition-transform" />
                     </div>
                     <div className="space-y-1">
                       <h4 className="font-semibold text-gray-200">{v.title}</h4>
@@ -182,10 +182,10 @@ export default function About() {
                 Designed with passion by
               </p>
               <div className="flex flex-col items-center lg:items-start gap-3">
-                <div className="text-4xl font-signature text-blue-400 opacity-80 pl-2">
+                <div className="text-4xl font-signature text-cyan-400 opacity-80 pl-2">
                   Octave Précieux M.
                 </div>
-                <div className="text-blue-500/90 font-medium tracking-wide">
+                <div className="text-cyan-500/90 font-medium tracking-wide">
                   BAHOUN-HOUTOUKPE
                 </div>
               </div>
@@ -218,7 +218,7 @@ export default function About() {
                     </div>
 
                     {/* Content Card */}
-                    <div className="flex-1 bg-[#111827]/40 border border-gray-800 rounded-2xl p-5 sm:p-6 relative group hover:border-blue-500/30 transition-all duration-300">
+                    <div className="flex-1 bg-[#111827]/40 border border-gray-800 rounded-2xl p-5 sm:p-6 relative group hover:border-cyan-500/30 transition-all duration-300">
                       <div className="flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-4 mb-3 sm:mb-4">
                         <h4 className="font-bold text-gray-100 leading-tight">
                           {j.title}
@@ -227,7 +227,7 @@ export default function About() {
                           {j.year}
                         </span>
                       </div>
-                      <p className="text-blue-500 text-[10px] sm:text-xs font-semibold mb-2 tracking-wide">
+                      <p className="text-cyan-500 text-[10px] sm:text-xs font-semibold mb-2 tracking-wide">
                         {j.subtitle}
                       </p>
                       <p className="text-gray-400 text-xs sm:text-[13px] font-light leading-relaxed">
@@ -265,7 +265,7 @@ export default function About() {
           <Motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-12 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold uppercase text-xs tracking-[0.2em] transition-all shadow-xl shadow-blue-600/10"
+            className="px-12 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-full font-bold uppercase text-xs tracking-[0.2em] transition-all shadow-xl shadow-cyan-600/10"
           >
             Work with me
           </Motion.button>

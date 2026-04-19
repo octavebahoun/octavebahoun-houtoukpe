@@ -96,7 +96,7 @@ export default function Admin() {
   return (
     <div className="space-y-12 pb-20">
       {/* Admin Header */}
-      <section className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-[#0a0a0a] p-8 rounded-2xl border border-white/5 relative overflow-hidden">
+      <section className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-dark-card p-8 rounded-2xl border border-white/5 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/5 blur-[100px] pointer-events-none" />
 
         <div className="flex items-center gap-4 relative z-10">
@@ -154,7 +154,7 @@ export default function Admin() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-[#0a0a0a] p-6 rounded-2xl border border-white/5 flex items-center gap-4">
+        <div className="bg-dark-card p-6 rounded-2xl border border-white/5 flex items-center gap-4">
           <div className="p-3 bg-purple-500/10 rounded-lg">
             <LayoutGrid className="text-purple-500" size={24} />
           </div>
@@ -168,7 +168,7 @@ export default function Admin() {
       </div>
 
       {/* Project Registry */}
-      <div className="bg-[#0a0a0a] rounded-2xl border border-white/5 overflow-hidden">
+      <div className="bg-dark-card rounded-2xl border border-white/5 overflow-hidden">
         <div className="p-6 border-b border-white/5 bg-white/[0.02] flex justify-between items-center">
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <LayoutGrid size={20} className="text-blue-500" />

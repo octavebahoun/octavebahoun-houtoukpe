@@ -89,7 +89,7 @@ export default function ContactSection() {
           <Motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent inline-block mb-4"
+            className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-500 bg-clip-text text-transparent inline-block mb-4"
           >
             Contact Me
           </Motion.h2>
@@ -110,7 +110,7 @@ export default function ContactSection() {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-[#0a0a0a] border border-white/5 p-8 rounded-3xl shadow-2xl overflow-hidden relative group"
+            className="bg-dark-card border border-white/5 p-8 rounded-3xl shadow-2xl overflow-hidden relative group"
           >
             <div className="absolute top-0 left-0 w-1 h-full bg-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -132,7 +132,7 @@ export default function ContactSection() {
                     name="name"
                     type="text"
                     placeholder="Your name"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-gray-400 focus:outline-none focus:border-green-500/50 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-gray-400 focus:outline-none focus:border-cyan-500/50 transition-colors"
                   />
                 </div>
                 <div className="space-y-2">
@@ -141,7 +141,7 @@ export default function ContactSection() {
                     name="email"
                     type="email"
                     placeholder="Your email"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-gray-400 focus:outline-none focus:border-green-500/50 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-gray-400 focus:outline-none focus:border-cyan-500/50 transition-colors"
                   />
                 </div>
               </div>
@@ -152,7 +152,7 @@ export default function ContactSection() {
                   name="message"
                   rows="5"
                   placeholder="Your message"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-gray-400 focus:outline-none focus:border-green-500/50 transition-colors resize-none"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 text-white placeholder:text-gray-400 focus:outline-none focus:border-cyan-500/50 transition-colors resize-none"
                 ></textarea>
               </div>
 
@@ -160,7 +160,7 @@ export default function ContactSection() {
                 disabled={status === "loading"}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full bg-blue-600 disabled:bg-gray-700 hover:bg-blue-500 text-white font-bold py-4 rounded-xl flex items-center justify-center space-x-3 transition-colors shadow-lg shadow-blue-600/20"
+                className="w-full bg-cyan-600 disabled:bg-gray-700 hover:bg-cyan-500 text-white font-bold py-4 rounded-xl flex items-center justify-center space-x-3 transition-colors shadow-lg shadow-cyan-600/20"
               >
                 {status === "loading" ? (
                   <Motion.div
@@ -225,7 +225,7 @@ export default function ContactSection() {
                     key={idx}
                     className="flex items-center space-x-4 bg-white/5 border border-white/5 p-4 rounded-2xl hover:border-green-500/30 transition-colors group"
                   >
-                    <div className="p-3 bg-green-500/10 rounded-xl group-hover:bg-green-500/20 transition-colors">
+                    <div className="p-3 bg-cyan-500/10 rounded-xl group-hover:bg-cyan-500/20 transition-colors">
                       {info.icon}
                     </div>
                     <div>
@@ -261,7 +261,7 @@ export default function ContactSection() {
                     }}
                     className="flex items-center space-x-3 bg-white/5 border border-white/5 p-4 rounded-xl text-gray-300 hover:text-white transition-all group"
                   >
-                    <div className="text-gray-300 group-hover:text-green-400 transition-colors">
+                    <div className="text-gray-300 group-hover:text-cyan-400 transition-colors">
                       {social.icon}
                     </div>
                     <span className="text-sm font-medium">{social.name}</span>

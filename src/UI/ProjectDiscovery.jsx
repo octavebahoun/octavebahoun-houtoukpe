@@ -12,7 +12,7 @@ export default function ProjectDiscovery() {
       >
         <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter text-white transition-colors duration-500">
           Ready to see my{" "}
-          <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-cyan-400 to-emerald-500 bg-clip-text text-transparent">
             Craft?
           </span>
         </h2>
@@ -52,8 +52,8 @@ export default function ProjectDiscovery() {
                   x2="100%"
                   y2="0%"
                 >
-                  <stop offset="0%" stopColor="#60a5fa" />
-                  <stop offset="100%" stopColor="#a855f7" />
+                  <stop offset="0%" stopColor="#22D3EE" />
+                  <stop offset="100%" stopColor="var(--primary-strong)" />
                 </linearGradient>
               </defs>
             </svg>
@@ -65,7 +65,7 @@ export default function ProjectDiscovery() {
               className="relative px-8 py-4 bg-white text-black font-bold rounded-full overflow-hidden group block shadow-xl transition-colors duration-500"
             >
               <span className="relative z-10">DISCOVER MY PROJECTS</span>
-              <motion.div className="absolute inset-0 bg-gradient-to-r from-blue-100 to-purple-100 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <motion.div className="absolute inset-0 bg-gradient-to-r from-cyan-100 to-emerald-100 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
           </motion.div>
         </div>

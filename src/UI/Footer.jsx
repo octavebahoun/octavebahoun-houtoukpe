@@ -11,9 +11,9 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-[#050505] border-t border-white/5 pt-16 pb-8 overflow-hidden">
+    <footer className="relative bg-dark-bg border-t border-white/5 pt-16 pb-8 overflow-hidden">
       {/* Background Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[300px] bg-blue-900/5 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[300px] bg-cyan-900/5 blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
@@ -72,7 +72,7 @@ export default function Footer() {
                     to={link === "Home" ? "/" : `/${link.toLowerCase()}`}
                     className="text-gray-300 hover:text-white text-sm transition-colors duration-300 flex items-center group"
                   >
-                    <span className="w-0 group-hover:w-2 h-[1px] bg-blue-500 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+                    <span className="w-0 group-hover:w-2 h-[1px] bg-cyan-500 mr-0 group-hover:mr-2 transition-all duration-300"></span>
                     {link}
                   </Link>
                 </li>
@@ -98,7 +98,7 @@ export default function Footer() {
               onClick={scrollToTop}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-2 text-xs font-bold text-blue-400 hover:text-blue-300 transition-colors uppercase tracking-widest"
+              className="flex items-center space-x-2 text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-colors uppercase tracking-widest"
             >
               <ArrowUp size={14} />
               <span>Back to Top</span>

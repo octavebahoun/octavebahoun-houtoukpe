@@ -39,7 +39,7 @@ export default function NavItem({ label, href, index, onClick }) {
       {isActive && (
         <Motion.div
           layoutId="nav-underline"
-          className="absolute bottom-0 left-3 right-3 h-[2px] bg-gradient-to-r from-blue-500 to-purple-500 z-10"
+          className="absolute bottom-0 left-3 right-3 h-[2px] bg-gradient-to-r from-cyan-400 to-emerald-500 z-10"
           transition={{ type: "spring", stiffness: 380, damping: 30 }}
         />
       )}

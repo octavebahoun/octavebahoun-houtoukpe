@@ -80,7 +80,7 @@ export default function AboutSection() {
           className="mr-2"
         >
           <path
-            fill="#a855f7"
+            fill="var(--primary-strong)"
             d="M8.003 4.07C8.55 3.994 9 4.449 9 5v6h6c.552 0 1.008.45.93.997A7.001 7.001 0 0 1 2 11a7 7 0 0 1 6.003-6.93"
           />
           <path
@@ -116,7 +116,7 @@ export default function AboutSection() {
         <Motion.h2
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
-          className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-12 inline-block"
+          className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-emerald-500 bg-clip-text text-transparent mb-12 inline-block"
         >
           About Me
         </Motion.h2>
@@ -147,8 +147,8 @@ export default function AboutSection() {
                       y2="1.002"
                       gradientUnits="objectBoundingBox"
                     >
-                      <stop offset="0" stopColor="#3b82f6" />
-                      <stop offset="1" stopColor="#a855f7" />
+                      <stop offset="0" stopColor="var(--primary)" />
+                      <stop offset="1" stopColor="var(--primary-strong)" />
                     </linearGradient>
                   </defs>
                   <path
@@ -165,7 +165,7 @@ export default function AboutSection() {
               </div>
               <p className="text-lg leading-relaxed">
                 As an{" "}
-                <span className="text-blue-400 font-semibold">
+                <span className="text-cyan-400 font-semibold">
                   Electrical and Computer Engineering
                 </span>{" "}
                 student at INSTI Lokossa, I am deeply passionate about the
@@ -188,7 +188,7 @@ export default function AboutSection() {
                   >
                     <g
                       fill="none"
-                      stroke="#a855f7"
+                      stroke="var(--primary-strong)"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth="2"
@@ -201,7 +201,7 @@ export default function AboutSection() {
               </div>
               <p className="text-lg leading-relaxed">
                 My goal is to craft{" "}
-                <span className="text-purple-400 font-semibold">
+                <span className="text-teal-400 font-semibold">
                   innovative digital solutions
                 </span>{" "}
                 that solve real-world problems. I am particularly interested in
@@ -242,7 +242,7 @@ export default function AboutSection() {
             <div className="pt-6">
               <Link
                 to="/about"
-                className="group flex items-center space-x-3 text-blue-400 font-semibold hover:text-blue-300 transition-colors"
+                className="group flex items-center space-x-3 text-cyan-400 font-semibold hover:text-cyan-300 transition-colors"
               >
                 <span>Learn More About Me</span>
                 <Motion.div
@@ -265,10 +265,10 @@ export default function AboutSection() {
             transition={{ duration: 0.8 }}
             className="relative group lg:justify-self-end w-full max-w-md"
           >
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-            <div className="relative bg-[#0a0a0a] border border-white/10 p-10 rounded-3xl text-center space-y-12 shadow-2xl">
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-600 to-emerald-600 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+            <div className="relative bg-dark-card border border-white/10 p-10 rounded-3xl text-center space-y-12 shadow-2xl">
               <div>
-                <h3 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">
+                <h3 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-cyan-400 to-emerald-500 bg-clip-text text-transparent mb-2">
                   08+
                 </h3>
                 <p className="text-gray-400 font-mono tracking-widest uppercase text-[10px] md:text-xs">
@@ -276,7 +276,7 @@ export default function AboutSection() {
                 </p>
               </div>
               <div>
-                <h3 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">
+                <h3 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-cyan-400 to-emerald-500 bg-clip-text text-transparent mb-2">
                   09+
                 </h3>
                 <p className="text-gray-400 font-mono tracking-widest uppercase text-[10px] md:text-xs">
@@ -284,7 +284,7 @@ export default function AboutSection() {
                 </p>
               </div>
               <div>
-                <h3 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">
+                <h3 className="text-5xl md:text-6xl font-black bg-gradient-to-r from-cyan-400 to-emerald-500 bg-clip-text text-transparent mb-2">
                   ∞
                 </h3>
                 <p className="text-gray-400 font-mono tracking-widest uppercase text-[10px] md:text-xs">

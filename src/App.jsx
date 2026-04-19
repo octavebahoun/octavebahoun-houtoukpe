@@ -30,22 +30,22 @@ function App() {
     location.pathname === "/admin" || location.pathname === "/login";
 
   return (
-    <div className="min-h-screen bg-dark-bg text-white selection:bg-blue-500/30 font-sans">
+    <div className="min-h-screen bg-dark-bg text-white selection:bg-cyan-400/30 font-sans">
       <ScrollToTop />
       <div className="fixed inset-0 bg-grid pointer-events-none opacity-40" />
 
       {/* Dynamic Background Glows */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div
-          className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[140px] animate-pulse will-change-transform"
+          className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/8 rounded-full blur-[140px] animate-pulse will-change-transform"
           style={{ transform: "translate3d(0,0,0)" }}
         />
         <div
-          className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[140px] animate-pulse will-change-transform"
+          className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-teal-600/8 rounded-full blur-[140px] animate-pulse will-change-transform"
           style={{ animationDelay: "2s", transform: "translate3d(0,0,0)" }}
         />
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30%] h-[30%] bg-blue-500/5 rounded-full blur-[120px] will-change-transform"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30%] h-[30%] bg-emerald-500/5 rounded-full blur-[120px] will-change-transform"
           style={{ transform: "translate3d(-50%, -50%, 0)" }}
         />
       </div>

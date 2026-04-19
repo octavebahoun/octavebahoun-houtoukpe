@@ -87,7 +87,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="selection:bg-green-500/30">
+    <div className="selection:bg-cyan-500/30">
       <Helmet>
         <title>Contact Octave Bahoun | Let's Collaborate</title>
         <meta
@@ -101,7 +101,7 @@ export default function Contact() {
           <Motion.h4
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-green-500 text-xs font-mono tracking-[0.3em] uppercase mb-3"
+            className="text-cyan-500 text-xs font-mono tracking-[0.3em] uppercase mb-3"
           >
             Contact
           </Motion.h4>
@@ -110,7 +110,7 @@ export default function Contact() {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-bold text-white mb-4"
           >
-            Let's <span className="text-green-500">Connect</span>
+            Let's <span className="text-cyan-400">Connect</span>
           </Motion.h1>
           <p className="text-gray-300 max-w-xl font-light">
             I'm currently available for freelance work and new opportunities.
@@ -128,10 +128,10 @@ export default function Contact() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex items-center gap-5 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-green-500/30 transition-all group"
+                  className="flex items-center gap-5 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all group"
                 >
                   <div
-                    className={`${info.color} bg-green-500/10 p-3 rounded-xl group-hover:scale-110 transition-transform`}
+                    className={`${info.color} bg-cyan-500/10 p-3 rounded-xl group-hover:scale-110 transition-transform`}
                   >
                     <info.icon size={22} />
                   </div>
@@ -145,7 +145,7 @@ export default function Contact() {
               ))}
             </div>
 
-            <div className="p-8 rounded-3xl bg-linear-to-br from-green-600 to-emerald-800 text-white relative overflow-hidden group">
+            <div className="p-8 rounded-3xl bg-linear-to-br from-cyan-600 to-teal-800 text-white relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
                 <MessageCircle size={100} />
               </div>
@@ -191,7 +191,7 @@ export default function Contact() {
                       required
                       type="text"
                       placeholder="Octave Bahoun"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-hidden focus:border-green-500/50 transition-all placeholder:text-gray-400"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-hidden focus:border-cyan-500/50 transition-all placeholder:text-gray-400"
                     />
                   </div>
                   <div className="space-y-2">
@@ -203,7 +203,7 @@ export default function Contact() {
                       required
                       type="email"
                       placeholder="octave@example.com"
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-hidden focus:border-green-500/50 transition-all placeholder:text-gray-400"
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-hidden focus:border-cyan-500/50 transition-all placeholder:text-gray-400"
                     />
                   </div>
                 </div>
@@ -217,14 +217,14 @@ export default function Contact() {
                     required
                     rows="5"
                     placeholder="Tell me about your project..."
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-hidden focus:border-green-500/50 transition-all placeholder:text-gray-400 resize-none"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white focus:outline-hidden focus:border-cyan-500/50 transition-all placeholder:text-gray-400 resize-none"
                   ></textarea>
                 </div>
 
                 <button
                   disabled={status === "loading"}
                   type="submit"
-                  className="w-full py-4 bg-green-600 disabled:bg-gray-700 hover:bg-green-500 text-white font-bold rounded-xl flex items-center justify-center gap-3 transition-all text-sm uppercase tracking-widest relative overflow-hidden"
+                  className="w-full py-4 bg-emerald-600 disabled:bg-gray-700 hover:bg-emerald-500 text-white font-bold rounded-xl flex items-center justify-center gap-3 transition-all text-sm uppercase tracking-widest relative overflow-hidden"
                 >
                   <AnimatePresence mode="wait">
                     {status === "loading" ? (

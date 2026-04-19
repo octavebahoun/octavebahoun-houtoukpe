@@ -1,14 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-    --color-dark-bg: #030303;
-    --color-dark-card: #0a0a0a;
-    --color-accent-blue: #3b82f6;
-    --color-accent-purple: #a855f7;
+    --color-dark-bg: #070B14;
+    --color-dark-card: #0F1629;
+    --color-accent-cyan: #22D3EE;
+    --color-accent-teal: #06B6D4;
+    --color-accent-emerald: #10B981;
 }
 
 :root {
-    background-color: #030303 !important;
+    /* CSS Custom Properties for SVG icons and inline styles */
+    --primary: #22D3EE;
+    --primary-strong: #06B6D4;
+    background-color: #070B14 !important;
     color: #f8fafc !important;
     font-family: 'Outfit', 'Inter', sans-serif;
 }
@@ -18,7 +22,7 @@ body {
     padding: 0;
     min-height: 100vh;
     overflow-x: hidden;
-    background-color: #030303;
+    background-color: #070B14;
 }
 
 /* Effet de grain "Premium Noise" */
@@ -30,7 +34,7 @@ body::before {
     width: 100%;
     height: 100%;
     background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-    opacity: 0.15;
+    opacity: 0.12;
     pointer-events: none;
     z-index: 50;
     filter: contrast(150%) brightness(100%);
@@ -40,8 +44,8 @@ body::before {
 .bg-grid {
     background-size: 40px 40px;
     background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        linear-gradient(to right, rgba(34, 211, 238, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(34, 211, 238, 0.015) 1px, transparent 1px);
 }
 
 /* Scrollbar Premium */
@@ -50,11 +54,11 @@ body::before {
 }
 
 ::-webkit-scrollbar-track {
-    background: #030303;
+    background: #070B14;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: linear-gradient(to bottom, #3b82f6, #a855f7);
+    background: linear-gradient(to bottom, #22D3EE, #10B981);
     border-radius: 10px;
 }
 
