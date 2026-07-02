@@ -53,11 +53,6 @@ export default function Navbar({ theme, toggleTheme }) {
             </ul>
 
             <div className="nav-pill__actions">
-              <button className="nav-pill__lang" type="button" aria-label="Switch language to French">
-                <Globe size={16} />
-                <span>FR</span>
-              </button>
-
               <button className="nav-pill__theme" onClick={toggleTheme} aria-label="Toggle theme">
                 {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
                 <span className="nav-pill__theme-label">{theme === "dark" ? "Light" : "Dark"}</span>
