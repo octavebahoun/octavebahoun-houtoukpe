@@ -9,7 +9,6 @@ import { Loader2 } from "lucide-react";
 
 const Home     = lazy(() => import("./pages/Home"));
 const Projects = lazy(() => import("./pages/Projects"));
-const Project  = lazy(() => import("./pages/ProjectDetail"));
 const Blog     = lazy(() => import("./pages/Blog"));
 const About    = lazy(() => import("./pages/About"));
 const Certs    = lazy(() => import("./pages/Certs"));
@@ -38,12 +37,11 @@ export default function App() {
       <div className="bg-circuit" aria-hidden="true" />
       <ScrollToTop />
       <Navbar theme={theme} toggleTheme={toggleTheme} />
-      <main>
+      <main style={{ paddingTop: "var(--nav-h)" }}>
         <Suspense fallback={<PageLoader />}>
           <Routes location={location} key={location.pathname}>
             <Route path="/"        element={<Home />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:projectId" element={<Project />} />
             <Route path="/blog"    element={<Blog />} />
             <Route path="/about"   element={<About />} />
             <Route path="/certs"   element={<Certs />} />

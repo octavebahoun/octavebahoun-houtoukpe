@@ -1,0 +1,235 @@
+import { motion as Motion, AnimatePresence } from "framer-motion";
+import { Github, ExternalLink, Code2, Layers, Loader2 } from "lucide-react";
+import { useState, useEffect, forwardRef } from "react";
+import projectsData from "../projects.json";
+import { Helmet } from "react-helmet-async";
+import { supabase } from "../lib/supabase";
+import SectionTitle from "../UI/SectionTitle";
+
+export default function Projects() {
+  const [filter, setFilter] = useState("tous");
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const categories = ["tous", "python", "web", "logiciel", "iot", "design"];
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("projects")
+          .select("*")
+          .order("id", { ascending: false });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          // Normalisation des noms de colonnes (Supabase lowercase -> camelCase)
+          const normalizedData = data.map((p) => ({
+            ...p,
+            demoUrl: p.demourl || p.demoUrl,
+            githubUrl: p.githuburl || p.githubUrl,
+          }));
+          setProjects(normalizedData);
+        } else {
+          // Fallback sur le JSON si la table est vide
+          setProjects(projectsData);
+        }
+      } catch (err) {
+        console.error("Error fetching projects from Supabase:", err);
+        setProjects(projectsData);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  const filteredProjects =
+    filter === "tous"
+      ? projects
+      : projects.filter((p) => p.category === filter);
+
+  return (
+    <div className="py-20 px-4 md:px-0">
+      <Helmet>
+        <title>Projects | Octave Bahoun Portfolio</title>
+        <meta
+          name="description"
+          content="Explore my portfolio of software development and AI projects, including web apps, IoT systems, and software solutions."
+        />
+      </Helmet>
+      <SectionTitle
+        number="03"
+        label="PORTFOLIO"
+        title="My Projects"
+        highlight="Projects"
+        className="mb-12"
+      />
+
+      {/* Filter Bar */}
+      <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-12 overflow-x-auto pb-4 no-scrollbar">
+        {categories.map((cat) => (
+          <Motion.button
+            key={cat}
+            onClick={() => setFilter(cat)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className={`px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-bold tracking-widest uppercase transition-all duration-300 border ${
+              filter === cat
+                ? "bg-cyan-600 border-cyan-500 text-white shadow-lg shadow-cyan-500/20"
+                : "bg-white/5 border-white/10 text-gray-300 hover:border-white/20 hover:text-white"
+            }`}
+          >
+            {cat === "tous" ? "All" : cat === "logiciel" ? "Software" : cat}
+          </Motion.button>
+        ))}
+      </div>
+
+      {/* Projects Grid */}
+      {loading ? (
+        <div className="flex flex-col items-center justify-center py-20 gap-4">
+          <Loader2 className="animate-spin text-cyan-500" size={40} />
+          <p className="text-gray-300 font-mono text-xs uppercase tracking-widest animate-pulse">
+            Syncing with database...
+          </p>
+        </div>
+      ) : (
+        <Motion.div
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} />
+            ))}
+          </AnimatePresence>
+        </Motion.div>
+      )}
+
+      {filteredProjects.length === 0 && (
+        <Motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center py-32 text-gray-300 font-mono text-sm"
+        >
+          No projects found in this category.
+        </Motion.div>
+      )}
+    </div>
+  );
+}
+
+const ProjectCard = forwardRef(({ project }, ref) => {
+  return (
+    <Motion.div
+      ref={ref}
+      layout
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.4 }}
+      className="group relative glass-card rounded-2xl overflow-hidden transition-all duration-500 shadow-xl flex flex-col h-full"
+    >
+      {/* Partie visuelle - Image */}
+      <div className="relative h-52 overflow-hidden">
+        <img
+          src={project.image}
+          alt={project.title}
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-30 group-hover:grayscale-0 will-change-transform"
+        />
+        <div className="absolute inset-0 bg-linear-to-t from-[#0F1629] via-transparent to-transparent opacity-80" />
+
+        {/* Catégorie Badge (Small) */}
+        <div className="absolute top-4 left-4">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 backdrop-blur-md border border-cyan-500/20 text-[9px] font-black text-cyan-400 uppercase tracking-tighter">
+            <Layers size={10} />
+            {project.category}
+          </div>
+        </div>
+
+        {/* Badge Status */}
+        <div className="absolute top-4 right-4">
+          <span className="px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-[9px] font-bold tracking-tighter text-gray-300 uppercase">
+            {project.status}
+          </span>
+        </div>
+
+        {/* Overlay Buttons on Hover */}
+        <div className="absolute inset-0 flex items-center justify-center gap-4 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 backdrop-blur-[2px]">
+          <Motion.a
+            href={project.demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Live Demo of ${project.title}`}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="p-3 bg-cyan-600 hover:bg-cyan-500 rounded-full text-white shadow-lg shadow-cyan-500/30 transition-colors"
+          >
+            <ExternalLink size={20} />
+          </Motion.a>
+          <Motion.a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`GitHub Repository for ${project.title}`}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full text-white transition-colors"
+          >
+            <Github size={20} />
+          </Motion.a>
+        </div>
+      </div>
+
+      {/* Contenu - Description et Stacks */}
+      <div className="p-6 flex flex-col grow">
+        <h3 className="text-xl font-bold mb-2 group-hover:text-cyan-400 transition-colors text-white">
+          {project.title}
+        </h3>
+        <p className="text-gray-300 text-sm leading-relaxed mb-6 line-clamp-3">
+          {project.description}
+        </p>
+
+        {/* Stack Technologique */}
+        <div className="flex flex-wrap gap-2 mt-auto">
+          {project.stacks.map((stack) => (
+            <div
+              key={stack}
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/5 text-[10px] font-medium text-gray-300 group-hover:border-cyan-500/20 group-hover:text-cyan-200 transition-colors"
+            >
+              <Code2 size={11} className="text-cyan-500/50" />
+              {stack}
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile Action Buttons - Visible on touch devices/small screens */}
+        <div className="flex gap-3 mt-6 md:hidden">
+          <a
+            href={project.demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Live Demo of ${project.title}`}
+            className="flex-1 flex items-center justify-center gap-2 py-3 bg-cyan-600 rounded-xl text-white text-xs font-bold shadow-lg shadow-cyan-500/20"
+          >
+            <ExternalLink size={14} />
+            Preview
+          </a>
+          <a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`GitHub Repository for ${project.title}`}
+            className="px-4 flex items-center justify-center py-3 bg-white/5 border border-white/10 rounded-xl text-white text-xs font-bold"
+          >
+            <Github size={14} />
+          </a>
+        </div>
+      </div>
+    </Motion.div>
+  );
+});
