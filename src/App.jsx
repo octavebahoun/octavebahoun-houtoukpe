@@ -15,6 +15,8 @@ const Blog     = lazy(() => import("./pages/Blog"));
 const About    = lazy(() => import("./pages/About"));
 const Certs    = lazy(() => import("./pages/Certs"));
 const Contact  = lazy(() => import("./pages/Contact"));
+const Login    = lazy(() => import("./pages/Login"));
+const Admin    = lazy(() => import("./pages/AdminDashboard"));
 
 const PageLoader = () => (
   <div style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -49,6 +51,8 @@ export default function App() {
             <Route path="/about"   element={<About />} />
             <Route path="/certs"   element={<Certs />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/login"  element={<Login />} />
+            <Route path="/admin"  element={<Admin />} />
           </Routes>
         </Suspense>
       </main>
