@@ -56,12 +56,12 @@ export default function Contact() {
               {INFO.map(inf => (
                 <div key={inf.label} style={{
                   display: "flex", gap: "16px", alignItems: "center",
-                  padding: "16px", borderRadius: "10px",
-                  border: "1px solid var(--border)", background: "var(--surface)",
+                  padding: "16px", borderRadius: "3px",
+                  border: "1.5px solid var(--text)", background: "var(--surface)", boxShadow: "var(--shadow-card)",
                 }}>
                   <div style={{
-                    width: "44px", height: "44px", borderRadius: "10px",
-                    background: "rgba(255,69,0,0.12)", display: "flex",
+                    width: "44px", height: "44px", borderRadius: "50%",
+                    background: "rgba(var(--accent-rgb),0.12)", display: "flex",
                     alignItems: "center", justifyContent: "center", color: "var(--accent)", flexShrink: 0,
                   }}>
                     {inf.icon}
@@ -77,9 +77,9 @@ export default function Contact() {
 
               {/* Social buttons */}
               <div style={{
-                marginTop: "8px", padding: "24px", borderRadius: "12px",
-                background: "linear-gradient(135deg, rgba(255,69,0,0.15), rgba(255,69,0,0.05))",
-                border: "1px solid rgba(255,69,0,0.2)",
+                marginTop: "8px", padding: "24px", borderRadius: "3px",
+                background: "rgba(var(--accent-rgb),0.08)",
+                border: "1.5px solid var(--accent)",
               }}>
                 <p style={{ fontWeight: 700, marginBottom: "8px" }}>{t("contact.social_title")}</p>
                 <p style={{ color: "var(--muted)", fontSize: "13px", marginBottom: "20px" }}>

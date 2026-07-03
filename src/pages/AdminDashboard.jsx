@@ -132,7 +132,7 @@ export default function AdminDashboard() {
         {/* Stats */}
         <div className="admin-stats">
           <div className="admin-stat-card">
-            <div className="admin-stat-card__icon" style={{ background: "rgba(255,69,0,0.12)", color: "var(--accent)" }}>
+            <div className="admin-stat-card__icon" style={{ background: "rgba(var(--accent-rgb),0.12)", color: "var(--accent)" }}>
               <FolderKanban size={22} />
             </div>
             <div>

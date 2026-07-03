@@ -34,7 +34,7 @@ export default function Certs() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px", flexWrap: "wrap" }}>
-                    <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: "15px", marginBottom: "4px" }}>
+                    <h3 style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "15px", marginBottom: "4px" }}>
                       {c.title}
                     </h3>
                     {c.url && c.url !== "#" && (

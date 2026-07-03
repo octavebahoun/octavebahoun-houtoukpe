@@ -42,12 +42,13 @@ export default function Home() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       /* Hero lines entrance */
-      gsap.from(".hero-line-1", { opacity: 0, y: 60, duration: 0.8, ease: "power3.out", delay: 0.2 });
-      gsap.from(".hero-line-2", { opacity: 0, y: 60, duration: 0.8, ease: "power3.out", delay: 0.4 });
-      gsap.from(".hero-line-3", { opacity: 0, y: 60, duration: 0.8, ease: "power3.out", delay: 0.6 });
-      gsap.from(".hero-sub",    { opacity: 0, y: 20, duration: 0.6, ease: "power2.out", delay: 0.9 });
-      gsap.from(".hero-pill",   { opacity: 0, y: 16, stagger: 0.1, duration: 0.5, ease: "power2.out", delay: 1.1 });
-      gsap.from(".hero-orb-photo", { opacity: 0, scale: 0.8, duration: 1, ease: "power3.out", delay: 0.5 });
+      gsap.from(".hero-line-1", { opacity: 0, y: 40, duration: 0.7, ease: "power3.out", delay: 0.15 });
+      gsap.from(".hero-line-2", { opacity: 0, y: 40, duration: 0.7, ease: "power3.out", delay: 0.3 });
+      gsap.from(".hero-line-3", { opacity: 0, y: 40, duration: 0.7, ease: "power3.out", delay: 0.45 });
+      gsap.from(".hero-sub",    { opacity: 0, y: 16, duration: 0.6, ease: "power2.out", delay: 0.65 });
+      gsap.from(".hero-ctas, .hero-socials", { opacity: 0, y: 12, duration: 0.5, ease: "power2.out", delay: 0.8 });
+      gsap.from(".hero-specimen", { opacity: 0, scale: 0.92, rotate: 3, duration: 0.9, ease: "power3.out", delay: 0.3 });
+      gsap.from(".hero-fieldtag", { opacity: 0, x: 16, stagger: 0.08, duration: 0.5, ease: "power2.out", delay: 0.9 });
 
       /* Work cards */
       if (workRef.current) {
@@ -107,72 +108,37 @@ function HeroSection() {
 
   return (
     <section className="hero-v2" id="hero">
-      {/* Background orbs */}
-      <div className="orb orb-hero-1" aria-hidden="true" />
-      <div className="orb orb-hero-2" aria-hidden="true" />
-      <div className="scan-h" aria-hidden="true" />
-      <div className="scan-v" aria-hidden="true" />
+      <div className="container hero-v2__grid">
+        {/* Main column */}
+        <div className="hero-v2__main">
+          <p className="label hero-eyebrow">{t("hero.greeting")}</p>
 
-      {/* Floating pills left */}
-      <div className="hero-pills hero-pills--left">
-        {STACK_PILLS_LEFT.map((p, i) => (
-          <div key={i} className="hero-pill" style={{ "--i": i }}>
-            {p.icon} {p.label}
-          </div>
-        ))}
-      </div>
-
-      {/* Floating pills right */}
-      <div className="hero-pills hero-pills--right">
-        {STACK_PILLS_RIGHT.map((p, i) => (
-          <div key={i} className="hero-pill" style={{ "--i": i }}>
-            {p.icon} {p.label}
-          </div>
-        ))}
-      </div>
-
-      {/* Main content */}
-      <div className="hero-v2__content">
-        {/* Eyebrow */}
-        <p className="label hero-eyebrow">{t("hero.greeting")}</p>
-
-        {/* Big headline */}
-        <div className="hero-v2__headline">
-          <div className="hero-line-1 hero-text-line">
-            {t("hero.phrase1")}
-          </div>
-          <div className="hero-line-2 hero-text-line hero-text-line--accent">
-            <span className={`hero-word${animating ? " hero-word--out" : " hero-word--in"}`}>
-              {WORDS[wordIdx]}
+          <h1 className="hero-v2__headline">
+            <span className="hero-line-1 hero-text-line">
+              {t("hero.phrase1")}
             </span>
-          </div>
-          <div className="hero-line-3 hero-text-line">
-            {t("hero.phrase2")}
-          </div>
-        </div>
+            <span className="hero-line-2 hero-text-line hero-text-line--accent">
+              <span className={`hero-word${animating ? " hero-word--out" : " hero-word--in"}`}>
+                {WORDS[wordIdx]}
+              </span>
+            </span>
+            <span className="hero-line-3 hero-text-line">
+              {t("hero.phrase2")}
+            </span>
+          </h1>
 
-        {/* Photo orb */}
-        <div className="hero-orb-photo" aria-hidden="true">
-          <div className="hero-orb-glow" />
-          <div className="hero-orb-ring" />
-          <div className="hero-orb-inner">
-            <img className="hero-orb-photo__img" src={profilePhoto} alt="" />
+          <p className="hero-sub">
+            {t("hero.sub")}
+          </p>
+
+          <div className="hero-ctas">
+            <Link to="/projects" className="btn btn-primary" id="hero-cta-projects">
+              {t("hero.cta.work")} <ArrowRight size={16} />
+            </Link>
+            <Link to="/contact" className="btn btn-outline" id="hero-cta-contact">
+              {t("hero.cta.contact")}
+            </Link>
           </div>
-        </div>
-
-        {/* Sub */}
-        <p className="hero-sub">
-          {t("hero.sub")}
-        </p>
-
-        {/* CTAs */}
-        <div className="hero-ctas">
-          <Link to="/projects" className="btn btn-primary" id="hero-cta-projects">
-            {t("hero.cta.work")} <ArrowRight size={16} />
-          </Link>
-          <Link to="/contact" className="btn btn-outline" id="hero-cta-contact">
-            {t("hero.cta.contact")}
-          </Link>
           <div className="hero-socials">
             {SOCIALS.map(s => (
               <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
@@ -182,6 +148,31 @@ function HeroSection() {
             ))}
           </div>
         </div>
+
+        {/* Dossier column */}
+        <aside className="hero-v2__aside">
+          <div className="hero-dossier-tag">
+            <span>Dossier</span>
+            <span className="hero-dossier-tag__no">N&deg;001</span>
+          </div>
+
+          <div className="hero-specimen">
+            <div className="hero-specimen__frame">
+              <img className="hero-specimen__img" src={profilePhoto} alt="Octave Bahoun" />
+              <span className="hero-specimen__corner hero-specimen__corner--tl" aria-hidden="true" />
+              <span className="hero-specimen__corner hero-specimen__corner--br" aria-hidden="true" />
+            </div>
+            <p className="hero-specimen__caption">Fig. 01 &mdash; O. Bahoun, Lokossa BJ</p>
+          </div>
+
+          <div className="hero-fieldtags">
+            {[...STACK_PILLS_LEFT, ...STACK_PILLS_RIGHT].map((p, i) => (
+              <div key={i} className="hero-fieldtag">
+                {p.icon} {p.label}
+              </div>
+            ))}
+          </div>
+        </aside>
       </div>
     </section>
   );
@@ -332,7 +323,6 @@ function CTABanner() {
     <section className="section">
       <div className="container" style={{ textAlign: "center" }}>
         <div style={{ position: "relative", display: "inline-block", maxWidth: "600px" }}>
-          <div className="orb" style={{ width: "300px", height: "300px", top: "50%", left: "50%", transform: "translate(-50%,-50%)", position: "absolute" }} aria-hidden="true" />
           <p className="label" style={{ marginBottom: "16px", display: "block" }}>{t("cta.label")}</p>
           <h2 className="h2" style={{ marginBottom: "24px" }}>
             {t("cta.title")} <span style={{ color: "var(--accent)" }}>{t("cta.title_accent")}</span>

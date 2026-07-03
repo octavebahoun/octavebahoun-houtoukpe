@@ -51,7 +51,7 @@ export default function Login() {
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
           <div style={{
             width: "56px", height: "56px", borderRadius: "14px",
-            background: "rgba(255,69,0,0.12)", display: "inline-flex",
+            background: "rgba(var(--accent-rgb),0.12)", display: "inline-flex",
             alignItems: "center", justifyContent: "center",
             marginBottom: "16px", color: "var(--accent)",
           }}>
