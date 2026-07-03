@@ -4,12 +4,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getProjects } from "../api/mock";
 import { ProjectCard } from "./Home";
 import { Helmet } from "react-helmet-async";
+import { useLang } from "../lib/i18n";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const CATEGORIES = ["all", "web", "iot", "design"];
 
 export default function Projects() {
+  const { t } = useLang();
   const [projects, setProjects]   = useState([]);
   const [filter, setFilter]       = useState("all");
   const gridRef = useRef(null);
@@ -37,12 +39,12 @@ export default function Projects() {
       <section className="section">
         <div className="container">
           {/* Header */}
-          <p className="section-label">My work</p>
+          <p className="section-label">{t("selected.title")}</p>
           <h1 className="h1" style={{ marginBottom: "16px" }}>
-            All <span style={{ color: "var(--accent)" }}>Projects</span>
+            {t("projects.title.prefix")} <span style={{ color: "var(--accent)" }}>{t("projects.title.highlight")}</span>
           </h1>
           <p style={{ color: "var(--muted)", maxWidth: "500px", marginBottom: "48px" }}>
-            A collection of web apps, IoT systems, and design projects I've shipped.
+            {t("projects.desc")}
           </p>
 
           {/* Filter tabs */}
@@ -56,7 +58,7 @@ export default function Projects() {
                 className={filter === cat ? "btn btn-primary" : "btn btn-ghost"}
                 style={{ fontSize: "11px", padding: "7px 16px", textTransform: "capitalize" }}
               >
-                {cat}
+                {cat === "all" ? t("projects.category.all") : t("cat_" + cat)}
               </button>
             ))}
           </div>
@@ -68,7 +70,7 @@ export default function Projects() {
 
           {filtered.length === 0 && (
             <p style={{ color: "var(--muted)", textAlign: "center", padding: "60px 0" }}>
-              No projects in this category yet.
+              {t("card.no_projects")}
             </p>
           )}
         </div>

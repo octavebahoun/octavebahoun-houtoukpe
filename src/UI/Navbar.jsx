@@ -2,19 +2,21 @@ import { useEffect, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { Globe, Sun, Moon } from "lucide-react";
 import Logo from "./Logo";
+import { useLang } from "../lib/i18n";
 
-const LINKS = [
-  { to: "/", label: "Home", exact: true },
-  { to: "/about", label: "About" },
-  { to: "/projects", label: "Projects" },
-  { to: "/#skills", label: "Skills", anchor: true },
-  { to: "/blog", label: "Blog" },
-  { to: "/contact", label: "Contact" },
+const LINKS_EN = [
+  { to: "/", label: "nav.home", exact: true },
+  { to: "/about", label: "nav.about" },
+  { to: "/projects", label: "nav.projects" },
+  { to: "/#skills", label: "nav.skills", anchor: true },
+  { to: "/blog", label: "nav.blog" },
+  { to: "/contact", label: "nav.contact" },
 ];
 
 export default function Navbar({ theme, toggleTheme }) {
+  const { t, lang, toggleLang } = useLang();
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen]         = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -24,7 +26,6 @@ export default function Navbar({ theme, toggleTheme }) {
 
   return (
     <>
-      {/* ── Floating pill navbar ── */}
       <header className={`navbar-wrap${scrolled ? " scrolled" : ""}`}>
         <div className="navbar-shell">
           <nav className="navbar-pill" role="navigation" aria-label="Main navigation">
@@ -33,11 +34,11 @@ export default function Navbar({ theme, toggleTheme }) {
             </div>
 
             <ul className="nav-pill__links">
-              {LINKS.map((l) => (
+              {LINKS_EN.map((l) => (
                 <li key={l.to}>
                   {l.anchor ? (
                     <Link to={l.to} className="nav-pill__link">
-                      {l.label}
+                      {t(l.label)}
                     </Link>
                   ) : (
                     <NavLink
@@ -45,7 +46,7 @@ export default function Navbar({ theme, toggleTheme }) {
                       end={l.exact ?? false}
                       className={({ isActive }) => `nav-pill__link${isActive ? " active" : ""}`}
                     >
-                      {l.label}
+                      {t(l.label)}
                     </NavLink>
                   )}
                 </li>
@@ -53,9 +54,14 @@ export default function Navbar({ theme, toggleTheme }) {
             </ul>
 
             <div className="nav-pill__actions">
+              <button className="nav-pill__lang" onClick={toggleLang} aria-label="Toggle language">
+                <Globe size={14} />
+                <span>{lang === "fr" ? "FR" : "EN"}</span>
+              </button>
+
               <button className="nav-pill__theme" onClick={toggleTheme} aria-label="Toggle theme">
                 {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
-                <span className="nav-pill__theme-label">{theme === "dark" ? "Light" : "Dark"}</span>
+                <span className="nav-pill__theme-label">{theme === "dark" ? t("nav.theme.light") : t("nav.theme.dark")}</span>
               </button>
 
               <button
@@ -71,10 +77,9 @@ export default function Navbar({ theme, toggleTheme }) {
         </div>
       </header>
 
-      {/* ── Mobile fullscreen menu ── */}
       <div className={`mobile-menu${open ? " open" : ""}`} aria-hidden={!open}>
         <div className="mobile-menu__inner">
-          {LINKS.map((l, i) => (
+          {LINKS_EN.map((l, i) => (
             <NavLink
               key={l.to}
               to={l.to}
@@ -83,7 +88,7 @@ export default function Navbar({ theme, toggleTheme }) {
               onClick={() => setOpen(false)}
             >
               <span className="mobile-nav-index">0{i + 1}</span>
-              {l.label}
+              {t(l.label)}
             </NavLink>
           ))}
           <Link
@@ -92,7 +97,7 @@ export default function Navbar({ theme, toggleTheme }) {
             style={{ marginTop: "32px", width: "100%", justifyContent: "center" }}
             onClick={() => setOpen(false)}
           >
-            Hire me
+            {t("nav.hire")}
           </Link>
         </div>
       </div>

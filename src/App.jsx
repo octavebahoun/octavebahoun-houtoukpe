@@ -5,6 +5,7 @@ import Navbar from "./UI/Navbar";
 import Footer from "./UI/Footer";
 import Cursor from "./UI/Cursor";
 import ScrollToTop from "./UI/ScrollToTop";
+import { LangProvider } from "./lib/i18n";
 import { Loader2 } from "lucide-react";
 
 const Home     = lazy(() => import("./pages/Home"));
@@ -33,7 +34,7 @@ export default function App() {
   const toggleTheme = () => setTheme(t => t === "dark" ? "light" : "dark");
 
   return (
-    <>
+    <LangProvider>
       <Cursor />
       <div className="bg-circuit" aria-hidden="true" />
       <ScrollToTop />
@@ -52,6 +53,6 @@ export default function App() {
         </Suspense>
       </main>
       <Footer />
-    </>
+    </LangProvider>
   );
 }

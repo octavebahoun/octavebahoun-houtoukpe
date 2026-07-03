@@ -5,12 +5,13 @@ import { getLanding } from "../api/mock";
 import { ExternalLink, Github, ArrowRight, Linkedin, Mail, Terminal, Globe, Database, Cpu, Code2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useLang } from "../lib/i18n";
 import profilePhoto from "../../profile.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /* ── Mots qui tournent dans le hero ── */
-const ROTATING_WORDS = ["Experiences", "Solutions", "Products", "Interfaces", "Systems"];
+const WORD_KEYS = ["word.0", "word.1", "word.2", "word.3", "word.4"];
 
 /* ── Pills de stack flottantes ── */
 const STACK_PILLS_LEFT  = [
@@ -86,19 +87,22 @@ export default function Home() {
 
 /* ─── HERO ─────────────────────────────────────────────── */
 function HeroSection() {
+  const { t } = useLang();
   const [wordIdx, setWordIdx] = useState(0);
   const [animating, setAnimating] = useState(false);
+
+  const WORDS = [t("word.0"), t("word.1"), t("word.2"), t("word.3"), t("word.4")];
 
   useEffect(() => {
     const interval = setInterval(() => {
       setAnimating(true);
       setTimeout(() => {
-        setWordIdx(i => (i + 1) % ROTATING_WORDS.length);
+        setWordIdx(i => (i + 1) % WORDS.length);
         setAnimating(false);
       }, 300);
     }, 2400);
     return () => clearInterval(interval);
-  }, []);
+  }, [WORDS.length]);
 
   return (
     <section className="hero-v2" id="hero">
@@ -129,20 +133,20 @@ function HeroSection() {
       {/* Main content */}
       <div className="hero-v2__content">
         {/* Eyebrow */}
-        <p className="label hero-eyebrow">// fullstack engineer &amp; ai enthusiast</p>
+        <p className="label hero-eyebrow">{t("hero.greeting")}</p>
 
         {/* Big headline */}
         <div className="hero-v2__headline">
           <div className="hero-line-1 hero-text-line">
-            I craft digital
+            {t("hero.phrase1")}
           </div>
           <div className="hero-line-2 hero-text-line hero-text-line--accent">
             <span className={`hero-word${animating ? " hero-word--out" : " hero-word--in"}`}>
-              {ROTATING_WORDS[wordIdx]}
+              {WORDS[wordIdx]}
             </span>
           </div>
           <div className="hero-line-3 hero-text-line">
-            that <span style={{ color: "var(--accent)" }}>ship fast.</span>
+            {t("hero.phrase2")}
           </div>
         </div>
 
@@ -157,17 +161,16 @@ function HeroSection() {
 
         {/* Sub */}
         <p className="hero-sub">
-          Based in <span style={{ color: "var(--accent)" }}>Bénin</span> — available worldwide.<br />
-          Web &bull; Systems &bull; AI / LM
+          {t("hero.sub")}
         </p>
 
         {/* CTAs */}
         <div className="hero-ctas">
           <Link to="/projects" className="btn btn-primary" id="hero-cta-projects">
-            View my work <ArrowRight size={16} />
+            {t("hero.cta.work")} <ArrowRight size={16} />
           </Link>
           <Link to="/contact" className="btn btn-outline" id="hero-cta-contact">
-            Get in touch
+            {t("hero.cta.contact")}
           </Link>
           <div className="hero-socials">
             {SOCIALS.map(s => (
@@ -185,17 +188,18 @@ function HeroSection() {
 
 /* ─── SELECTED WORK ──────────────────────────────────────── */
 function SelectedWork({ workRef }) {
+  const { t } = useLang();
   const [data, setData] = useState([]);
   useEffect(() => { getLanding().then(d => setData(d.selectedWork)); }, []);
 
   return (
     <section className="section" style={{ borderTop: "1px solid var(--border)" }}>
       <div className="container">
-        <p className="section-label">Selected Work</p>
+        <p className="section-label">{t("selected.title")}</p>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "40px", flexWrap: "wrap", gap: "16px" }}>
-          <h2 className="h2">Featured Projects</h2>
+          <h2 className="h2">{t("selected.featured")}</h2>
           <Link to="/projects" className="btn btn-ghost" style={{ fontSize: "12px" }}>
-            All projects <ArrowRight size={14} />
+            {t("selected.all")} <ArrowRight size={14} />
           </Link>
         </div>
         <div className="projects-grid" ref={workRef}>
@@ -208,6 +212,7 @@ function SelectedWork({ workRef }) {
 
 /* ─── PROJECT CARD (3D tilt) ─────────────────────────────── */
 export function ProjectCard({ project: p }) {
+  const { t } = useLang();
   const cardRef = useRef(null);
   const onMouseMove = (e) => {
     const card = cardRef.current;
@@ -237,16 +242,16 @@ export function ProjectCard({ project: p }) {
             className="btn btn-ghost"
             style={{ fontSize: "11px", padding: "8px 14px" }}
           >
-            View details
+            {t("card.view_details")}
           </Link>
         {p.demoUrl && (
           <a href={p.demoUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ fontSize: "11px", padding: "8px 14px" }}>
-            <ExternalLink size={12} /> Demo
+            <ExternalLink size={12} /> {t("card.demo")}
           </a>
         )}
         {p.githubUrl && (
           <a href={p.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost" style={{ fontSize: "11px", padding: "8px 14px" }}>
-            <Github size={12} /> Code
+            <Github size={12} /> {t("card.code")}
           </a>
         )}
       </div>
@@ -256,11 +261,12 @@ export function ProjectCard({ project: p }) {
 
 /* ─── ABOUT SECTION (home snippet) ──────────────────────── */
 function AboutSection({ aboutRef }) {
+  const { t } = useLang();
   const stats = [
-    { n: "08+", label: "Projects Completed" },
-    { n: "09+", label: "Technologies" },
-    { n: "02",  label: "Internships" },
-    { n: "∞",   label: "Passion" },
+    { n: "08+", label: t("homeabout.stat1") },
+    { n: "09+", label: t("homeabout.stat2") },
+    { n: "02",  label: t("homeabout.stat3") },
+    { n: "∞",   label: t("homeabout.stat4") },
   ];
 
   return (
@@ -271,24 +277,21 @@ function AboutSection({ aboutRef }) {
           {/* Text */}
           <div>
             <h2 className="h2" style={{ marginBottom: "24px" }}>
-              About <span style={{ color: "var(--accent)" }}>Me</span>
+              {t("homeabout.title")} <span style={{ color: "var(--accent)" }}>{t("homeabout.title_accent")}</span>
             </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginBottom: "32px" }}>
               <p style={{ color: "var(--muted)", fontSize: "14px", lineHeight: 1.85 }}>
-                As an <span style={{ color: "var(--text)", fontWeight: 700 }}>Electrical and Computer Engineering</span> student
-                at INSTI Lokossa, I am deeply passionate about the intersection of software development and Artificial Intelligence.
+                {t("homeabout.p1")}
               </p>
               <p style={{ color: "var(--muted)", fontSize: "14px", lineHeight: 1.85 }}>
-                My goal is to craft <span style={{ color: "var(--accent)", fontWeight: 700 }}>innovative digital solutions</span> that
-                solve real-world problems — from intuitive web apps to embedded IoT systems and AI-powered applications.
+                {t("homeabout.p2")}
               </p>
               <p style={{ color: "var(--muted)", fontSize: "14px", lineHeight: 1.85, fontStyle: "italic" }}>
-                Always seeking new challenges, I enjoy exploring cutting-edge technologies and contributing to
-                projects that make a positive impact.
+                {t("homeabout.p3")}
               </p>
             </div>
             <Link to="/about" className="btn btn-outline" style={{ display: "inline-flex", gap: "8px" }}>
-              Learn more about me <ArrowRight size={16} />
+              {t("homeabout.cta")} <ArrowRight size={16} />
             </Link>
           </div>
 
@@ -321,20 +324,21 @@ function SkillsStrip() {
 
 /* ─── CTA BANNER ─────────────────────────────────────────── */
 function CTABanner() {
+  const { t } = useLang();
   return (
     <section className="section">
       <div className="container" style={{ textAlign: "center" }}>
         <div style={{ position: "relative", display: "inline-block", maxWidth: "600px" }}>
           <div className="orb" style={{ width: "300px", height: "300px", top: "50%", left: "50%", transform: "translate(-50%,-50%)", position: "absolute" }} aria-hidden="true" />
-          <p className="label" style={{ marginBottom: "16px", display: "block" }}>// Ready to collaborate?</p>
+          <p className="label" style={{ marginBottom: "16px", display: "block" }}>{t("cta.label")}</p>
           <h2 className="h2" style={{ marginBottom: "24px" }}>
-            Let's build something <span style={{ color: "var(--accent)" }}>great</span>
+            {t("cta.title")} <span style={{ color: "var(--accent)" }}>{t("cta.title_accent")}</span>
           </h2>
           <p style={{ color: "var(--muted)", marginBottom: "32px", fontSize: "14px" }}>
-            I'm currently available for freelance projects and open to new opportunities.
+            {t("cta.desc")}
           </p>
           <Link to="/contact" className="btn btn-primary" id="cta-hire-btn" style={{ fontSize: "14px", padding: "14px 32px" }}>
-            Hire me <ArrowRight size={16} />
+            {t("cta.btn")} <ArrowRight size={16} />
           </Link>
         </div>
       </div>

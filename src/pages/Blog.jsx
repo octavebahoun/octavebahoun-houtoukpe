@@ -3,8 +3,10 @@ import { getBlog } from "../api/mock";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight, Clock, Sparkles, BookOpen, BarChart3, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLang } from "../lib/i18n";
 
 export default function Blog() {
+  const { t } = useLang();
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -23,12 +25,12 @@ export default function Blog() {
 
       <section className="section blog-page">
         <div className="container">
-          <p className="section-label">Writing</p>
+          <p className="section-label">{t("blog.title")}</p>
           <h1 className="h1" style={{ marginBottom: "16px" }}>
-            Dev <span style={{ color: "var(--accent)" }}>Bento</span>
+            {t("blog.title")} <span style={{ color: "var(--accent)" }}>{t("blog.title_highlight")}</span>
           </h1>
           <p className="blog-page__intro">
-            Thoughts, tutorials, and write-ups on frontend craft, animation, and AI.
+            {t("blog.desc")}
           </p>
 
           <div className="blog-bento">
@@ -38,7 +40,7 @@ export default function Blog() {
                 <div className="blog-featured__overlay" />
                 <div className="blog-featured__content">
                   <div className="blog-chip-row">
-                    <span className="badge">Featured</span>
+                    <span className="badge">{t("blog.featured")}</span>
                     <span className="badge">{featured?.tags?.[0]}</span>
                     <span className="badge blog-chip-row__meta"><Clock size={12} /> {featured?.readTime}</span>
                   </div>
@@ -49,7 +51,7 @@ export default function Blog() {
                       Talk about it <ArrowRight size={14} />
                     </Link>
                     <span className="btn btn-ghost blog-featured__pill">
-                      <BookOpen size={14} /> Frontend craft
+                      <BookOpen size={14} /> {t("blog.featured") === "Featured" ? "Frontend craft" : "Frontend"}
                     </span>
                   </div>
                 </div>
@@ -59,11 +61,10 @@ export default function Blog() {
             <article className="card blog-note-card">
               <div className="blog-note-card__header">
                 <Sparkles size={16} />
-                <p className="label" style={{ marginBottom: 0 }}>Why I write</p>
+                <p className="label" style={{ marginBottom: 0 }}>{t("blog.why_write_title")}</p>
               </div>
               <p className="blog-note-card__text">
-                I write to document what I learn, sharpen my thinking, and share practical ways to build faster, cleaner interfaces.
-                The blog is a working notebook for UI, animation, AI, and product thinking.
+                {t("blog.why_write_body")}
               </p>
               <div className="blog-stats">
                 <div className="about-stat-card blog-stat-card">
@@ -84,7 +85,7 @@ export default function Blog() {
             <article className="card blog-note-card blog-note-card--wide">
               <div className="blog-note-card__header">
                 <BarChart3 size={16} />
-                <p className="label" style={{ marginBottom: 0 }}>What you will find</p>
+                <p className="label" style={{ marginBottom: 0 }}>{t("blog.what_find")}</p>
               </div>
               <div className="blog-pill-grid">
                 <span className="about__tag">UI systems</span>

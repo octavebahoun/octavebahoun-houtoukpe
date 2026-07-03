@@ -1,12 +1,13 @@
 import { Github, Linkedin, Mail, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
+import { useLang } from "../lib/i18n";
 
 const LINKS = [
-  { to: "/", label: "Home" },
-  { to: "/projects", label: "Projects" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
+  { to: "/", label: "nav.home" },
+  { to: "/projects", label: "nav.projects" },
+  { to: "/about", label: "nav.about" },
+  { to: "/contact", label: "nav.contact" },
 ];
 
 const SOCIALS = [
@@ -16,6 +17,7 @@ const SOCIALS = [
 ];
 
 export default function Footer() {
+  const { t } = useLang();
   return (
     <footer className="footer footer--strong">
       <div className="container">
@@ -23,7 +25,7 @@ export default function Footer() {
           <div className="footer__brand">
             <Logo />
             <p className="footer__brand-text">
-              Crafting interactive digital experiences with a focus on clarity, speed, and precision.
+              {t("footer.tagline")}
             </p>
             <div className="footer__socials">
               {SOCIALS.map((social) => (
@@ -42,44 +44,43 @@ export default function Footer() {
           </div>
 
           <div className="footer__nav">
-            <p className="label">Navigation</p>
+            <p className="label">{t("footer.nav")}</p>
             <nav className="footer__nav-list" aria-label="Footer navigation">
               {LINKS.map((link) => (
                 <Link key={link.to} to={link.to} className="footer__nav-link">
-                  {link.label}
+                  {t(link.label)}
                 </Link>
               ))}
             </nav>
           </div>
 
           <div className="footer__status">
-            <p className="label">Status</p>
+            <p className="label">{t("footer.status_title")}</p>
             <div className="footer__status-line">
               <span className="footer__status-dot" />
-              <span>Available for hire</span>
+              <span>{t("footer.available")}</span>
             </div>
             <p className="footer__status-copy">
-              Open to worldwide freelance opportunities and collaborations.
+              {t("footer.status_text")}
             </p>
             <button
               type="button"
               className="footer__top-btn"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
-              Back to top <ArrowUpRight size={14} />
+              {t("footer.btt")} <ArrowUpRight size={14} />
             </button>
           </div>
         </div>
 
         <div className="footer__bottom">
           <p className="footer__fineprint">
-            © {new Date().getFullYear()} Octave Bahoun-Houtoukpe. All rights reserved.
+            © {new Date().getFullYear()} Octave Bahoun-Houtoukpe. {t("footer.copyright")}
           </p>
-          <p className="footer__credit">Designed with <span>♥</span> in Lokossa</p>
+          <p className="footer__credit">{t("footer.credit_prefix")} <span>♥</span> {t("footer.credit_suffix")}</p>
         </div>
       </div>
 
-      {/* Watermark */}
       <div className="footer__watermark" aria-hidden="true">O&lt;ktav&gt;</div>
     </footer>
   );

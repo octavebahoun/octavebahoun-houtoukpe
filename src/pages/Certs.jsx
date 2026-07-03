@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { getCerts } from "../api/mock";
 import { Helmet } from "react-helmet-async";
 import { ExternalLink } from "lucide-react";
+import { useLang } from "../lib/i18n";
 
 export default function Certs() {
+  const { t } = useLang();
   const [certs, setCerts] = useState([]);
   useEffect(() => { getCerts().then(setCerts); }, []);
 
@@ -16,12 +18,12 @@ export default function Certs() {
 
       <section className="section">
         <div className="container">
-          <p className="section-label">Credentials</p>
+          <p className="section-label">{t("certs.title")}</p>
           <h1 className="h1" style={{ marginBottom: "16px" }}>
-            Certifi<span style={{ color: "var(--accent)" }}>cations</span>
+            {t("certs.title")}<span style={{ color: "var(--accent)" }}>{t("certs.title_highlight")}</span>
           </h1>
           <p style={{ color: "var(--muted)", maxWidth: "500px", marginBottom: "60px" }}>
-            Verified credentials across web development, AI/ML, cybersecurity, and more.
+            {t("certs.desc")}
           </p>
 
           <div className="grid-2">

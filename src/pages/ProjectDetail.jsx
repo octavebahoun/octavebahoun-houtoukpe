@@ -3,8 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { ArrowLeft, ExternalLink, Github, Layers, CircleDot, Clock3 } from "lucide-react";
 import { getProjects } from "../api/mock";
+import { useLang } from "../lib/i18n";
 
 export default function ProjectDetail() {
+  const { t } = useLang();
   const { projectId } = useParams();
   const [projects, setProjects] = useState([]);
 
@@ -27,9 +29,9 @@ export default function ProjectDetail() {
         <div className="container" style={{ minHeight: "50vh", display: "grid", placeItems: "center" }}>
           <div style={{ textAlign: "center" }}>
             <p className="section-label">Projects</p>
-            <h1 className="h1" style={{ marginBottom: "16px" }}>Project not found</h1>
+            <h1 className="h1" style={{ marginBottom: "16px" }}>{t("project.notfound")}</h1>
             <Link to="/projects" className="btn btn-primary">
-              <ArrowLeft size={16} /> Back to projects
+              <ArrowLeft size={16} /> {t("project.back")}
             </Link>
           </div>
         </div>
@@ -47,10 +49,10 @@ export default function ProjectDetail() {
       <section className="section">
         <div className="container">
           <Link to="/projects" className="btn btn-ghost" style={{ marginBottom: "28px", display: "inline-flex" }}>
-            <ArrowLeft size={14} /> Back to projects
+            <ArrowLeft size={14} /> {t("project.back")}
           </Link>
 
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.45fr) minmax(320px, 0.8fr)", gap: "24px", alignItems: "start" }}>
+          <div className="project-detail-layout" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.45fr) minmax(320px, 0.8fr)", gap: "24px", alignItems: "start" }}>
             <article className="card" style={{ padding: 0, overflow: "hidden" }}>
               <div style={{ position: "relative", minHeight: "340px" }}>
                 <img src={project.image} alt={project.title} style={{ width: "100%", height: "100%", objectFit: "cover", minHeight: "340px" }} />
@@ -58,7 +60,7 @@ export default function ProjectDetail() {
                 <div style={{ position: "absolute", left: "22px", bottom: "22px", right: "22px" }}>
                   <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
                     <span className="badge">{project.category}</span>
-                    <span className="badge" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}><Clock3 size={12} /> {project.status}</span>
+                    <span className="badge" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}><Clock3 size={12} /> {t("status_" + project.status.toLowerCase().replace(/\s+/g, "_"))}</span>
                   </div>
                   <h1 className="h1" style={{ marginBottom: "10px" }}>{project.title}</h1>
                   <p style={{ color: "rgba(255,255,255,0.78)", maxWidth: "760px", lineHeight: 1.75 }}>{project.description}</p>
@@ -66,10 +68,9 @@ export default function ProjectDetail() {
               </div>
 
               <div style={{ padding: "24px" }}>
-                <h2 className="h3" style={{ marginBottom: "14px" }}>Overview</h2>
+                <h2 className="h3" style={{ marginBottom: "14px" }}>{t("project.overview")}</h2>
                 <p style={{ color: "var(--muted)", lineHeight: 1.85, marginBottom: "20px" }}>
-                  This project is presented as a focused case study. Use the links below to open the live demo or review the code,
-                  then explore the stack and related work for more context.
+                  {t("project.overview_text")}
                 </p>
 
                 <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "24px" }}>
@@ -81,12 +82,12 @@ export default function ProjectDetail() {
                 <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
                   {project.demoUrl && (
                     <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                      <ExternalLink size={16} /> Live demo
+                      <ExternalLink size={16} /> {t("card.live_demo")}
                     </a>
                   )}
                   {project.githubUrl && (
                     <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
-                      <Github size={16} /> Source code
+                      <Github size={16} /> {t("card.source_code")}
                     </a>
                   )}
                 </div>
@@ -95,16 +96,16 @@ export default function ProjectDetail() {
 
             <aside style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
               <div className="card" style={{ display: "grid", gap: "14px" }}>
-                <p className="label">Project Snapshot</p>
+                <p className="label">{t("project.snapshot")}</p>
                 <div style={{ display: "grid", gap: "12px" }}>
-                  <DetailRow icon={<Layers size={14} />} label="Category" value={project.category} />
-                  <DetailRow icon={<CircleDot size={14} />} label="Status" value={project.status} />
-                  <DetailRow icon={<Clock3 size={14} />} label="Stack size" value={`${project.stacks.length} technologies`} />
+                  <DetailRow icon={<Layers size={14} />} label={t("project.category")} value={project.category} />
+                  <DetailRow icon={<CircleDot size={14} />} label={t("project.status")} value={t("status_" + project.status.toLowerCase().replace(/\s+/g, "_"))} />
+                  <DetailRow icon={<Clock3 size={14} />} label={t("project.stack_size")} value={`${project.stacks.length} ${t("project.stack_size")}`} />
                 </div>
               </div>
 
               <div className="card" style={{ display: "grid", gap: "14px" }}>
-                <p className="label">Stack</p>
+                <p className="label">{t("project.stack")}</p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                   {project.stacks.map((stack) => (
                     <span key={stack} className="about__tag">{stack}</span>
@@ -113,9 +114,9 @@ export default function ProjectDetail() {
               </div>
 
               <div className="card" style={{ display: "grid", gap: "12px" }}>
-                <p className="label">Next step</p>
+                <p className="label">{t("project.next_step")}</p>
                 <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
-                  If you want this project page to show case-study sections like goals, constraints, and results, I can extend it with a full narrative layout.
+                  {t("project.next_step_text")}
                 </p>
               </div>
             </aside>
@@ -123,7 +124,7 @@ export default function ProjectDetail() {
 
           {relatedProjects.length > 0 && (
             <div style={{ marginTop: "40px" }}>
-              <p className="section-label">Related projects</p>
+                <p className="section-label">{t("project.related")}</p>
               <div className="projects-grid">
                 {relatedProjects.map((item) => (
                   <Link key={item.id} to={`/projects/${item.id}`} className="card" style={{ display: "block" }}>
