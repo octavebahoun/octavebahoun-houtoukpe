@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 
 export default function Cursor() {
+  const isFinePointer = window.matchMedia?.("(pointer: fine)")?.matches ?? true;
+
   useEffect(() => {
+    if (!isFinePointer) return;
+
     const dot  = document.getElementById("cursor-dot");
     const ring = document.getElementById("cursor-ring");
     if (!dot || !ring) return;
@@ -26,6 +30,8 @@ export default function Cursor() {
       cancelAnimationFrame(raf);
     };
   }, []);
+
+  if (!isFinePointer) return null;
 
   return (
     <>
