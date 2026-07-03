@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowLeft, ExternalLink, Github, Layers, CircleDot, Clock3 } from "lucide-react";
+import { ArrowLeft, ExternalLink, Github, Layers, CircleDot, Clock3, ChevronRight } from "lucide-react";
 import { getProjects } from "../api/mock";
 import { useLang } from "../lib/i18n";
+import { ProjectCard } from "./Home";
 
 export default function ProjectDetail() {
   const { t } = useLang();
@@ -46,92 +47,86 @@ export default function ProjectDetail() {
         <meta name="description" content={project.description} />
       </Helmet>
 
-      <section className="section">
+      <section className="section" style={{ paddingTop: 0 }}>
+        {/* ─── HERO ─────────────────────────── */}
+        <div className="project-detail__hero">
+          <img src={project.image} alt={project.title} className="project-detail__hero-img" />
+          <div className="project-detail__hero-overlay" />
+          <div className="container project-detail__hero-content">
+            <Link to="/projects" className="project-detail__back">
+              <ArrowLeft size={14} /> {t("project.back")}
+            </Link>
+            <div className="project-detail__hero-badges">
+              <span className="badge">{project.category}</span>
+              <span className="badge" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                <Clock3 size={12} /> {t("status_" + project.status.toLowerCase().replace(/\s+/g, "_"))}
+              </span>
+            </div>
+            <h1 className="h1 project-detail__hero-title">{project.title}</h1>
+            <p className="project-detail__hero-desc">{project.description}</p>
+          </div>
+        </div>
+
         <div className="container">
-          <Link to="/projects" className="btn btn-ghost" style={{ marginBottom: "28px", display: "inline-flex" }}>
-            <ArrowLeft size={14} /> {t("project.back")}
-          </Link>
+          {/* ─── CONTENT + SIDEBAR ──────────── */}
+          <div className="project-detail__grid">
+            <div className="project-detail__main">
+              <h2 className="h3" style={{ marginBottom: "16px" }}>{t("project.overview")}</h2>
+              <p className="project-detail__text">{t("project.overview_text")}</p>
 
-          <div className="project-detail-layout" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.45fr) minmax(320px, 0.8fr)", gap: "24px", alignItems: "start" }}>
-            <article className="card" style={{ padding: 0, overflow: "hidden" }}>
-              <div style={{ position: "relative", minHeight: "340px" }}>
-                <img src={project.image} alt={project.title} style={{ width: "100%", height: "100%", objectFit: "cover", minHeight: "340px" }} />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(8,8,8,0.06), rgba(8,8,8,0.9))" }} />
-                <div style={{ position: "absolute", left: "22px", bottom: "22px", right: "22px" }}>
-                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "14px" }}>
-                    <span className="badge">{project.category}</span>
-                    <span className="badge" style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}><Clock3 size={12} /> {t("status_" + project.status.toLowerCase().replace(/\s+/g, "_"))}</span>
-                  </div>
-                  <h1 className="h1" style={{ marginBottom: "10px" }}>{project.title}</h1>
-                  <p style={{ color: "rgba(255,255,255,0.78)", maxWidth: "760px", lineHeight: 1.75 }}>{project.description}</p>
+              <div className="project-detail__stacks">
+                {project.stacks.map((stack) => (
+                  <span key={stack} className="badge" style={{ fontSize: "12px", padding: "4px 12px" }}>{stack}</span>
+                ))}
+              </div>
+
+              <div className="project-detail__actions">
+                {project.demoUrl && (
+                  <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                    <ExternalLink size={16} /> {t("card.live_demo")} <ChevronRight size={14} />
+                  </a>
+                )}
+                {project.githubUrl && (
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+                    <Github size={16} /> {t("card.source_code")}
+                  </a>
+                )}
+              </div>
+            </div>
+
+            <aside className="project-detail__aside">
+              <div className="project-detail__info-card">
+                <p className="label" style={{ marginBottom: "16px" }}>{t("project.snapshot")}</p>
+                <div className="project-detail__info-rows">
+                  <InfoRow icon={<Layers size={14} />} label={t("project.category")} value={project.category} />
+                  <InfoRow icon={<CircleDot size={14} />} label={t("project.status")} value={t("status_" + project.status.toLowerCase().replace(/\s+/g, "_"))} />
+                  <InfoRow icon={<Clock3 size={14} />} label={t("project.stack_size")} value={`${project.stacks.length} ${t("project.stack_size")}`} />
                 </div>
               </div>
 
-              <div style={{ padding: "24px" }}>
-                <h2 className="h3" style={{ marginBottom: "14px" }}>{t("project.overview")}</h2>
-                <p style={{ color: "var(--muted)", lineHeight: 1.85, marginBottom: "20px" }}>
-                  {t("project.overview_text")}
-                </p>
-
-                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "24px" }}>
+              <div className="project-detail__info-card">
+                <p className="label" style={{ marginBottom: "14px" }}>{t("project.stack")}</p>
+                <div className="project-detail__info-tags">
                   {project.stacks.map((stack) => (
-                    <span key={stack} className="badge">{stack}</span>
-                  ))}
-                </div>
-
-                <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-                  {project.demoUrl && (
-                    <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                      <ExternalLink size={16} /> {t("card.live_demo")}
-                    </a>
-                  )}
-                  {project.githubUrl && (
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
-                      <Github size={16} /> {t("card.source_code")}
-                    </a>
-                  )}
-                </div>
-              </div>
-            </article>
-
-            <aside style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
-              <div className="card" style={{ display: "grid", gap: "14px" }}>
-                <p className="label">{t("project.snapshot")}</p>
-                <div style={{ display: "grid", gap: "12px" }}>
-                  <DetailRow icon={<Layers size={14} />} label={t("project.category")} value={project.category} />
-                  <DetailRow icon={<CircleDot size={14} />} label={t("project.status")} value={t("status_" + project.status.toLowerCase().replace(/\s+/g, "_"))} />
-                  <DetailRow icon={<Clock3 size={14} />} label={t("project.stack_size")} value={`${project.stacks.length} ${t("project.stack_size")}`} />
-                </div>
-              </div>
-
-              <div className="card" style={{ display: "grid", gap: "14px" }}>
-                <p className="label">{t("project.stack")}</p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                  {project.stacks.map((stack) => (
-                    <span key={stack} className="about__tag">{stack}</span>
+                    <span key={stack} className="project-detail__tag">{stack}</span>
                   ))}
                 </div>
               </div>
 
-              <div className="card" style={{ display: "grid", gap: "12px" }}>
-                <p className="label">{t("project.next_step")}</p>
-                <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
-                  {t("project.next_step_text")}
-                </p>
+              <div className="project-detail__info-card">
+                <p className="label" style={{ marginBottom: "10px" }}>{t("project.next_step")}</p>
+                <p className="project-detail__next-text">{t("project.next_step_text")}</p>
               </div>
             </aside>
           </div>
 
+          {/* ─── RELATED ────────────────────── */}
           {relatedProjects.length > 0 && (
-            <div style={{ marginTop: "40px" }}>
-                <p className="section-label">{t("project.related")}</p>
+            <div className="project-detail__related">
+              <p className="section-label">{t("project.related")}</p>
               <div className="projects-grid">
                 {relatedProjects.map((item) => (
-                  <Link key={item.id} to={`/projects/${item.id}`} className="card" style={{ display: "block" }}>
-                    <img src={item.image} alt={item.title} className="card-img" loading="lazy" />
-                    <h3 className="h3" style={{ marginBottom: "8px" }}>{item.title}</h3>
-                    <p style={{ color: "var(--muted)", fontSize: "13px", lineHeight: 1.6 }}>{item.intro || item.description}</p>
-                  </Link>
+                  <ProjectCard key={item.id} project={item} />
                 ))}
               </div>
             </div>
@@ -142,14 +137,14 @@ export default function ProjectDetail() {
   );
 }
 
-function DetailRow({ icon, label, value }) {
+function InfoRow({ icon, label, value }) {
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px", padding: "14px 0", borderBottom: "1px solid var(--border)" }}>
-      <span style={{ display: "flex", alignItems: "center", gap: "8px", color: "var(--muted)", fontSize: "13px" }}>
+    <div className="project-detail__info-row">
+      <span className="project-detail__info-label">
         {icon}
         {label}
       </span>
-      <span style={{ color: "var(--text)", fontSize: "13px", fontWeight: 700, textTransform: "capitalize" }}>{value}</span>
+      <span className="project-detail__info-value">{value}</span>
     </div>
   );
 }
