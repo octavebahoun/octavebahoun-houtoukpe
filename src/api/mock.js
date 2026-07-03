@@ -1,4 +1,5 @@
 import { supabase } from "../lib/supabase";
+import blogData from "../data/blog.json";
 
 // ─── HELPERS ─────────────────────────────────────────────
 function normalizeProject(p) {
@@ -76,11 +77,9 @@ export const getProjects = async () => {
   return MOCK_ALL_PROJECTS;
 };
 
-export const getBlog = () => Promise.resolve([
-  { id: 1, title: "Building a Real-Time Kanban with Socket.io", excerpt: "How I implemented WebSocket-based task syncing across multiple browser sessions with minimal overhead.", tags: ["Node.js","Socket.io","React"], date: "2025-06-15", readTime: "8 min", cover: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=800" },
-  { id: 2, title: "GSAP vs Framer Motion — My Take", excerpt: "A practical comparison after shipping production apps with both animation libraries.", tags: ["GSAP","Framer Motion","Animation"], date: "2025-05-20", readTime: "6 min", cover: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800" },
-  { id: 3, title: "Designing a PCB-inspired UI", excerpt: "How I translated circuit board aesthetics into a cohesive web design system.", tags: ["Design","CSS","UI"], date: "2025-04-10", readTime: "5 min", cover: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800" },
-]);
+export const getBlog = () => Promise.resolve(blogData.posts);
+
+export { blogData };
 
 export const getAbout = () => Promise.resolve({
   bio: "I'm Octave Précieux Mahunan Bahoun-Houtoukpe — a fullstack engineer and AI enthusiast based in Lokossa, Bénin. I build fast, accessible digital experiences with a strong focus on frontend craft and emerging technologies.",

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { getBlog } from "../api/mock";
+import { getBlog, blogData } from "../api/mock";
 import { Helmet } from "react-helmet-async";
-import { ArrowRight, Clock, Sparkles, BookOpen, BarChart3, MessageSquare } from "lucide-react";
+import { ArrowRight, Clock, Sparkles, BookOpen, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLang } from "../lib/i18n";
 
 export default function Blog() {
   const { t } = useLang();
   const [posts, setPosts] = useState([]);
+  const [data] = useState(blogData);
 
   useEffect(() => {
     getBlog().then(setPosts);
@@ -67,18 +68,12 @@ export default function Blog() {
                 {t("blog.why_write_body")}
               </p>
               <div className="blog-stats">
-                <div className="about-stat-card blog-stat-card">
-                  <span className="about-stat__n">03</span>
-                  <span className="about-stat__label">Published notes</span>
-                </div>
-                <div className="about-stat-card blog-stat-card">
-                  <span className="about-stat__n">UI</span>
-                  <span className="about-stat__label">Bento thinking</span>
-                </div>
-                <div className="about-stat-card blog-stat-card">
-                  <span className="about-stat__n">AI</span>
-                  <span className="about-stat__label">Systems & tools</span>
-                </div>
+                {data.stats.map((s, i) => (
+                  <div key={i} className="about-stat-card blog-stat-card">
+                    <span className="about-stat__n">{s.value}</span>
+                    <span className="about-stat__label">{s.label}</span>
+                  </div>
+                ))}
               </div>
             </article>
 
@@ -88,12 +83,9 @@ export default function Blog() {
                 <p className="label" style={{ marginBottom: 0 }}>{t("blog.what_find")}</p>
               </div>
               <div className="blog-pill-grid">
-                <span className="about__tag">UI systems</span>
-                <span className="about__tag">Motion design</span>
-                <span className="about__tag">Developer workflow</span>
-                <span className="about__tag">AI tooling</span>
-                <span className="about__tag">Portfolio craft</span>
-                <span className="about__tag">Case studies</span>
+                {data.topics.map((topic, i) => (
+                  <span key={i} className="about__tag">{topic}</span>
+                ))}
               </div>
             </article>
 
@@ -109,7 +101,7 @@ export default function Blog() {
 
 function BlogBentoCard({ post, tone }) {
   return (
-    <article className={`card blog-card blog-card--${tone}`}>
+    <Link to={`/blog/${post.id}`} className={`card blog-card blog-card--${tone}`}>
       <div className="blog-card__media">
         <img src={post.cover} alt={post.title} loading="lazy" />
         <div className="blog-card__overlay" />
@@ -130,6 +122,6 @@ function BlogBentoCard({ post, tone }) {
           ))}
         </div>
       </div>
-    </article>
+    </Link>
   );
 }

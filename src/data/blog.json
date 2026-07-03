@@ -1,0 +1,72 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Building a Real-Time Kanban with Socket.io",
+      "excerpt": "How I implemented WebSocket-based task syncing across multiple browser sessions with minimal overhead.",
+      "tags": ["Node.js", "Socket.io", "React"],
+      "date": "2025-06-15",
+      "readTime": "8 min",
+      "cover": "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=800",
+      "body": [
+        { "type": "p", "text": "Real-time collaboration is one of those features that instantly elevates an application from good to memorable. When a user moves a card on one screen and sees it update on another in real time, it feels like magic. But behind that magic is a carefully orchestrated dance of WebSocket connections, state management, and conflict resolution." },
+        { "type": "h3", "text": "Why Socket.io?" },
+        { "type": "p", "text": "Socket.io was the natural choice for this project. It provides fallback transports (long-polling when WebSockets aren't available), automatic reconnection, and a clean event-based API. More importantly, it offers rooms — a way to group connections so that updates are broadcast only to the relevant clients." },
+        { "type": "p", "text": "For a Kanban board, each board becomes a room. When a user drags a card from 'In Progress' to 'Done', the server validates the move and broadcasts the new state to every other client in that room." },
+        { "type": "h3", "text": "Architecture Overview" },
+        { "type": "p", "text": "The stack is straightforward: React on the frontend, Express + Socket.io on the backend, and an in-memory store with optional Redis persistence. Each board state is a JSON object stored in memory. On every mutation, the new state is broadcast to all connected clients in the same room." },
+        { "type": "p", "text": "The key insight is to never trust the client's version of the state. The server is the single source of truth. When a client sends a 'moveCard' event, it sends only the card ID, target column, and new index. The server computes the new board state and broadcasts it back." },
+        { "type": "h3", "text": "Handling Conflicts" },
+        { "type": "p", "text": "With multiple users editing the same board, conflicts are inevitable. I implemented a simple versioning system: each board has a version number that increments on every change. If a client's local version is behind, the server sends the full state instead of applying the partial update." },
+        { "type": "p", "text": "This optimistic concurrency approach works well for small teams (2-5 users). For larger teams, Operational Transform or CRDTs would be more appropriate." }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "GSAP vs Framer Motion — My Take",
+      "excerpt": "A practical comparison after shipping production apps with both animation libraries.",
+      "tags": ["GSAP", "Framer Motion", "Animation"],
+      "date": "2025-05-20",
+      "readTime": "6 min",
+      "cover": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800",
+      "body": [
+        { "type": "p", "text": "Animation libraries are a deeply personal choice in the frontend world. After using both GSAP and Framer Motion in production, I have a clear picture of when each one shines." },
+        { "type": "h3", "text": "GSAP — Absolute Power" },
+        { "type": "p", "text": "GSAP (GreenSock Animation Platform) is the most powerful animation library I've ever used. It can animate virtually anything — DOM elements, SVG, canvas, WebGL, CSS variables, and even JavaScript objects. The timeline feature lets you sequence complex choreographies with surgical precision." },
+        { "type": "p", "text": "This portfolio site uses GSAP for all scroll-triggered animations, the 3D tilt on project cards, and the hero entrance sequence. The ScrollTrigger plugin alone is worth the price of admission." },
+        { "type": "h3", "text": "Framer Motion — The React Way" },
+        { "type": "p", "text": "Framer Motion feels like it was designed specifically for React's mental model. Declarative animations via the `animate` prop, layout animations that automatically animate between states, and gesture support (drag, hover, tap) out of the box." },
+        { "type": "p", "text": "For component-level micro-interactions and page transitions in a React app, Framer Motion is hard to beat. The `AnimatePresence` component makes exit animations trivial." },
+        { "type": "h3", "text": "The Verdict" },
+        { "type": "p", "text": "I use both. GSAP for scroll-driven narratives, complex timelines, and animations that need to run outside React's render cycle. Framer Motion for component interactions, layout animations, and quick prototyping." },
+        { "type": "p", "text": "They're not competitors — they're complementary tools in different parts of the stack." }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Designing a PCB-inspired UI",
+      "excerpt": "How I translated circuit board aesthetics into a cohesive web design system.",
+      "tags": ["Design", "CSS", "UI"],
+      "date": "2025-04-10",
+      "readTime": "5 min",
+      "cover": "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800",
+      "body": [
+        { "type": "p", "text": "The dark theme with orange accents on this portfolio isn't arbitrary. It's inspired by printed circuit boards — the glowing traces, the dark substrate, the precision of component placement." },
+        { "type": "h3", "text": "The Color Palette" },
+        { "type": "p", "text": "PCBs are typically dark green or black with copper traces. I translated this to a dark background (#0D0D0D) with vibrant orange (#FF4500) traces. Orange was chosen over green because it feels more energetic and modern while retaining the 'circuit' feel." },
+        { "type": "p", "text": "The subtle grid pattern in the background mimics the PCB substrate, and the accent color is used sparingly — just like copper traces on a board." },
+        { "type": "h3", "text": "Typography as Components" },
+        { "type": "p", "text": "Just as a PCB has through-hole components and surface-mount parts, the typography uses two distinct typefaces: 'Black Ops One' for headings (bold, display, like through-hole components) and 'Syne' for body text (clean, readable, like SMD parts)." },
+        { "type": "h3", "text": "The Grid System" },
+        { "type": "p", "text": "The layout takes inspiration from PCB routing. Content flows along logical paths, cards have defined boundaries like IC footprints, and the overall structure feels engineered rather than designed." },
+        { "type": "p", "text": "The scan-line animations and circuit-pattern backgrounds reinforce the theme without overwhelming the content. The goal was to make the theme feel like a natural backdrop rather than a gimmick." }
+      ]
+    }
+  ],
+  "stats": [
+    { "value": "03", "label": "Published notes" },
+    { "value": "UI", "label": "Bento thinking" },
+    { "value": "AI", "label": "Systems & tools" }
+  ],
+  "topics": ["UI systems", "Motion design", "Developer workflow", "AI tooling", "Portfolio craft", "Case studies"]
+}
