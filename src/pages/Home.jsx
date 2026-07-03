@@ -218,42 +218,44 @@ export function ProjectCard({ project: p }) {
     const card = cardRef.current;
     if (!card) return;
     const { left, top, width, height } = card.getBoundingClientRect();
-    const x = ((e.clientX - left) / width  - 0.5) * 14;
-    const y = ((e.clientY - top)  / height - 0.5) * 14;
-    gsap.to(card, { rotateX: -y, rotateY: x, scale: 1.02, duration: 0.4, ease: "power2.out", transformPerspective: 600 });
+    const x = ((e.clientX - left) / width  - 0.5) * 10;
+    const y = ((e.clientY - top)  / height - 0.5) * 10;
+    gsap.to(card, { rotateX: -y, rotateY: x, scale: 1.01, duration: 0.4, ease: "power2.out", transformPerspective: 800 });
   };
   const onMouseLeave = () => {
     gsap.to(cardRef.current, { rotateX: 0, rotateY: 0, scale: 1, duration: 0.5, ease: "power2.out" });
   };
 
   return (
-    <div className="card" ref={cardRef} onMouseMove={onMouseMove} onMouseLeave={onMouseLeave}>
-      <img src={p.image} alt={p.title} className="card-img" loading="lazy" />
-      <h3 className="h3" style={{ marginBottom: "8px" }}>{p.title}</h3>
-      <p style={{ color: "var(--muted)", fontSize: "13px", marginBottom: "16px", lineHeight: 1.6 }}>
-        {p.intro || p.description}
-      </p>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "20px" }}>
-        {p.stacks.map(s => <span key={s} className="badge">{s}</span>)}
+    <div className="project-card" ref={cardRef} onMouseMove={onMouseMove} onMouseLeave={onMouseLeave}>
+      <div className="project-card__media">
+        <img src={p.image} alt={p.title} className="project-card__img" loading="lazy" />
+        <div className="project-card__overlay" />
+        <div className="project-card__badge">
+          <span className="badge">{p.category}</span>
+        </div>
       </div>
-      <div style={{ display: "flex", gap: "10px" }}>
-          <Link
-            to={`/projects/${p.id}`}
-            className="btn btn-ghost"
-            style={{ fontSize: "11px", padding: "8px 14px" }}
-          >
+      <div className="project-card__body">
+        <h3 className="project-card__title">{p.title}</h3>
+        <p className="project-card__desc">{p.intro || p.description}</p>
+        <div className="project-card__tags">
+          {p.stacks.map(s => <span key={s} className="badge">{s}</span>)}
+        </div>
+        <div className="project-card__actions">
+          <Link to={`/projects/${p.id}`} className="btn btn-ghost" style={{ fontSize: "11px", padding: "7px 14px" }}>
             {t("card.view_details")}
           </Link>
-        {p.demoUrl && (
-          <a href={p.demoUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ fontSize: "11px", padding: "8px 14px" }}>
-            <ExternalLink size={12} /> {t("card.demo")}
-          </a>
-        )}
-        {p.githubUrl && (
-          <a href={p.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost" style={{ fontSize: "11px", padding: "8px 14px" }}>
-            <Github size={12} /> {t("card.code")}
-          </a>
-        )}
+          {p.demoUrl && (
+            <a href={p.demoUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ fontSize: "11px", padding: "7px 14px" }}>
+              <ExternalLink size={12} /> {t("card.demo")}
+            </a>
+          )}
+          {p.githubUrl && (
+            <a href={p.githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost" style={{ fontSize: "11px", padding: "7px 14px" }}>
+              <Github size={12} /> {t("card.code")}
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
