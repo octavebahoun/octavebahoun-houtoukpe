@@ -14,7 +14,7 @@ export default function Login() {
   if (!supabase) {
     return (
       <section className="section" style={{ minHeight: "80vh", display: "grid", placeItems: "center" }}>
-        <div className="card" style={{ padding: "48px", maxWidth: "420px", textAlign: "center" }}>
+        <div className="card login-card" style={{ textAlign: "center" }}>
           <AlertCircle size={32} style={{ color: "var(--accent)", marginBottom: "16px" }} />
           <h2 className="h3" style={{ marginBottom: "12px" }}>Supabase not configured</h2>
           <p style={{ color: "var(--muted)", fontSize: "13px" }}>
@@ -47,7 +47,7 @@ export default function Login() {
         <title>Admin Login — O&lt;ktav&gt;</title>
       </Helmet>
 
-      <div className="card" style={{ maxWidth: "420px", width: "100%", padding: "40px" }}>
+      <div className="card login-card">
         <div style={{ textAlign: "center", marginBottom: "32px" }}>
           <div style={{
             width: "56px", height: "56px", borderRadius: "14px",

@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { ArrowLeft, ExternalLink, Github, Layers, CircleDot, Clock3, ChevronRight } from "lucide-react";
+import { ArrowLeft, ExternalLink, Layers, CircleDot, Clock3, ChevronRight } from "lucide-react";
+import { Github, Linkedin } from "../lib/icons.jsx";
 import { getProjects } from "../api/mock";
 import { useLang } from "../lib/i18n";
 import { ProjectCard } from "./Home";

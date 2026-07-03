@@ -1,4 +1,5 @@
-import { Github, Linkedin, Mail, ArrowUpRight } from "lucide-react";
+import { Mail, ArrowUpRight } from "lucide-react";
+import { Github, Linkedin } from "../lib/icons.jsx";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
 import { useLang } from "../lib/i18n";

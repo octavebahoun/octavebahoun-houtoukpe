@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Send, Github, Linkedin, Mail, MapPin, Phone, CheckCircle2, AlertCircle } from "lucide-react";
+import { Send, Mail, MapPin, Phone, CheckCircle2, AlertCircle } from "lucide-react";
+import { Github, Linkedin } from "../lib/icons.jsx";
 import { useLang } from "../lib/i18n";
 
 const SOCIALS = [
@@ -49,7 +50,7 @@ export default function Contact() {
             {t("contact.desc")}
           </p>
 
-          <div className="contact-grid" style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "48px" }}>
+          <div className="contact-grid">
             {/* INFO COLUMN */}
             <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
               {INFO.map(inf => (
@@ -96,11 +97,11 @@ export default function Contact() {
             </div>
 
             {/* FORM COLUMN */}
-            <div className="card" style={{ padding: "40px" }}>
+            <div className="card contact-form-card">
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
                 <input type="checkbox" name="botcheck" style={{ display: "none" }} />
 
-                <div className="contact-form-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+                <div className="contact-form-row">
                   <div className="form-group">
                     <label className="form-label" htmlFor="contact-name">{t("contact.form.name")}</label>
                     <input id="contact-name" name="name" required type="text"

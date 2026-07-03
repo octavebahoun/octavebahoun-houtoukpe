@@ -6,13 +6,12 @@ import {
   MapPin,
   Phone,
   Send,
-  Github,
-  Linkedin,
   Facebook,
   MessageCircle,
   CheckCircle2,
   AlertCircle,
 } from "lucide-react";
+import { Github, Linkedin } from "../lib/icons.jsx";
 
 export default function ContactSection() {
   const [status, setStatus] = useState("idle");

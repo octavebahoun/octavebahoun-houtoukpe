@@ -1,5 +1,6 @@
 import { motion as Motion, AnimatePresence } from "framer-motion";
-import { Github, ExternalLink, Code2, Layers, Loader2 } from "lucide-react";
+import { ExternalLink, Code2, Layers, Loader2 } from "lucide-react";
+import { Github, Linkedin } from "../lib/icons.jsx";
 import { useState, useEffect, forwardRef } from "react";
 import projectsData from "../projects.json";
 import { Helmet } from "react-helmet-async";

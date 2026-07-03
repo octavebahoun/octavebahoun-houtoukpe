@@ -3,8 +3,6 @@ import { Helmet } from "react-helmet-async";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import {
   Send,
-  Github,
-  Linkedin,
   Facebook,
   MessageCircle,
   CheckCircle2,
@@ -12,6 +10,7 @@ import {
   Mail,
   MapPin,
 } from "lucide-react";
+import { Github, Linkedin } from "../lib/icons.jsx";
 import {
   AnimatedMail,
   AnimatedMapPin,

@@ -1,5 +1,6 @@
 import { motion  as Motion} from "framer-motion";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
+import { Github, Linkedin } from "../lib/icons.jsx";
 
 export default function Hero() {
   const terminalData = [

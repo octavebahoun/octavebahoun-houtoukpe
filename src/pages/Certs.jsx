@@ -33,7 +33,7 @@ export default function Certs() {
                   <span style={{ fontSize: "24px" }}>{c.icon}</span>
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "12px", flexWrap: "wrap" }}>
                     <h3 style={{ fontFamily: "'Syne',sans-serif", fontWeight: 700, fontSize: "15px", marginBottom: "4px" }}>
                       {c.title}
                     </h3>
