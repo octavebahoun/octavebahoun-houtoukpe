@@ -46,7 +46,7 @@ function run(raw: string): Row[] {
     case "skills":
       return SKILLS.flatMap((g) => [
         out(`[${g.title}]`),
-        ...g.items.map((s) => out(`  ${s.n.padEnd(46, ".")} ${s.v}`)),
+        ...g.items.map((s) => out(`  ${s.n.padEnd(24, ".")} ${s.v}`)),
       ]);
 
     case "projects":
