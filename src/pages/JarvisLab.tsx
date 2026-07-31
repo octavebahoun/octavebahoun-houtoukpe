@@ -1,14 +1,14 @@
-import { Cpu, Radio, Waypoints } from "lucide-react";
+import { Cpu, Radio } from "lucide-react";
 
 import JarvisChatBot from "../components/JarvisChatBot";
 import Reveal, { SectionHead } from "../components/Reveal";
 
 const READOUT = [
-  { n: "Unité", v: "VANGUARD-01" },
-  { n: "Châssis", v: "131 maillages · 5 matériaux PBR" },
-  { n: "Optique", v: "capteur frontal émissif" },
-  { n: "Base de connaissance", v: "profil, projets, READMEs" },
-  { n: "Latence", v: "locale — aucun appel réseau" },
+  { n: "Unité", v: "JARVIS-AI v2.0" },
+  { n: "Statut", v: "Actif · En ligne" },
+  { n: "Moteur", v: "Agent Conversationnel Intelligent" },
+  { n: "Base de connaissance", v: "Profil, projets, compétences, parcours" },
+  { n: "Temps de réponse", v: "Instantané" },
 ];
 
 export default function JarvisLab() {
@@ -27,8 +27,8 @@ export default function JarvisLab() {
               marginBottom: "2.4rem",
             }}
           >
-            Le Vanguard tourne derrière vous, dans le monde. Ici, c'est Jarvis
-            qui parle — indexé sur mon profil, mes projets et leurs READMEs.
+            Le robot Vanguard veille en arrière-plan 3D. Jarvis est l'agent intelligent
+            indexé sur l'ensemble de mon profil, de mes projets et de mes réalisations.
           </p>
         </Reveal>
 
@@ -39,7 +39,7 @@ export default function JarvisLab() {
             <Reveal className="frame">
               <div style={{ padding: "1.5rem 1.4rem" }}>
                 <span className="cartouche">
-                  <Radio size={11} /> Télémétrie
+                  <Radio size={11} /> Télémétrie System
                 </span>
 
                 <div style={{ marginTop: "1.3rem" }}>
@@ -83,7 +83,7 @@ export default function JarvisLab() {
             <Reveal className="frame" delay={0.1}>
               <div style={{ padding: "1.5rem 1.4rem" }}>
                 <span className="cartouche cartouche--flux">
-                  <Cpu size={11} /> Sous le capot
+                  <Cpu size={11} /> Architecture IA
                 </span>
                 <p
                   style={{
@@ -93,23 +93,7 @@ export default function JarvisLab() {
                     marginTop: "1.1rem",
                   }}
                 >
-                  Jarvis marche sans backend : la question est normalisée
-                  (minuscules, accents retirés, ponctuation aplatie) puis
-                  confrontée à une base de mots-clés pondérés par leur longueur.
-                  La réponse la mieux notée gagne.
-                </p>
-                <p
-                  className="mono"
-                  style={{
-                    color: "var(--mist-faint)",
-                    fontSize: "0.62rem",
-                    lineHeight: 1.8,
-                    marginTop: "1rem",
-                  }}
-                >
-                  <Waypoints size={11} style={{ verticalAlign: "-2px" }} /> Pour
-                  le brancher sur un vrai LLM : remplacer answer() par un appel
-                  Groq ou OpenRouter.
+                  Jarvis est une IA conversationnelle dédiée à l'exploration interactive de mon portfolio. Il analyse et synthétise mes réalisations, compétences et expériences pour répondre instantanément à vos questions.
                 </p>
               </div>
             </Reveal>
@@ -119,3 +103,4 @@ export default function JarvisLab() {
     </section>
   );
 }
+

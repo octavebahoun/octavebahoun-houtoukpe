@@ -162,7 +162,7 @@ export default function Home() {
         <div className="wrap">
           <div className="hero__stack veil">
             <span className="cartouche hero__cartouche" style={{ opacity: 0 }}>
-              Lokossa, Bénin — poste 01
+              Lokossa, Bénin · Open to Work
             </span>
 
             <h1 className="hero__title">

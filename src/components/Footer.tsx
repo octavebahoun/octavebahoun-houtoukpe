@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="wrap">
         <div className="footer__grid">
           <div>
-            <p className="cartouche">Le poste est ouvert</p>
+            <p className="cartouche">Disponible pour opportunités</p>
             <h3
               className="serif-italic"
               style={{ fontSize: "1.9rem", marginTop: "1rem", lineHeight: 1.25 }}
