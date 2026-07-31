@@ -55,8 +55,8 @@ const HALLS = [
   {
     to: "/jarvis-lab",
     icon: Bot,
-    t: "Jarvis 3D Lab",
-    d: "Le robot Vanguard en scène, et un assistant qui répond sur mon profil.",
+    t: "Jarvis",
+    d: "Un assistant conversationnel indexé sur l'ensemble de mon profil.",
   },
   {
     to: "/contact",
@@ -157,10 +157,9 @@ export default function Home() {
 
   return (
     <>
-      {/* ------------ Hero : le texte flotte devant le monde ------------ */}
-      <section className="hero hero--world" ref={hero}>
+      <section className="hero" ref={hero}>
         <div className="wrap">
-          <div className="hero__stack veil">
+          <div className="hero__stack">
             <span className="cartouche hero__cartouche" style={{ opacity: 0 }}>
               Lokossa, Bénin · Open to Work
             </span>
@@ -175,7 +174,7 @@ export default function Home() {
                 style={{
                   fontSize: "0.4em",
                   fontWeight: 400,
-                  color: "var(--mist-dim)",
+                  color: "var(--ink-dim)",
                   marginTop: "0.55rem",
                   letterSpacing: "-0.01em",
                 }}
@@ -190,7 +189,7 @@ export default function Home() {
 
             <div className="hero__badges">
               {BADGES.map((b) => (
-                <span key={b} className="cartouche cartouche--flux">
+                <span key={b} className="cartouche cartouche--clay">
                   {b}
                 </span>
               ))}
@@ -220,7 +219,7 @@ export default function Home() {
       {/* ---------------- Manifeste (section épinglée) ---------------- */}
       <section className="section creed" ref={creed}>
         <div className="wrap wrap--tight">
-          <p className="creed__text veil">
+          <p className="creed__text">
             <span className="creed__line">J'assemble des systèmes</span>{" "}
             <span className="creed__line">
               où le{" "}

@@ -48,7 +48,7 @@ export default function About() {
         <div className="wrap">
           <SectionHead num="II" title="L'ingénieur & le meneur" />
 
-          <div className="wrap--tight veil">
+          <div className="wrap--tight">
             <Reveal>
               <span className="cartouche">Portrait</span>
 
@@ -65,7 +65,7 @@ export default function About() {
 
               <p
                 style={{
-                  color: "var(--mist-dim)",
+                  color: "var(--ink-dim)",
                   marginTop: "1.2rem",
                   fontSize: "0.96rem",
                   lineHeight: 1.85,
@@ -88,10 +88,10 @@ export default function About() {
                     display: "flex",
                     alignItems: "center",
                     gap: "0.5rem",
-                    color: "var(--mist-dim)",
+                    color: "var(--ink-dim)",
                   }}
                 >
-                  <MapPin size={14} color="var(--volt-ink)" /> {IDENTITY.location}
+                  <MapPin size={14} color="var(--belge-ink)" /> {IDENTITY.location}
                 </span>
                 <span
                   className="mono"
@@ -99,10 +99,10 @@ export default function About() {
                     display: "flex",
                     alignItems: "center",
                     gap: "0.5rem",
-                    color: "var(--mist-dim)",
+                    color: "var(--ink-dim)",
                   }}
                 >
-                  <GraduationCap size={14} color="var(--volt-ink)" /> INSTI Lokossa
+                  <GraduationCap size={14} color="var(--belge-ink)" /> INSTI Lokossa
                   (UNSTIM)
                 </span>
               </div>
@@ -124,16 +124,16 @@ export default function About() {
         <div className="wrap">
           <SectionHead num="III" title="Excellence Team" />
 
-          <div className="wrap--tight veil">
+          <div className="wrap--tight">
 
             <Reveal>
-              <span className="cartouche cartouche--flux">
+              <span className="cartouche cartouche--clay">
                 Co-fondateur & Tech Lead — depuis août 2025
               </span>
 
               <p
                 style={{
-                  color: "var(--mist-dim)",
+                  color: "var(--ink-dim)",
                   marginTop: "1.3rem",
                   fontSize: "0.96rem",
                   lineHeight: 1.85,
@@ -161,7 +161,7 @@ export default function About() {
                   { i: GraduationCap, n: "10+", l: "Étudiants encadrés" },
                 ].map(({ i: I, n, l }) => (
                   <div key={l} className="frame" style={{ padding: "1.1rem" }}>
-                    <I size={18} color="var(--volt-lit)" strokeWidth={1.3} />
+                    <I size={18} color="var(--belge-deep)" strokeWidth={1.3} />
                     <div className="tally__n" style={{ marginTop: "0.6rem" }}>
                       {n}
                     </div>

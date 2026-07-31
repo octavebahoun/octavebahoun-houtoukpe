@@ -42,19 +42,6 @@ export const TALLY = [
   { n: "6", l: "Équipe Excellence" },
 ] as const;
 
-/* ---------------- Les pièces 3D de la collection ---------------- */
-
-export const MODELS = {
-  profil: "/models/profil.glb",
-  engineer: "/models/engineer-character.glb",
-  vanguard: "/models/vanguard-01.glb",
-  chip: "/models/quantum-ai-processor-chip.glb",
-  lens: "/models/cinema-drone-lens.glb",
-  pad: "/models/holographic-pad.glb",
-  trophy: "/models/geometric-trophy-emblem.glb",
-  avatar: "/models/footer-avatar.glb",
-} as const;
-
 /* ---------------- Parcours ---------------- */
 
 export type Milestone = {
@@ -166,14 +153,12 @@ export type Project = {
   id: string;
   title: string;
   kind: string;
-  model: string;
   cats: ProjectCategory[];
   isPublic: boolean;
   summary: string;
   detail: string;
   stack: string[];
   links: { label: string; url: string }[];
-  scale?: number;
 };
 
 export const PROJECTS: Project[] = [
@@ -181,7 +166,6 @@ export const PROJECTS: Project[] = [
     id: "codetovecto",
     title: "Codetovecto",
     kind: "Package NPM · CLI Open Source",
-    model: "/models/quantum-ai-processor-chip.glb",
     cats: ["ia", "oss"],
     isPublic: true,
     summary:
@@ -198,7 +182,6 @@ export const PROJECTS: Project[] = [
     id: "tofitune",
     title: "To_fitune",
     kind: "Dataset Studio pour LLMs",
-    model: "/models/quantum-ai-processor-chip.glb",
     cats: ["ia", "oss"],
     isPublic: true,
     summary:
@@ -212,7 +195,6 @@ export const PROJECTS: Project[] = [
     id: "nowstudy",
     title: "NowStudy / AcademiX",
     kind: "PWA étudiante intelligente",
-    model: "/models/holographic-pad.glb",
     cats: ["ia", "web"],
     isPublic: true,
     summary:
@@ -229,7 +211,6 @@ export const PROJECTS: Project[] = [
     id: "videogen",
     title: "VideoGen v2",
     kind: "Markdown → Vidéo",
-    model: "/models/cinema-drone-lens.glb",
     cats: ["web", "ia"],
     isPublic: true,
     summary:
@@ -243,22 +224,19 @@ export const PROJECTS: Project[] = [
     id: "jarvis",
     title: "Jarvis",
     kind: "Assistant personnel système",
-    model: "/models/vanguard-01.glb",
     cats: ["ia", "oss"],
     isPublic: true,
     summary:
       "Agent IA Python pour l'automatisation de tâches système, le contrôle vocal et les requêtes intelligentes.",
     detail:
-      "Assistant local capable d'exécuter des commandes système, d'interpréter la voix et de router des requêtes vers des modèles de langage. Le robot Vanguard qui pilote le laboratoire 3D de ce portfolio en est le visage.",
+      "Assistant local capable d'exécuter des commandes système, d'interpréter la voix et de router des requêtes vers des modèles de langage. Sa version web, plus légère, alimente le chatbot de ce portfolio.",
     stack: ["Python", "Speech", "Automatisation", "LLM routing"],
     links: [{ label: "Repo GitHub", url: "https://github.com/octavebahoun/Jarvis" }],
-    scale: 1,
   },
   {
     id: "whisper",
     title: "Whisper-subtitle",
     kind: "Sous-titrage karaoké IA",
-    model: "/models/cinema-drone-lens.glb",
     cats: ["ia", "oss"],
     isPublic: true,
     summary:
@@ -274,7 +252,6 @@ export const PROJECTS: Project[] = [
     id: "fieri",
     title: "FIERI",
     kind: "Gouvernance communautaire",
-    model: "/models/geometric-trophy-emblem.glb",
     cats: ["web"],
     isPublic: false,
     summary:
@@ -339,7 +316,7 @@ export const JARVIS_KB: Answer[] = [
   },
   {
     keys: ["jarvis", "assistant", "vanguard", "robot"],
-    text: "Jarvis est son assistant personnel écrit en Python : automatisation de tâches système, contrôle vocal et routage de requêtes vers des modèles de langage. Le robot Vanguard affiché dans ce laboratoire en est la représentation 3D.",
+    text: "Jarvis est son assistant personnel écrit en Python : automatisation de tâches système, contrôle vocal et routage de requêtes vers des modèles de langage. Le chatbot de cette page en est une version web allégée.",
   },
   {
     keys: ["fieri", "gouvernance", "communaut"],

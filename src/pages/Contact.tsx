@@ -63,7 +63,7 @@ export default function Contact() {
 
                 <p
                   style={{
-                    color: "var(--mist-dim)",
+                    color: "var(--ink-dim)",
                     fontSize: "0.9rem",
                     margin: "1.1rem 0 1.5rem",
                     lineHeight: 1.75,
@@ -97,7 +97,7 @@ export default function Contact() {
                     <LinkedinIcon size={14} /> LinkedIn
                   </a>
                   <a
-                    className="btn btn--flux"
+                    className="btn btn--clay"
                     href={`mailto:${IDENTITY.email}`}
                   >
                     <Mail size={14} /> Écrire
@@ -182,7 +182,7 @@ export default function Contact() {
 
             <Reveal className="frame">
               <form onSubmit={submit} style={{ padding: "1.8rem 1.6rem" }}>
-                <span className="cartouche cartouche--flux">
+                <span className="cartouche cartouche--clay">
                   Message direct
                 </span>
 
@@ -199,7 +199,7 @@ export default function Contact() {
                       <div
                         className="mono"
                         style={{
-                          color: "var(--ember-lit)",
+                          color: "var(--alert)",
                           fontSize: "0.62rem",
                           marginTop: "0.35rem",
                         }}
@@ -221,7 +221,7 @@ export default function Contact() {
                       <div
                         className="mono"
                         style={{
-                          color: "var(--ember-lit)",
+                          color: "var(--alert)",
                           fontSize: "0.62rem",
                           marginTop: "0.35rem",
                         }}
@@ -245,7 +245,7 @@ export default function Contact() {
                       <div
                         className="mono"
                         style={{
-                          color: "var(--ember-lit)",
+                          color: "var(--alert)",
                           fontSize: "0.62rem",
                           marginTop: "0.35rem",
                         }}
@@ -256,7 +256,7 @@ export default function Contact() {
                   </div>
 
                   <button
-                    className={`btn ${sent ? "btn--flux" : "btn--solid"}`}
+                    className={`btn ${sent ? "btn--clay" : "btn--solid"}`}
                     type="submit"
                     style={{ justifyContent: "center" }}
                   >
@@ -274,7 +274,7 @@ export default function Contact() {
                   <p
                     className="mono"
                     style={{
-                      color: "var(--mist-faint)",
+                      color: "var(--ink-faint)",
                       fontSize: "0.6rem",
                       lineHeight: 1.7,
                     }}

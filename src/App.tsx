@@ -10,7 +10,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import World from "./components/World";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Projects from "./pages/Projects";
@@ -21,7 +20,7 @@ import "./App.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* Transition cinématique entre les salles : voile d'encre + remontée. */
+/* Transition entre les pages : voile de papier + remontée. */
 function RoomTransition({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
 
@@ -60,7 +59,7 @@ function RoomTransition({ children }: { children: React.ReactNode }) {
           zIndex: 500,
           pointerEvents: "none",
           background:
-            "linear-gradient(180deg, rgba(21,14,46,0.96) 0%, rgba(28,20,64,0.86) 55%, rgba(108,124,255,0.2) 100%)",
+            "linear-gradient(180deg, #fbf9f4 0%, #f3efe6 55%, rgba(91,127,174,0.16) 100%)",
           transform: "scaleY(0)",
           transformOrigin: "top",
         }}
@@ -74,11 +73,10 @@ function RoomTransition({ children }: { children: React.ReactNode }) {
 
 function Layout() {
   return (
-    <World>
+    <>
       <a className="skip-link" href="#contenu">
         Aller au contenu
       </a>
-      <div className="weave" />
       <div className="grain" />
       <div className="shell">
         <Navbar />
@@ -96,7 +94,7 @@ function Layout() {
         </main>
         <Footer />
       </div>
-    </World>
+    </>
   );
 }
 

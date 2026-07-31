@@ -9,7 +9,7 @@ import {
 type Row = { kind: "cmd" | "out" | "err"; text: string };
 
 const BANNER = [
-  "octave-cli v2.0.0 — nuit électrique",
+  "octave-cli v2.0.0",
   "Tape `help` pour la liste des commandes.",
 ];
 
@@ -73,7 +73,7 @@ function run(raw: string): Row[] {
       return [out("Ouverture du CV PDF…")];
 
     case "whoami":
-      return [out("visiteur@monde — bienvenue.")];
+      return [out("visiteur@portfolio — bienvenue.")];
 
     default:
       return [
@@ -112,10 +112,10 @@ export default function TerminalCLI() {
 
   const color = (k: Row["kind"]) =>
     k === "cmd"
-      ? "var(--volt-lit)"
+      ? "var(--belge-bright)"
       : k === "err"
-        ? "var(--ember-lit)"
-        : "var(--mist-dim)";
+        ? "#e9a89e"
+        : "var(--on-dark-dim)";
 
   return (
     <div
@@ -125,12 +125,9 @@ export default function TerminalCLI() {
     >
       <div className="terminal__scan" />
 
-      <div
-        className="chat__head"
-        style={{ borderBottomColor: "var(--flux-hair)" }}
-      >
+      <div className="chat__head">
         <span style={{ display: "flex", gap: "0.35rem" }}>
-          {["#ff4d9d", "#3b4fe0", "#b44be8"].map((c) => (
+          {["#e4bb8f", "#9fb8db", "#c9c2ae"].map((c) => (
             <span
               key={c}
               style={{
@@ -145,9 +142,9 @@ export default function TerminalCLI() {
         </span>
         <span
           className="mono"
-          style={{ color: "var(--mist-faint)", fontSize: "0.62rem" }}
+          style={{ color: "var(--on-dark-dim)", fontSize: "0.62rem" }}
         >
-          octave@monde : ~
+          octave@portfolio : ~
         </span>
       </div>
 
@@ -166,7 +163,7 @@ export default function TerminalCLI() {
             style={{ color: color(r.kind), whiteSpace: "pre-wrap" }}
           >
             {r.kind === "cmd" && (
-              <span style={{ color: "var(--flux-lit)" }}>$ </span>
+              <span style={{ color: "var(--clay-bright)" }}>$ </span>
             )}
             {r.text}
           </div>
@@ -179,11 +176,11 @@ export default function TerminalCLI() {
           display: "flex",
           alignItems: "center",
           gap: "0.5rem",
-          borderTop: "1px solid rgba(234, 230, 250,0.08)",
+          borderTop: "1px solid rgba(255, 255, 255, 0.1)",
           padding: "0.75rem 1.2rem",
         }}
       >
-        <span style={{ color: "var(--flux-lit)" }}>$</span>
+        <span style={{ color: "var(--clay-bright)" }}>$</span>
         <input
           ref={input}
           value={draft}
@@ -196,7 +193,7 @@ export default function TerminalCLI() {
             background: "transparent",
             border: 0,
             outline: "none",
-            color: "var(--mist)",
+            color: "var(--on-dark)",
             fontFamily: "var(--f-mono)",
             fontSize: "0.8rem",
           }}

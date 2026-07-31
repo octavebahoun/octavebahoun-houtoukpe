@@ -15,20 +15,20 @@ export default function JarvisLab() {
   return (
     <section className="section section--first">
       <div className="wrap">
-        <SectionHead num="VII" title="Jarvis 3D Lab" />
+        <SectionHead num="VII" title="Jarvis" />
 
         <Reveal>
           <p
-            className="serif-italic veil"
+            className="serif-italic"
             style={{
-              color: "var(--mist-dim)",
+              color: "var(--ink-dim)",
               fontSize: "1.05rem",
               maxWidth: "46rem",
               marginBottom: "2.4rem",
             }}
           >
-            Le robot Vanguard veille en arrière-plan 3D. Jarvis est l'agent intelligent
-            indexé sur l'ensemble de mon profil, de mes projets et de mes réalisations.
+            Jarvis est l'agent intelligent indexé sur l'ensemble de mon
+            profil, de mes projets et de mes réalisations.
           </p>
         </Reveal>
 
@@ -51,7 +51,7 @@ export default function JarvisLab() {
                         justifyContent: "space-between",
                         gap: "1rem",
                         padding: "0.55rem 0",
-                        borderBottom: "1px solid rgba(234, 230, 250, 0.06)",
+                        borderBottom: "1px solid var(--hairline)",
                       }}
                     >
                       <span
@@ -60,7 +60,7 @@ export default function JarvisLab() {
                           fontSize: "0.58rem",
                           letterSpacing: "0.18em",
                           textTransform: "uppercase",
-                          color: "var(--mist-faint)",
+                          color: "var(--ink-faint)",
                         }}
                       >
                         {r.n}
@@ -68,7 +68,7 @@ export default function JarvisLab() {
                       <span
                         style={{
                           fontSize: "0.82rem",
-                          color: "var(--mist)",
+                          color: "var(--ink)",
                           textAlign: "right",
                         }}
                       >
@@ -82,12 +82,12 @@ export default function JarvisLab() {
 
             <Reveal className="frame" delay={0.1}>
               <div style={{ padding: "1.5rem 1.4rem" }}>
-                <span className="cartouche cartouche--flux">
+                <span className="cartouche cartouche--clay">
                   <Cpu size={11} /> Architecture IA
                 </span>
                 <p
                   style={{
-                    color: "var(--mist-dim)",
+                    color: "var(--ink-dim)",
                     fontSize: "0.86rem",
                     lineHeight: 1.75,
                     marginTop: "1.1rem",

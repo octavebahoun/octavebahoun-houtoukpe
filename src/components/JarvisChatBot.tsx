@@ -89,17 +89,17 @@ export default function JarvisChatBot() {
       <div className="terminal__scan" />
 
       <div className="chat__head">
-        <Bot size={18} color="var(--flux-lit)" strokeWidth={1.4} />
+        <Bot size={18} color="var(--clay-bright)" strokeWidth={1.4} />
         <div>
           <div
             className="mono"
-            style={{ color: "var(--flux-lit)", letterSpacing: "0.18em" }}
+            style={{ color: "var(--clay-bright)", letterSpacing: "0.18em" }}
           >
             JARVIS
           </div>
           <div
             className="mono"
-            style={{ fontSize: "0.6rem", color: "var(--mist-faint)" }}
+            style={{ fontSize: "0.6rem", color: "var(--on-dark-dim)" }}
           >
             indexé sur le profil complet d'Octave
           </div>
@@ -110,8 +110,7 @@ export default function JarvisChatBot() {
             width: 7,
             height: 7,
             borderRadius: "50%",
-            background: thinking ? "var(--volt-lit)" : "var(--flux-lit)",
-            boxShadow: "0 0 10px currentColor",
+            background: thinking ? "var(--belge-bright)" : "var(--clay-bright)",
           }}
         />
       </div>
@@ -132,7 +131,7 @@ export default function JarvisChatBot() {
                 fontSize: "0.56rem",
                 letterSpacing: "0.2em",
                 color:
-                  l.from === "ai" ? "var(--flux-lit)" : "var(--volt-lit)",
+                  l.from === "ai" ? "var(--clay-bright)" : "var(--belge-bright)",
                 marginBottom: "0.35rem",
               }}
             >
@@ -173,7 +172,7 @@ export default function JarvisChatBot() {
             style={{ fontFamily: "var(--f-mono)", fontSize: "0.82rem" }}
           />
           <button
-            className="btn btn--flux"
+            className="btn btn--clay"
             type="submit"
             disabled={thinking || !draft.trim()}
             aria-label="Envoyer"

@@ -1,7 +1,7 @@
 {
-  "name": "octave-portfolio-3d",
+  "name": "octave-portfolio",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,17 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.6.1",
-    "@types/canvas-confetti": "^1.9.0",
-    "@types/three": "^0.185.1",
-    "canvas-confetti": "^1.9.4",
     "gsap": "^3.15.0",
     "lucide-react": "^1.28.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "react-router-dom": "^7.18.2",
-    "three": "^0.185.1"
+    "react-router-dom": "^7.18.2"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",

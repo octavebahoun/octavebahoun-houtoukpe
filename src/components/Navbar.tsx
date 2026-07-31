@@ -7,7 +7,7 @@ const ROUTES = [
   { to: "/", label: "Accueil", end: true },
   { to: "/about", label: "Parcours" },
   { to: "/projects", label: "Œuvres" },
-  { to: "/jarvis-lab", label: "Jarvis Lab" },
+  { to: "/jarvis-lab", label: "Jarvis" },
   { to: "/contact", label: "Contact" },
 ];
 

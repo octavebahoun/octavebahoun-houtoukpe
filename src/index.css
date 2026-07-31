@@ -1,48 +1,50 @@
 @import "tailwindcss";
 
 /* ============================================================
-   NUIT ÉLECTRIQUE
-   Une scène de nuit sous éclairage artificiel : bleu électrique
-   comme voix principale, violet en second, et la chaleur orange
-   des lampadaires qui perce çà et là. Aucun or.
+   ÉDITORIAL — BLEU BELGE
+   Une page qui respire : beaucoup de papier, une seule encre
+   (le bleu belge) en voix principale, une touche de sable/terre
+   cuite en second, jamais deux accents en même temps.
    ============================================================ */
 
 :root {
-  /* --- Nuit (fond) --- */
-  --night: #150e2e;
-  --night-2: #1c1440;
-  --night-3: #241a4f;
-  --canvas: #2a1f5c;
-  --canvas-warm: #31246b;
+  /* --- Papier (fond) --- */
+  --paper: #fbf9f4;
+  --paper-2: #f3efe6;
+  --paper-3: #eae3d3;
 
-  /* --- Bleu électrique (voix principale) ---
-     `--volt` est saturé : 2,98:1 sur la nuit, donc réservé aux traits, fonds
-     et éléments non textuels. Tout texte passe par `--volt-lit` (5,3:1). */
-  --volt: #3b4fe0;
-  --volt-lit: #7c8cff;
-  --volt-deep: #1b2596;
-  --volt-ink: #8a97ff;
-  --volt-veil: rgba(108, 124, 255, 0.14);
-  --volt-hair: rgba(108, 124, 255, 0.3);
+  /* --- Encre (texte) — tous ≥ 4,5:1 sur --paper --- */
+  --ink: #1e2024;       /* 15,5:1 */
+  --ink-dim: #52555e;   /*  7,1:1 */
+  --ink-faint: #6b6f7a; /*  4,8:1 */
 
-  /* --- Violet lumineux (seconde voix) --- */
-  --flux: #b44be8;
-  --flux-lit: #e58bff;
-  --flux-deep: #6b2596;
-  --flux-veil: rgba(180, 75, 232, 0.13);
-  --flux-hair: rgba(180, 75, 232, 0.32);
+  /* --- Bleu belge (voix principale) ---
+     `--belge` est la teinte franche, réservée aux traits, fonds teintés
+     et éléments non textuels. Le texte passe par `--belge-deep` (8,5:1)
+     ou `--belge-ink` (11,8:1) sur du papier clair. */
+  --belge: #5b7fae;
+  --belge-deep: #2e4a73;
+  --belge-ink: #1f3555;
+  --belge-veil: rgba(46, 74, 115, 0.06);
+  --belge-hair: rgba(46, 74, 115, 0.22);
 
-  /* --- Lampadaire (accent chaud, rare) --- */
-  --ember: #ff7a18;
-  --ember-lit: #ffc24d;
+  /* --- Sable / terre cuite (seconde voix, rare) --- */
+  --clay: #b5764a;
+  --clay-deep: #7c4f2c;
+  --clay-veil: rgba(124, 79, 44, 0.07);
+  --clay-hair: rgba(124, 79, 44, 0.24);
 
-  /* --- Rose fusée (ponctuation vive) --- */
-  --rose: #ff4d9d;
+  /* --- Alerte (erreurs de formulaire) --- */
+  --alert: #a6382b;
 
-  /* --- Brume lavande (texte) — tous ≥ 4,5:1 sur le fond le plus clair --- */
-  --mist: #eae6fa;      /* 12,9:1 */
-  --mist-dim: #a9a0d0;  /*  6,5:1 */
-  --mist-faint: #9089bd;/*  4,9:1 */
+  /* --- Ligne de séparation neutre --- */
+  --hairline: rgba(30, 32, 36, 0.1);
+
+  /* --- Sur fond sombre (terminal, chat) — seuls encarts non-papier --- */
+  --on-dark: var(--paper);
+  --on-dark-dim: rgba(251, 249, 244, 0.62);
+  --belge-bright: #9fb8db;
+  --clay-bright: #e4bb8f;
 
   /* --- Typographies --- */
   --f-display: "Playfair Display", "Georgia", serif;
@@ -50,14 +52,14 @@
   --f-mono: "JetBrains Mono", "Fira Code", monospace;
 
   /* --- Rythme --- */
-  --shadow-deep: 0 32px 80px -24px rgba(0, 0, 0, 0.9);
+  --shadow-soft: 0 24px 60px -32px rgba(30, 32, 36, 0.22);
 
   --ease-silk: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-ink: cubic-bezier(0.65, 0, 0.35, 1);
 
   /* --- Rayons --- */
-  --r-card: 16px;
-  --r-control: 10px;
+  --r-card: 14px;
+  --r-control: 9px;
   --r-pill: 999px;
 }
 
@@ -77,8 +79,8 @@ html {
 
 body {
   min-height: 100vh;
-  background-color: var(--night);
-  color: var(--mist);
+  background-color: var(--paper);
+  color: var(--ink);
   font-family: var(--f-ui);
   font-weight: 300;
   font-size: 16px;
@@ -86,81 +88,15 @@ body {
   overflow-x: hidden;
 }
 
-/* Halos de néon dans la nuit — sous le monde 3D ------------- */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 70% 50% at 12% 0%, rgba(59, 79, 224, 0.26), transparent 62%),
-    radial-gradient(ellipse 62% 55% at 88% 20%, rgba(180, 75, 232, 0.2), transparent 64%),
-    radial-gradient(ellipse 50% 40% at 70% 78%, rgba(255, 122, 24, 0.1), transparent 66%),
-    radial-gradient(ellipse 80% 45% at 30% 100%, rgba(255, 77, 157, 0.09), transparent 68%);
-}
-
-/* ---------------- Le monde 3D ---------------- */
-
-/* La scène vit ici, fixée derrière tout le contenu, pour toute la durée
-   de la visite. Elle ne capte aucun événement : le contenu reste maître. */
-.world {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.world canvas {
-  display: block;
-}
-
-/* Voile qui assombrit le monde juste sous les zones de texte dense.
-
-   Le premier essai — un dégradé radial flouté à 0.88 — laissait passer la
-   grille et le sujet 3D : le texte se noyait dedans. Il faut un noir presque
-   franc au centre, qui ne se dissout qu'aux bords. */
-.veil {
-  position: relative;
-  isolation: isolate;
-}
-
-.veil::before {
-  content: "";
-  position: absolute;
-  inset: -2.4rem -3rem;
-  z-index: -1;
-  pointer-events: none;
-  border-radius: var(--r-card);
-  background:
-    radial-gradient(ellipse 74% 66% at 50% 50%,
-      rgba(11, 7, 26, 0.94) 0%,
-      rgba(11, 7, 26, 0.86) 45%,
-      rgba(11, 7, 26, 0.5) 72%,
-      transparent 88%);
-}
-
-/* Grain de capteur ------------------------------------------ */
+/* Grain de papier, très discret — la seule texture de la page. */
 .grain {
   position: fixed;
   inset: 0;
   z-index: 9998;
   pointer-events: none;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
-/* Trame de scanline très fine ------------------------------- */
-.weave {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.5;
-  background-image:
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.012) 0 1px, transparent 1px 3px);
 }
 
 /* ---------------- Typographie ---------------- */
@@ -170,16 +106,16 @@ h2,
 h3,
 h4 {
   font-family: var(--f-display);
-  font-weight: 400;
-  line-height: 1.06;
-  letter-spacing: -0.02em;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
 }
 
 .display {
   font-family: var(--f-display);
-  font-weight: 900;
-  line-height: 0.94;
-  letter-spacing: -0.035em;
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
 }
 
 .serif-italic {
@@ -195,39 +131,16 @@ h4 {
   letter-spacing: 0.06em;
 }
 
-/* ------------------------------------------------------------
-   Accents lumineux.
-
-   Ces classes utilisaient un dégradé clippé au texte
-   (`background-clip: text` + `color: transparent`). Deux choses
-   le cassent, et les deux sont présentes ici :
-
-   - `filter: blur()`, que les révélations au scroll animent sur
-     les blocs parents ;
-   - `transform`, que GSAP pose sur chaque lettre du hero.
-
-   L'un comme l'autre crée un contexte de rendu qui sort le texte
-   du clip : le navigateur peint alors le dégradé en rectangle
-   plein. D'où les barres bleues au milieu du manifeste.
-
-   Couleur pleine + halo : même intention visuelle, et ça tient
-   quelle que soit l'animation posée au-dessus.
-   ------------------------------------------------------------ */
+/* Accents de couleur pleine — pas de lueur, juste l'encre. */
 .lumen {
-  color: var(--volt-lit);
-  text-shadow:
-    0 0 18px rgba(124, 140, 255, 0.5),
-    0 0 48px rgba(59, 79, 224, 0.32);
+  color: var(--belge-deep);
 }
 
 .aura {
-  color: var(--flux-lit);
-  text-shadow:
-    0 0 18px rgba(229, 139, 255, 0.5),
-    0 0 48px rgba(180, 75, 232, 0.32);
+  color: var(--clay-deep);
 }
 
-/* Cartouche : étiquette lumineuse --------------------------- */
+/* Cartouche : étiquette discrète --------------------------- */
 .cartouche {
   display: inline-flex;
   align-items: center;
@@ -235,74 +148,58 @@ h4 {
   font-family: var(--f-mono);
   font-size: 0.66rem;
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--volt-ink);
+  color: var(--belge-deep);
   padding: 0.4rem 0.85rem;
-  border: 1px solid var(--volt-hair);
-  background: var(--volt-veil);
+  border: 1px solid var(--belge-hair);
+  background: var(--belge-veil);
   border-radius: var(--r-pill);
 }
 
-.cartouche--flux {
-  color: var(--flux-lit);
-  border-color: var(--flux-hair);
-  background: var(--flux-veil);
+.cartouche--clay {
+  color: var(--clay-deep);
+  border-color: var(--clay-hair);
+  background: var(--clay-veil);
 }
 
 .cartouche--ox {
-  color: var(--ember-lit);
-  border-color: rgba(255, 122, 24, 0.34);
-  background: rgba(255, 122, 24, 0.12);
+  color: var(--alert);
+  border-color: rgba(166, 56, 43, 0.28);
+  background: rgba(166, 56, 43, 0.07);
 }
 
-/* Filet lumineux -------------------------------------------- */
+/* Filet ------------------------------------------------------ */
 .filet {
   height: 1px;
   border: 0;
   background: linear-gradient(90deg,
       transparent,
-      var(--volt-hair) 12%,
-      var(--volt) 50%,
-      var(--volt-hair) 88%,
+      var(--hairline) 12%,
+      var(--ink-faint) 50%,
+      var(--hairline) 88%,
       transparent);
   opacity: 0.7;
 }
 
 /* ---------------- Cadres & cartes ---------------- */
 
-/* Les cadres laissent transparaître le monde derrière eux : ils sont
-   translucides et floutent ce qui passe dessous. */
 .frame {
   position: relative;
-  background:
-    linear-gradient(155deg, rgba(255, 255, 255, 0.04), transparent 42%),
-    rgba(28, 20, 64, 0.62);
-  backdrop-filter: blur(16px) saturate(130%);
-  -webkit-backdrop-filter: blur(16px) saturate(130%);
-  border: 1px solid rgba(108, 124, 255, 0.2);
+  background: var(--paper-2);
+  border: 1px solid var(--hairline);
   border-radius: var(--r-card);
   overflow: hidden;
-  transition: border-color 0.5s var(--ease-silk), transform 0.5s var(--ease-silk),
-    box-shadow 0.5s var(--ease-silk), background 0.5s var(--ease-silk);
-}
-
-.frame::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.5'/%3E%3C/svg%3E");
-  opacity: 0.05;
-  mix-blend-mode: overlay;
+  transition: border-color 0.4s var(--ease-silk), transform 0.4s var(--ease-silk),
+    box-shadow 0.4s var(--ease-silk);
 }
 
 .frame:hover {
-  border-color: rgba(108, 124, 255, 0.42);
-  box-shadow: var(--shadow-deep), 0 0 40px -22px rgba(108, 124, 255, 0.55);
+  border-color: var(--belge-hair);
+  box-shadow: var(--shadow-soft);
 }
 
-/* Équerres d'accrochage lumineuses */
+/* Équerres d'accrochage, discrètes */
 .frame--corners::after {
   content: "";
   position: absolute;
@@ -310,20 +207,20 @@ h4 {
   pointer-events: none;
   border-radius: 1px;
   background:
-    linear-gradient(var(--volt), var(--volt)) top left / 14px 1px no-repeat,
-    linear-gradient(var(--volt), var(--volt)) top left / 1px 14px no-repeat,
-    linear-gradient(var(--volt), var(--volt)) top right / 14px 1px no-repeat,
-    linear-gradient(var(--volt), var(--volt)) top right / 1px 14px no-repeat,
-    linear-gradient(var(--volt), var(--volt)) bottom left / 14px 1px no-repeat,
-    linear-gradient(var(--volt), var(--volt)) bottom left / 1px 14px no-repeat,
-    linear-gradient(var(--volt), var(--volt)) bottom right / 14px 1px no-repeat,
-    linear-gradient(var(--volt), var(--volt)) bottom right / 1px 14px no-repeat;
-  opacity: 0.34;
-  transition: opacity 0.5s var(--ease-silk);
+    linear-gradient(var(--belge), var(--belge)) top left / 12px 1px no-repeat,
+    linear-gradient(var(--belge), var(--belge)) top left / 1px 12px no-repeat,
+    linear-gradient(var(--belge), var(--belge)) top right / 12px 1px no-repeat,
+    linear-gradient(var(--belge), var(--belge)) top right / 1px 12px no-repeat,
+    linear-gradient(var(--belge), var(--belge)) bottom left / 12px 1px no-repeat,
+    linear-gradient(var(--belge), var(--belge)) bottom left / 1px 12px no-repeat,
+    linear-gradient(var(--belge), var(--belge)) bottom right / 12px 1px no-repeat,
+    linear-gradient(var(--belge), var(--belge)) bottom right / 1px 12px no-repeat;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-silk);
 }
 
 .frame--corners:hover::after {
-  opacity: 0.95;
+  opacity: 0.55;
 }
 
 /* Coup de pinceau vertical ---------------------------------- */
@@ -340,11 +237,11 @@ h4 {
   bottom: 0.35em;
   width: 3px;
   border-radius: 2px;
-  background: linear-gradient(180deg, var(--volt), rgba(108, 124, 255, 0.05));
+  background: linear-gradient(180deg, var(--belge), rgba(46, 74, 115, 0.08));
 }
 
-.brushed--flux::before {
-  background: linear-gradient(180deg, var(--flux-lit), rgba(180, 75, 232, 0.05));
+.brushed--clay::before {
+  background: linear-gradient(180deg, var(--clay), rgba(124, 79, 44, 0.08));
 }
 
 /* ---------------- Boutons ---------------- */
@@ -357,136 +254,74 @@ h4 {
   font-family: var(--f-ui);
   font-size: 0.82rem;
   font-weight: 500;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 0.85rem 1.6rem;
   border-radius: var(--r-control);
-  border: 1px solid var(--volt-hair);
-  color: var(--volt-lit);
+  border: 1px solid var(--belge-hair);
+  color: var(--belge-deep);
   background: transparent;
   cursor: pointer;
   text-decoration: none;
   isolation: isolate;
   /* Cible tactile confortable : 44px de haut, minimum recommandé. */
   min-height: 44px;
-  /* Clippe le lavis d'encre qui monte au survol. */
   overflow: hidden;
-  transition: color 0.45s var(--ease-silk), border-color 0.45s var(--ease-silk),
-    transform 0.35s var(--ease-silk), box-shadow 0.45s var(--ease-silk);
-}
-
-/* Le remplissage monte comme un lavis d'encre */
-.btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(180deg, var(--volt-lit), var(--volt));
-  transform: translateY(101%);
-  transition: transform 0.5s var(--ease-silk);
+  transition: color 0.4s var(--ease-silk), border-color 0.4s var(--ease-silk),
+    transform 0.3s var(--ease-silk), box-shadow 0.4s var(--ease-silk),
+    background 0.4s var(--ease-silk);
 }
 
 .btn:hover {
-  color: var(--night);
-  border-color: var(--volt-lit);
-}
-
-.btn:hover::before {
-  transform: translateY(0);
+  border-color: var(--belge-deep);
+  background: var(--belge-veil);
 }
 
 .btn--solid {
   color: #ffffff;
-  background: linear-gradient(120deg, var(--volt), var(--volt-deep));
-  border-color: var(--volt-lit);
+  background: var(--belge-ink);
+  border-color: var(--belge-ink);
   font-weight: 600;
-  /* Pas de lavis ici : c'est le halo qui doit pouvoir déborder. */
-  overflow: visible;
-}
-
-/* Le halo derrière l'action principale : c'est lui qui la fait exister
-   dans la nuit, et qui dit « c'est ici qu'on clique ». */
-.btn--solid::after {
-  content: "";
-  position: absolute;
-  inset: -40%;
-  z-index: -2;
-  pointer-events: none;
-  border-radius: inherit;
-  background: radial-gradient(ellipse at center, rgba(59, 79, 224, 0.6), transparent 68%);
-  filter: blur(14px);
-  opacity: 0.75;
-  transition: opacity 0.45s var(--ease-silk);
 }
 
 .btn--solid:hover {
   color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 34px -10px rgba(59, 79, 224, 0.8);
+  background: var(--belge-deep);
+  border-color: var(--belge-deep);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-soft);
 }
 
-.btn--solid:hover::after {
-  opacity: 1;
+.btn--clay {
+  color: var(--clay-deep);
+  border-color: var(--clay-hair);
 }
 
-.btn--solid::before {
-  display: none;
-}
-
-.btn--flux {
-  color: var(--flux-lit);
-  border-color: var(--flux-hair);
-}
-
-.btn--flux::before {
-  background: linear-gradient(180deg, var(--flux-lit), var(--flux));
+.btn--clay:hover {
+  background: var(--clay-veil);
+  border-color: var(--clay-deep);
 }
 
 .btn--ghost {
-  border-color: rgba(234, 230, 250, 0.16);
-  color: var(--mist-dim);
+  border-color: var(--hairline);
+  color: var(--ink-dim);
 }
 
-.btn--ghost::before {
-  background: rgba(234, 230, 250, 0.94);
+.btn--ghost:hover {
+  border-color: var(--ink-dim);
+  background: rgba(30, 32, 36, 0.04);
 }
 
 .btn:disabled {
-  opacity: 0.4;
+  opacity: 0.45;
   cursor: not-allowed;
-}
-
-/* ---------------- Scène 3D ---------------- */
-
-.stage {
-  position: relative;
-  min-height: 220px;
-  border-radius: var(--r-card);
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse 55% 55% at 50% 42%, rgba(108, 124, 255, 0.16), transparent 70%),
-    radial-gradient(ellipse 70% 60% at 50% 100%, rgba(180, 75, 232, 0.1), transparent 70%),
-    var(--night-2);
-}
-
-.stage__grid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.24;
-  background-image:
-    linear-gradient(rgba(108, 124, 255, 0.14) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(108, 124, 255, 0.14) 1px, transparent 1px);
-  background-size: 46px 46px;
-  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 25%, transparent 78%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 25%, transparent 78%);
 }
 
 /* ---------------- Jauges de compétence ---------------- */
 
 .gauge {
   height: 3px;
-  background: rgba(234, 230, 250, 0.08);
+  background: var(--hairline);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -495,37 +330,30 @@ h4 {
   height: 100%;
   width: 0;
   border-radius: 2px;
-  background: linear-gradient(90deg, var(--volt-deep), var(--volt-lit));
-  box-shadow: 0 0 12px -2px rgba(124, 140, 255, 0.7);
+  background: linear-gradient(90deg, var(--belge-deep), var(--belge));
 }
 
-.gauge__fill--flux {
-  background: linear-gradient(90deg, var(--flux-deep), var(--flux-lit));
-  box-shadow: 0 0 12px -2px rgba(229, 139, 255, 0.7);
+.gauge__fill--clay {
+  background: linear-gradient(90deg, var(--clay-deep), var(--clay));
 }
 
-/* ---------------- Terminal ---------------- */
+/* ---------------- Terminal & Jarvis : encart carbone ----------------
+   Seuls encarts sombres de la page, comme un timbre encré sur le papier —
+   le contraste sert à isoler ces deux pièces interactives du reste. */
 
 .terminal {
   position: relative;
   font-family: var(--f-mono);
   font-size: 0.8rem;
   line-height: 1.85;
-  background:
-    linear-gradient(180deg, rgba(180, 75, 232, 0.05), transparent 30%),
-    #0b0720;
-  border: 1px solid var(--flux-hair);
+  background: var(--belge-ink);
+  color: var(--paper);
+  border: 1px solid var(--belge-ink);
   border-radius: var(--r-card);
 }
 
 .terminal__scan {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.35;
-  background: repeating-linear-gradient(180deg,
-      rgba(229, 139, 255, 0.045) 0 1px,
-      transparent 1px 4px);
+  display: none;
 }
 
 .caret {
@@ -533,7 +361,7 @@ h4 {
   width: 8px;
   height: 1em;
   vertical-align: text-bottom;
-  background: var(--flux-lit);
+  background: var(--paper);
   animation: blink 1.05s steps(2, start) infinite;
 }
 
@@ -555,16 +383,16 @@ h4 {
 
 .bubble--ai {
   align-self: flex-start;
-  background: linear-gradient(150deg, rgba(180, 75, 232, 0.12), rgba(19, 19, 24, 0.9));
-  border: 1px solid var(--flux-hair);
-  color: var(--mist);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--paper);
 }
 
 .bubble--me {
   align-self: flex-end;
-  background: linear-gradient(150deg, rgba(108, 124, 255, 0.16), rgba(19, 19, 24, 0.9));
-  border: 1px solid var(--volt-hair);
-  color: var(--mist);
+  background: rgba(91, 127, 174, 0.32);
+  border: 1px solid rgba(91, 127, 174, 0.5);
+  color: var(--paper);
 }
 
 .dots span {
@@ -573,7 +401,7 @@ h4 {
   height: 5px;
   margin-right: 4px;
   border-radius: 50%;
-  background: var(--flux-lit);
+  background: var(--paper);
   animation: pulse-dot 1.25s var(--ease-silk) infinite;
 }
 
@@ -604,26 +432,24 @@ h4 {
 
 .field {
   width: 100%;
-  background: rgba(8, 8, 10, 0.6);
-  border: 1px solid rgba(234, 230, 250, 0.1);
-  border-bottom: 1px solid var(--volt-hair);
+  background: var(--paper);
+  border: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--ink-faint);
   border-radius: var(--r-control);
-  color: var(--mist);
+  color: var(--ink);
   font-family: var(--f-ui);
   font-size: 0.94rem;
   padding: 0.85rem 1rem;
-  /* Pas de `outline: none` : l'anneau de focus reste, on le rend juste
-     plus net quand le champ est atteint au clavier. */
-  transition: border-color 0.35s var(--ease-silk), background 0.35s var(--ease-silk);
+  transition: border-color 0.3s var(--ease-silk), background 0.3s var(--ease-silk);
 }
 
 .field::placeholder {
-  color: var(--mist-faint);
+  color: var(--ink-faint);
 }
 
 .field:focus {
-  border-color: var(--volt-lit);
-  background: rgba(108, 124, 255, 0.07);
+  border-color: var(--belge-deep);
+  background: var(--belge-veil);
 }
 
 .field:focus-visible {
@@ -631,7 +457,7 @@ h4 {
 }
 
 .field--err {
-  border-color: var(--ember-lit);
+  border-color: var(--alert);
 }
 
 /* ---------------- Navigation ---------------- */
@@ -641,12 +467,12 @@ h4 {
   font-family: var(--f-ui);
   font-size: 0.78rem;
   font-weight: 400;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--mist-dim);
+  color: var(--ink-dim);
   text-decoration: none;
   padding: 0.35rem 0;
-  transition: color 0.4s var(--ease-silk);
+  transition: color 0.35s var(--ease-silk);
 }
 
 .navlink::after {
@@ -656,13 +482,13 @@ h4 {
   bottom: 0;
   height: 1px;
   width: 0;
-  background: linear-gradient(90deg, var(--volt), var(--volt-lit));
-  transition: width 0.45s var(--ease-silk);
+  background: var(--belge-deep);
+  transition: width 0.4s var(--ease-silk);
 }
 
 .navlink:hover,
 .navlink.is-active {
-  color: var(--volt-lit);
+  color: var(--belge-deep);
 }
 
 .navlink:hover::after,
@@ -673,22 +499,19 @@ h4 {
 /* ---------------- Divers ---------------- */
 
 ::selection {
-  background: var(--volt);
+  background: var(--belge);
   color: #ffffff;
 }
 
 /* ---------------- Focus clavier ---------------- */
 
-/* Un anneau visible sur fond sombre, avec un liseré foncé qui le détache
-   même quand l'élément est posé sur un cadre translucide. */
 :focus-visible {
-  outline: 2px solid var(--volt-lit);
+  outline: 2px solid var(--belge-deep);
   outline-offset: 3px;
   border-radius: var(--r-control);
-  box-shadow: 0 0 0 5px rgba(21, 14, 46, 0.9);
+  box-shadow: 0 0 0 4px var(--paper);
 }
 
-/* Ne jamais retirer l'anneau — seulement le rendre plus juste. */
 .btn:focus-visible,
 .filter:focus-visible,
 .ctrl:focus-visible {
@@ -721,8 +544,8 @@ button:disabled {
   z-index: 9999;
   padding: 0.7rem 1.1rem;
   border-radius: var(--r-control);
-  background: var(--volt-lit);
-  color: var(--night);
+  background: var(--belge-ink);
+  color: var(--paper);
   font-family: var(--f-ui);
   font-size: 0.82rem;
   font-weight: 600;
@@ -741,15 +564,16 @@ button:disabled {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--night);
+  background: var(--paper-2);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--volt-deep), rgba(108, 124, 255, 0.25));
+  background: var(--belge-hair);
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--volt);
+  background: var(--belge);
 }
 
 a {

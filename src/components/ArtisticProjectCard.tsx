@@ -1,9 +1,7 @@
-import { ArrowUpRight, Lock, Orbit } from "lucide-react";
-import { useWorld } from "./worldContext";
+import { ArrowUpRight, Lock } from "lucide-react";
 import type { Project } from "../data/portfolioData";
 
-/* Une œuvre au mur. Survolez-la : son modèle prend la place du sujet
-   dans le monde 3D qui tourne derrière la page. */
+/* Une pièce de la galerie : titre, résumé, stack et liens. */
 export default function ArtisticProjectCard({
   project,
   index,
@@ -11,22 +9,17 @@ export default function ArtisticProjectCard({
   project: Project;
   index: number;
 }) {
-  const world = useWorld();
   const num = String(index + 1).padStart(2, "0");
 
   return (
     <article
       className="frame frame--corners oeuvre"
       data-cats={project.cats.join(" ")}
-      onMouseEnter={() => world.focus(project.model)}
-      onMouseLeave={() => world.focus(null)}
-      onFocus={() => world.focus(project.model)}
-      onBlur={() => world.focus(null)}
     >
       <div className="oeuvre__head">
         <span
           className={`cartouche ${
-            project.isPublic ? "cartouche--flux" : "cartouche--ox"
+            project.isPublic ? "cartouche--clay" : "cartouche--ox"
           }`}
         >
           {project.isPublic ? (
@@ -37,9 +30,6 @@ export default function ArtisticProjectCard({
             </>
           )}
         </span>
-        <span className="oeuvre__cue">
-          <Orbit size={12} /> Survoler pour l'afficher
-        </span>
       </div>
 
       <div className="oeuvre__body">
@@ -49,7 +39,7 @@ export default function ArtisticProjectCard({
         <p className="oeuvre__d">
           {project.summary}
           <br />
-          <span style={{ color: "var(--mist-faint)", fontSize: "0.82rem" }}>
+          <span style={{ color: "var(--ink-faint)", fontSize: "0.82rem" }}>
             {project.detail}
           </span>
         </p>

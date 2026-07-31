@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, MapPin, ArrowUpRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon, NpmIcon } from "./SocialIcons";
-import WorldToggle from "./WorldToggle";
 import { IDENTITY } from "../data/portfolioData";
 
 export default function Footer() {
@@ -25,7 +24,7 @@ export default function Footer() {
             </h3>
             <p
               style={{
-                color: "var(--mist-dim)",
+                color: "var(--ink-dim)",
                 fontSize: "0.88rem",
                 marginTop: "0.7rem",
                 maxWidth: "26rem",
@@ -96,8 +95,7 @@ export default function Footer() {
           <span>
             © {year} {IDENTITY.fullName}
           </span>
-          <WorldToggle />
-          <span>React · Three.js · GSAP — un seul monde, huit pièces</span>
+          <span>Écrit à Lokossa, Bénin — React · TypeScript · GSAP</span>
         </div>
       </div>
     </footer>

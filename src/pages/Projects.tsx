@@ -57,16 +57,16 @@ export default function Projects() {
 
         <Reveal>
           <p
-            className="serif-italic veil"
+            className="serif-italic"
             style={{
-              color: "var(--mist-dim)",
+              color: "var(--ink-dim)",
               fontSize: "1.05rem",
               maxWidth: "48rem",
               marginBottom: "2.4rem",
             }}
           >
-            Sept pièces. Survolez une carte : son modèle vient prendre le centre
-            du monde, derrière la page.
+            Sept pièces, du pipeline RAG à la PWA. Chaque carte détaille la
+            stack, le contexte et les liens.
           </p>
         </Reveal>
 
@@ -86,7 +86,7 @@ export default function Projects() {
             style={{
               alignSelf: "center",
               marginLeft: "0.6rem",
-              color: "var(--mist-faint)",
+              color: "var(--ink-faint)",
             }}
           >
             {shown} pièce{shown > 1 ? "s" : ""} accrochée

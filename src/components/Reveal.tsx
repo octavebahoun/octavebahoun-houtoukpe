@@ -124,7 +124,7 @@ export function Gauge({
     <div className="gauge">
       <div
         ref={bar}
-        className={`gauge__fill${accent === "flux" ? " gauge__fill--flux" : ""}`}
+        className={`gauge__fill${accent === "flux" ? " gauge__fill--clay" : ""}`}
       />
     </div>
   );
