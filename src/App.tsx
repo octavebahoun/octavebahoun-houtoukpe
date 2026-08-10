@@ -59,7 +59,7 @@ function RoomTransition({ children }: { children: React.ReactNode }) {
           zIndex: 500,
           pointerEvents: "none",
           background:
-            "linear-gradient(180deg, #fbf9f4 0%, #f3efe6 55%, rgba(91,127,174,0.16) 100%)",
+            "linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 55%, var(--belge-veil) 100%)",
           transform: "scaleY(0)",
           transformOrigin: "top",
         }}

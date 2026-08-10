@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Menu, X, Download } from "lucide-react";
+import { Menu, X, Download, Moon, Sun } from "lucide-react";
 import { IDENTITY } from "../data/portfolioData";
+import { useTheme } from "../hooks/useTheme";
 
 const ROUTES = [
   { to: "/", label: "Accueil", end: true },
@@ -14,6 +15,7 @@ const ROUTES = [
 export default function Navbar() {
   const [stuck, setStuck] = useState(false);
   const [open, setOpen] = useState(false);
+  const { theme, toggle } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setStuck(window.scrollY > 24);
@@ -34,38 +36,52 @@ export default function Navbar() {
             </span>
           </Link>
 
-          <nav className="topbar__nav">
-            {ROUTES.map((r) => (
-              <NavLink
-                key={r.to}
-                to={r.to}
-                end={r.end}
-                className={({ isActive }) =>
-                  `navlink${isActive ? " is-active" : ""}`
-                }
+          <div className="topbar__controls">
+            <nav className="topbar__nav">
+              {ROUTES.map((r) => (
+                <NavLink
+                  key={r.to}
+                  to={r.to}
+                  end={r.end}
+                  className={({ isActive }) =>
+                    `navlink${isActive ? " is-active" : ""}`
+                  }
+                >
+                  {r.label}
+                </NavLink>
+              ))}
+              <a
+                className="btn btn--solid"
+                href={IDENTITY.links.cv}
+                download
+                style={{ padding: "0.6rem 1.1rem", fontSize: "0.7rem" }}
               >
-                {r.label}
-              </NavLink>
-            ))}
-            <a
-              className="btn btn--solid"
-              href={IDENTITY.links.cv}
-              download
-              style={{ padding: "0.6rem 1.1rem", fontSize: "0.7rem" }}
-            >
-              <Download size={14} />
-              CV
-            </a>
-          </nav>
+                <Download size={14} />
+                CV
+              </a>
+            </nav>
 
-          <button
-            className="burger"
-            onClick={() => setOpen((v) => !v)}
-            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-            aria-expanded={open}
-          >
-            {open ? <X size={20} /> : <Menu size={20} />}
-          </button>
+            <button
+              type="button"
+              className="theme-toggle"
+              onClick={toggle}
+              aria-label={
+                theme === "dark" ? "Passer en thème clair" : "Passer en thème sombre"
+              }
+              title={theme === "dark" ? "Thème clair" : "Thème sombre"}
+            >
+              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+
+            <button
+              className="burger"
+              onClick={() => setOpen((v) => !v)}
+              aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+              aria-expanded={open}
+            >
+              {open ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
       </div>
 

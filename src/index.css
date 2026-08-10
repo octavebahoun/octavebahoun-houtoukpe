@@ -40,8 +40,13 @@
   /* --- Ligne de séparation neutre --- */
   --hairline: rgba(30, 32, 36, 0.1);
 
-  /* --- Sur fond sombre (terminal, chat) — seuls encarts non-papier --- */
-  --on-dark: var(--paper);
+  /* --- Encart sticky (topbar au scroll) --- */
+  --scrim: rgba(251, 249, 244, 0.86);
+
+  /* --- Sur fond sombre (terminal, chat) — seuls encarts non-papier,
+     identiques dans les deux thèmes puisque ce sont déjà les couleurs
+     pensées pour un fond sombre. --- */
+  --on-dark: #fbf9f4;
   --on-dark-dim: rgba(251, 249, 244, 0.62);
   --belge-bright: #9fb8db;
   --clay-bright: #e4bb8f;
@@ -61,6 +66,75 @@
   --r-card: 14px;
   --r-control: 9px;
   --r-pill: 999px;
+
+  color-scheme: light;
+}
+
+/* ------------------------------------------------------------
+   Mode sombre. Même grammaire de tokens, valeurs recalculées pour
+   rester ≥ 4,5:1 sur --paper (ratios en commentaire). Défini deux fois :
+   sous la préférence système (tant que l'utilisateur n'a rien choisi),
+   puis sous l'attribut explicite posé par le bouton de bascule — qui
+   gagne dans les deux sens.
+   ------------------------------------------------------------ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #15171b;
+    --paper-2: #1d2024;
+    --paper-3: #262a30;
+
+    --ink: #edeef0;       /* 15,5:1 */
+    --ink-dim: #aeb1b8;   /*  8,4:1 */
+    --ink-faint: #868a93; /*  4,7:1 */
+
+    --belge: #7c9bc9;
+    --belge-deep: #9fb8db;
+    --belge-ink: #3b5a87;
+    --belge-veil: rgba(124, 155, 201, 0.14);
+    --belge-hair: rgba(124, 155, 201, 0.34);
+
+    --clay: #c99669;
+    --clay-deep: #e3b98d;
+    --clay-veil: rgba(201, 150, 105, 0.14);
+    --clay-hair: rgba(201, 150, 105, 0.34);
+
+    --alert: #e2897c;
+
+    --hairline: rgba(255, 255, 255, 0.12);
+    --scrim: rgba(21, 23, 27, 0.86);
+    --shadow-soft: 0 24px 60px -28px rgba(0, 0, 0, 0.65);
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #15171b;
+  --paper-2: #1d2024;
+  --paper-3: #262a30;
+
+  --ink: #edeef0;
+  --ink-dim: #aeb1b8;
+  --ink-faint: #868a93;
+
+  --belge: #7c9bc9;
+  --belge-deep: #9fb8db;
+  --belge-ink: #3b5a87;
+  --belge-veil: rgba(124, 155, 201, 0.14);
+  --belge-hair: rgba(124, 155, 201, 0.34);
+
+  --clay: #c99669;
+  --clay-deep: #e3b98d;
+  --clay-veil: rgba(201, 150, 105, 0.14);
+  --clay-hair: rgba(201, 150, 105, 0.34);
+
+  --alert: #e2897c;
+
+  --hairline: rgba(255, 255, 255, 0.12);
+  --scrim: rgba(21, 23, 27, 0.86);
+  --shadow-soft: 0 24px 60px -28px rgba(0, 0, 0, 0.65);
+
+  color-scheme: dark;
 }
 
 *,

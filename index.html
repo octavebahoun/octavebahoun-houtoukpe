@@ -7,6 +7,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#FBF9F4" />
 
+  <!-- Applique le thème enregistré avant le premier paint, pour éviter
+       le flash clair→sombre au chargement. -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        var theme = saved === "light" || saved === "dark"
+          ? saved
+          : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {}
+    })();
+  </script>
+
   <title>Octave BAHOUN-HOUTOUKPE — Architecte IA, RAG &amp; Fullstack Engineer</title>
   <meta name="description"
     content="Portfolio d'Octave BAHOUN-HOUTOUKPE — Étudiant Ingénieur en Génie Électrique &amp; Informatique (INSTI Lokossa), architecte de pipelines RAG et de systèmes LLM, Co-fondateur &amp; Tech Lead d'Excellence Team." />
