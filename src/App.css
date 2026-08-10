@@ -211,8 +211,69 @@
   padding-top: 74px;
 }
 
+.hero__row {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  align-items: center;
+  gap: 2.5rem;
+}
+
 .hero__stack {
   max-width: 54rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------
+   Portrait — deux traitements pour un seul et même cliché.
+
+   Clair : un portrait rond, posé comme une photo d'identité.
+   Sombre : le même cliché s'efface en filigrane plein cadre
+   derrière le texte — plus une présence qu'une image.
+   ------------------------------------------------------------ */
+.hero__portrait {
+  justify-self: center;
+}
+
+.hero__portrait img {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 50%;
+  border: 1px solid var(--belge-hair);
+  box-shadow: var(--shadow-soft);
+  background: var(--paper-2);
+}
+
+:root[data-theme="dark"] .hero__row {
+  grid-template-columns: 1fr;
+}
+
+:root[data-theme="dark"] .hero__portrait {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  justify-self: stretch;
+  pointer-events: none;
+}
+
+:root[data-theme="dark"] .hero__portrait img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  aspect-ratio: auto;
+  object-position: top center;
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+  background: none;
+  opacity: 0.28;
+  filter: grayscale(1) contrast(1.05);
+  mask-image: radial-gradient(ellipse 60% 55% at 50% 42%, black 40%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 42%, black 40%, transparent 85%);
 }
 
 .hero__title {
@@ -826,8 +887,14 @@
 @media (max-width: 1024px) {
 
   .lab,
-  .contact__grid {
+  .contact__grid,
+  .hero__row {
     grid-template-columns: 1fr;
+  }
+
+  .hero__portrait img {
+    max-width: 220px;
+    margin: 0 auto;
   }
 
   .hero {

@@ -15,6 +15,7 @@ import {
 import Reveal, { SectionHead, Tally } from "../components/Reveal";
 import Magnetic from "../components/Magnetic";
 import { BADGES, IDENTITY, TALLY } from "../data/portfolioData";
+import portrait from "../assets/octave-portrait.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -159,53 +160,62 @@ export default function Home() {
     <>
       <section className="hero" ref={hero}>
         <div className="wrap">
-          <div className="hero__stack">
-            <span className="cartouche hero__cartouche" style={{ opacity: 0 }}>
-              Lokossa, Bénin · Open to Work
-            </span>
-
-            <h1 className="hero__title">
-              <span className="ln">{splitToChars("Octave")}</span>
-              <span className="ln hero__name">
-                {splitToChars("BAHOUN-HOUTOUKPE")}
+          <div className="hero__row">
+            <div className="hero__stack">
+              <span className="cartouche hero__cartouche" style={{ opacity: 0 }}>
+                Lokossa, Bénin · Open to Work
               </span>
-              <span
-                className="ln serif-italic"
-                style={{
-                  fontSize: "0.4em",
-                  fontWeight: 400,
-                  color: "var(--ink-dim)",
-                  marginTop: "0.55rem",
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                {splitToChars("Architecte IA & Fullstack")}
-              </span>
-            </h1>
 
-            <p className="hero__lead" style={{ opacity: 0 }}>
-              « {IDENTITY.tagline} »
-            </p>
-
-            <div className="hero__badges">
-              {BADGES.map((b) => (
-                <span key={b} className="cartouche cartouche--clay">
-                  {b}
+              <h1 className="hero__title">
+                <span className="ln">{splitToChars("Octave")}</span>
+                <span className="ln hero__name">
+                  {splitToChars("BAHOUN-HOUTOUKPE")}
                 </span>
-              ))}
+                <span
+                  className="ln serif-italic"
+                  style={{
+                    fontSize: "0.4em",
+                    fontWeight: 400,
+                    color: "var(--ink-dim)",
+                    marginTop: "0.55rem",
+                    letterSpacing: "-0.01em",
+                  }}
+                >
+                  {splitToChars("Architecte IA & Fullstack")}
+                </span>
+              </h1>
+
+              <p className="hero__lead" style={{ opacity: 0 }}>
+                « {IDENTITY.tagline} »
+              </p>
+
+              <div className="hero__badges">
+                {BADGES.map((b) => (
+                  <span key={b} className="cartouche cartouche--clay">
+                    {b}
+                  </span>
+                ))}
+              </div>
+
+              <div className="hero__cta">
+                <Magnetic strength={0.3}>
+                  <Link to="/projects" className="btn btn--solid">
+                    Entrer dans la galerie <ArrowRight size={15} />
+                  </Link>
+                </Magnetic>
+                <Magnetic strength={0.22}>
+                  <a className="btn" href={IDENTITY.links.cv} download>
+                    <Download size={15} /> CV PDF
+                  </a>
+                </Magnetic>
+              </div>
             </div>
 
-            <div className="hero__cta">
-              <Magnetic strength={0.3}>
-                <Link to="/projects" className="btn btn--solid">
-                  Entrer dans la galerie <ArrowRight size={15} />
-                </Link>
-              </Magnetic>
-              <Magnetic strength={0.22}>
-                <a className="btn" href={IDENTITY.links.cv} download>
-                  <Download size={15} /> CV PDF
-                </a>
-              </Magnetic>
+            <div className="hero__portrait">
+              <img
+                src={portrait}
+                alt="Portrait d'Octave Précieux Mahunan Bahoun-Houtoukpe"
+              />
             </div>
           </div>
         </div>
