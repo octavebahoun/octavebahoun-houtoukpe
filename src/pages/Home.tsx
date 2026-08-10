@@ -100,7 +100,12 @@ export default function Home() {
           { opacity: 0, filter: "blur(8px)" },
           { opacity: 1, filter: "blur(0px)", stagger: 0.4 },
         )
-        .to(".creed__rule", { scaleX: 1, transformOrigin: "left" }, "<");
+        .to(".creed__rule", { scaleX: 1, transformOrigin: "left" }, "<")
+        /* Sans étape dédiée ici, les compteurs avaient leur propre
+           ScrollTrigger (dans Tally) qui se déclenchait dès l'entrée dans
+           la section épinglée — donc avant le manifeste, pas après. Cette
+           étape les rattache à la même timeline pour respecter l'ordre. */
+        .fromTo(".tally", { opacity: 0, y: 16 }, { opacity: 1, y: 0 });
     }, el);
 
     return () => ctx.revert();

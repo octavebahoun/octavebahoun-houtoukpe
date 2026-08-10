@@ -178,6 +178,7 @@
   <script type="text/javascript">
     function forceCleanup() {
       document.documentElement.style.setProperty('padding-top', '0px', 'important');
+      if (!document.body) return;
       document.body.style.setProperty('top', '0px', 'important');
       const selectors = [
         '.goog-te-banner-frame',
@@ -198,10 +199,32 @@
       });
     }
 
-    const observer = new MutationObserver(forceCleanup);
+    /* La bannière Google Translate n'apparaît que dans les toutes premières
+       secondes, le temps que le widget s'initialise — observer le DOM au-delà
+       ne sert à rien et coûte cher : chaque style/attribut posé par les
+       animations GSAP pendant le scroll (ScrollTrigger, Reveal, Magnetic)
+       redéclenchait ce nettoyage (2 setProperty + 9 querySelectorAll sur tout
+       le document), causant des à-coups pendant le défilement. On coupe donc
+       l'observation après la même fenêtre de 5 s que l'intervalle, et on
+       regroupe les déclenchements rapprochés sur une frame plutôt que de les
+       exécuter un par un. */
+    let cleanupQueued = false;
+    function scheduleCleanup() {
+      if (cleanupQueued) return;
+      cleanupQueued = true;
+      requestAnimationFrame(() => {
+        cleanupQueued = false;
+        forceCleanup();
+      });
+    }
+
+    const observer = new MutationObserver(scheduleCleanup);
     observer.observe(document.documentElement, { attributes: true, childList: true, subtree: true });
     const cleanInterval = setInterval(forceCleanup, 300);
-    setTimeout(() => clearInterval(cleanInterval), 5000);
+    setTimeout(() => {
+      clearInterval(cleanInterval);
+      observer.disconnect();
+    }, 5000);
     window.addEventListener('load', forceCleanup);
   </script>
 </head>
