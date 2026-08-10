@@ -72,6 +72,32 @@ function RoomTransition({ children }: { children: React.ReactNode }) {
 }
 
 function Layout() {
+  /* Les révélations au scroll (Reveal.tsx) calculent leur zone de
+     déclenchement au montage — avant que les polices web et les images
+     (le portrait du hero, par exemple) n'aient fini de charger. Tant que
+     rien ne recalcule ces positions, une police ou une image qui change
+     la mise en page après coup décale la zone de déclenchement, et des
+     sections entières restent invisibles même arrêté sur elles. Un seul
+     rafraîchissement, une fois que tout est chargé, remet tout d'aplomb. */
+  useEffect(() => {
+    let cancelled = false;
+    const refresh = () => {
+      if (!cancelled) ScrollTrigger.refresh();
+    };
+
+    const pageLoaded = new Promise<void>((resolve) => {
+      if (document.readyState === "complete") resolve();
+      else window.addEventListener("load", () => resolve(), { once: true });
+    });
+    const fontsReady = document.fonts ? document.fonts.ready : Promise.resolve();
+
+    Promise.all([pageLoaded, fontsReady]).then(refresh);
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <>
       <a className="skip-link" href="#contenu">
