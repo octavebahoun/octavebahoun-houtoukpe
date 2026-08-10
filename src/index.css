@@ -145,8 +145,13 @@
   padding: 0;
 }
 
+/* Pas de `scroll-behavior: smooth` ici : le scroll natif fluide du
+   navigateur entre en conflit avec les calculs de position de
+   ScrollTrigger — particulièrement visible sur la section épinglée du
+   manifeste (desktop uniquement, ≥ 900px) où le contenu pouvait rester
+   figé pendant et après le défilement. GSAP anime déjà ce qui doit
+   l'être ; le reste peut sauter net. */
 html {
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -20,6 +20,12 @@ import "./App.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* Sans ça, un ralentissement du thread principal (rafale de scroll,
+   rendu lourd) fait que GSAP ralentit ses animations pour "rattraper"
+   le temps perdu au lieu de sauter directement à l'état correct — ce qui
+   se voit comme un contenu qui semble figé puis se débloque d'un coup. */
+gsap.ticker.lagSmoothing(0);
+
 /* Transition entre les pages : voile de papier + remontée. */
 function RoomTransition({ children }: { children: React.ReactNode }) {
   const { pathname } = useLocation();
@@ -38,7 +44,21 @@ function RoomTransition({ children }: { children: React.ReactNode }) {
     ).fromTo(
       ".room",
       { opacity: 0, y: 18 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        /* Sans ça, GSAP laisse un `transform: translate(0px, 0px)` sur
+           .room une fois l'animation finie — un transform "neutre" crée
+           quand même un nouveau bloc de positionnement pour ses
+           descendants en `position: fixed`. La section épinglée du
+           manifeste (Home.tsx) s'y retrouvait alors fixée par rapport à
+           .room, qui défile normalement, au lieu de la fenêtre : elle
+           semblait figée puis décrochait complètement du scroll.
+           `clearProps` retire le transform une fois l'entrée jouée. */
+        clearProps: "transform",
+      },
       "-=0.45",
     );
 

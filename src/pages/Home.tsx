@@ -85,11 +85,23 @@ export default function Home() {
         .timeline({
           scrollTrigger: {
             trigger: el,
-            start: "top top",
+            /* +74 = hauteur de la nav fixe (.topbar__inner) : sans ce
+               décalage, le tout début du contenu épinglé s'engage sous la
+               nav et y reste chevauché le temps d'un cran de scroll. */
+            start: "top top+=74",
             end: "+=90%",
             scrub: 1,
             pin: true,
             pinSpacing: true,
+            /* Anticipe l'accroche du pin d'un cran : évite le saut/flash
+               visible quand un scroll rapide (molette, trackpad) franchit
+               le point de déclenchement en une seule fois. */
+            anticipatePin: 1,
+            /* Un refresh (chargement tardif d'une police, d'une image, ou
+               changement de route) doit repartir de valeurs fraîches plutôt
+               que de valeurs mises en cache pendant que la section était
+               épinglée — sinon la position figée peut rester corrompue. */
+            invalidateOnRefresh: true,
           },
         })
         /* Le point de départ reste lisible : à 0.12 d'opacité et 7px de
