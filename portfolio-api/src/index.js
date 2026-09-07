@@ -34,22 +34,32 @@ app.get('/api-docs/spec', (req, res) => {
     res.send(swaggerSpec)
 })
 
-// Error handler
+// Error handler importé plus bas (après les routes)
+
+// Connexion Mongo lazy pour Vercel (serverless) : réutilise la connexion cachée
+app.use(async (req, res, next) => {
+    try {
+        await connectDB()
+        next()
+    } catch (error) {
+        next(error)
+    }
+})
+
+// 5. ROUTES PUBLIQUES
+app.use('/api', require('./routes/public'))
+
+// 6. ROUTES ADMIN (protégées)
+app.use('/api/admin', require('./routes/admin'))
+
+// 7. ERROR HANDLER (à la fin)
 app.use(require('./middlewares/errorHandler'))
 
+// Démarrage local uniquement : sur Vercel on exporte juste `app`
 async function startServer() {
     try {
         await connectDB()
         console.log('Connection à la base de donné ')
-
-        // 5. ROUTES PUBLIQUES
-        app.use('/api', require('./routes/public'))
-
-        // 6. ROUTES ADMIN (protégées)
-        app.use('/api/admin', require('./routes/admin'))
-
-        // 7. ERROR HANDLER (à la fin)
-        app.use(require('./middlewares/errorHandler'))
 
         app.listen(config.port, () => {
             console.log(`API running on port ${config.port}`)
@@ -61,4 +71,8 @@ async function startServer() {
     }
 }
 
-startServer();
+if (require.main === module) {
+    startServer()
+}
+
+module.exports = app

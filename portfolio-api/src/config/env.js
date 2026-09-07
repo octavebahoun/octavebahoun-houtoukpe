@@ -23,7 +23,6 @@ const requiredVars = ['JWT_SECRET', 'FRONTEND_URL', 'ADMIN_URL', 'GITHUB_CLIENT_
 requiredVars.forEach(varname => {
     if (!process.env[varname]) {
         console.log(`Variable d'environnement manquante : ${varname} `);
-git 
     }
 })
 
