@@ -23,7 +23,7 @@ const getProjectById = async (req, res, next) => {
 // ADMIN
 const createProject = async (req, res, next) => {
     try {
-        const { title, description, shortDesc, image, techStack, links, featured } = req.body
+        const { title, description, shortDesc, image, techStack, links, featured, challenge, solution, impact, features } = req.body
 
         if (!title || !shortDesc || !image) {
             const error = new Error('Missing required fields')
@@ -38,7 +38,11 @@ const createProject = async (req, res, next) => {
             image,
             techStack,
             links,
-            featured: featured || false
+            featured: featured || false,
+            challenge,
+            solution,
+            impact,
+            features
         })
 
         await project.save()
@@ -50,11 +54,11 @@ const createProject = async (req, res, next) => {
 
 const updateProject = async (req, res, next) => {
     try {
-        const { title, description, shortDesc, image, techStack, links, featured } = req.body
+        const { title, description, shortDesc, image, techStack, links, featured, challenge, solution, impact, features } = req.body
 
         const project = await Project.findByIdAndUpdate(
             req.params.id,
-            { title, description, shortDesc, image, techStack, links, featured },
+            { title, description, shortDesc, image, techStack, links, featured, challenge, solution, impact, features },
             { new: true }
         )
 

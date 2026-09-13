@@ -16,6 +16,16 @@ const userProject = mongoose.Schema({
         type: String,
         required: true
     },
+    challenge: {
+        type: String
+    },
+    solution: {
+        type: String
+    },
+    impact: {
+        type: String
+    },
+    features: [String],
     techStack: [String],
     links: {
         github: { type: String },
