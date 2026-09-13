@@ -8,7 +8,7 @@ passport.use(
     new GitHubStrategy({
         clientID: config.github.clientId,
         clientSecret: config.github.clientSecret,
-        callbackURL: '/api/admin/auth/github/callback'
+        callbackURL: `${config.urls.api}/api/admin/auth/callback`
     },
         async (accessToken, refreshToken, profile, done) => {
             try {

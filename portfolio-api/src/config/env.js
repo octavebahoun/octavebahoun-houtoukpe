@@ -14,7 +14,8 @@ const config = {
     },
     urls: {
         frontend: process.env.FRONTEND_URL,
-        admin: process.env.ADMIN_URL
+        admin: process.env.ADMIN_URL,
+        api: process.env.API_URL || 'http://localhost:5000'
     }
 }
 

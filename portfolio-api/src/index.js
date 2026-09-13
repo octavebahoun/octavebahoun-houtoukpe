@@ -11,6 +11,9 @@ const passport = require('./config/passport')
 // 2. CRÉER APP
 const app = express()
 
+// Derrière un reverse proxy (Render) : construire les URLs en https
+app.set('trust proxy', 1)
+
 // 3. MIDDLEWARES GLOBAUX
 // CORS
 app.use(cors(corsOptions))
