@@ -46,7 +46,7 @@ function normalize(project) {
     role: project.collaborators?.length ? 'Équipe' : 'Solo',
     link: project.links?.live ?? project.links?.demo ?? project.links?.github ?? '#',
     repo: repoFromLink(project.links?.github),
-    image: imageByTitle[key] ?? '/images/projects/jarvis.jpg',
+    image: project.image || imageByTitle[key] || '/images/projects/jarvis.jpg',
   }
 }
 
