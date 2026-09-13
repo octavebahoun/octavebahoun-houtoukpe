@@ -35,7 +35,7 @@ export default function Home() {
         </Reveal>
 
         <Reveal delay={0.12} className="mt-14">
-          <ServicesPanels limit={4} />
+          <ServicesPanels limit={6} />
         </Reveal>
 
         <Reveal delay={0.1} className="mt-12 text-center">
