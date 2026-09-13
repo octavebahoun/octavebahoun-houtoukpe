@@ -30,7 +30,8 @@ const landingController = require('../controllers/landingController')
 // GET /api/admin/auth/github
 // Redirect vers GitHub OAuth
 router.get('/auth/github', passport.authenticate('github', {
-    scope: ['user:email']
+    scope: ['user:email'],
+    session: false
 }))
 
 /**
@@ -50,7 +51,7 @@ router.get('/auth/github', passport.authenticate('github', {
 // GET /api/admin/auth/callback
 // Callback depuis GitHub - génère JWT
 router.get('/auth/callback',
-    passport.authenticate('github', { failureRedirect: '/login' }),
+    passport.authenticate('github', { failureRedirect: '/login', session: false }),
     authController.githubCallback
 )
 
