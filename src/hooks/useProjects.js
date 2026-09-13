@@ -39,6 +39,10 @@ function normalize(project) {
     title: project.title,
     subtitle: project.shortDesc ?? '',
     description: project.description ?? '',
+    challenge: project.challenge ?? '',
+    solution: project.solution ?? '',
+    impact: project.impact ?? '',
+    features: project.features ?? [],
     stack: project.techStack ?? [],
     year: project.createdAt
       ? String(new Date(project.createdAt).getFullYear())

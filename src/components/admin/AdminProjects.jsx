@@ -19,6 +19,10 @@ const emptyForm = {
   live: '',
   github: '',
   featured: false,
+  challenge: '',
+  solution: '',
+  impact: '',
+  features: '',
 }
 
 export default function AdminProjects({ token }) {
@@ -56,6 +60,10 @@ export default function AdminProjects({ token }) {
       live: item.links?.live ?? '',
       github: item.links?.github ?? '',
       featured: !!item.featured,
+      challenge: item.challenge ?? '',
+      solution: item.solution ?? '',
+      impact: item.impact ?? '',
+      features: (item.features ?? []).join(', '),
     })
     setEditingId(item._id)
     setError('')
@@ -77,6 +85,13 @@ export default function AdminProjects({ token }) {
         .filter(Boolean),
       links: { live: form.live, github: form.github },
       featured: form.featured,
+      challenge: form.challenge,
+      solution: form.solution,
+      impact: form.impact,
+      features: form.features
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean),
     }
 
     try {
@@ -148,6 +163,39 @@ export default function AdminProjects({ token }) {
             onChange={(event) =>
               setForm({ ...form, description: event.target.value })
             }
+          />
+          <AdminTextarea
+            label="Le défi"
+            rows="3"
+            className="font-sans"
+            value={form.challenge}
+            onChange={(event) =>
+              setForm({ ...form, challenge: event.target.value })
+            }
+          />
+          <AdminTextarea
+            label="La solution"
+            rows="3"
+            className="font-sans"
+            value={form.solution}
+            onChange={(event) =>
+              setForm({ ...form, solution: event.target.value })
+            }
+          />
+          <AdminInput
+            label="Points clés (séparés par des virgules)"
+            value={form.features}
+            onChange={(event) =>
+              setForm({ ...form, features: event.target.value })
+            }
+            hint="Affichés avec des coches dans la page projet"
+          />
+          <AdminTextarea
+            label="L'impact"
+            rows="3"
+            className="font-sans"
+            value={form.impact}
+            onChange={(event) => setForm({ ...form, impact: event.target.value })}
           />
           <AdminInput
             label="Technologies"
