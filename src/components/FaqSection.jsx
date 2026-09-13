@@ -1,23 +1,26 @@
 import { Link } from 'react-router-dom'
 import FaqAccordion from './FaqAccordion'
 import { Mail, Sparkle } from './icons'
+import { Reveal } from './Reveal'
 
 export default function FaqSection({ limit }) {
   return (
     <section className="mx-auto max-w-site px-6 py-20">
-      <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-        <span className="h-px w-8 bg-primary" />
-        FAQ
-      </p>
+      <Reveal>
+        <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
+          <span className="h-px w-8 bg-primary" />
+          FAQ
+        </p>
 
-      <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-        Des questions ?{' '}
-        <span className="font-medium text-primary italic">Réponses ici</span>
-        <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
-      </h2>
+        <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
+          Des questions ?{' '}
+          <span className="font-medium text-primary italic">Réponses ici</span>
+          <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
+        </h2>
+      </Reveal>
 
       <div className="mt-14 grid gap-8 lg:grid-cols-[1.8fr_1fr]">
-        <div>
+        <Reveal delay={0.08}>
           <FaqAccordion limit={limit} />
 
           {limit && (
@@ -30,9 +33,9 @@ export default function FaqSection({ limit }) {
               </Link>
             </div>
           )}
-        </div>
+        </Reveal>
 
-        <div className="flex flex-col gap-6 self-start">
+        <Reveal delay={0.16} className="flex flex-col gap-6 self-start">
           <div className="overflow-hidden rounded-card bg-ink">
             <div className="p-8 text-center">
               <span className="mx-auto flex size-14 items-center justify-center">
@@ -78,7 +81,7 @@ export default function FaqSection({ limit }) {
               <p className="font-bold text-ink">Réponse sous 24 h</p>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   )

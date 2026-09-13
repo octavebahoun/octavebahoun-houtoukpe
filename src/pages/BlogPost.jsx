@@ -7,6 +7,7 @@ import {
   XIcon,
 } from '../components/icons'
 import Marquee from '../components/Marquee'
+import { Reveal, Stagger, StaggerItem } from '../components/Reveal'
 import { useGithubStats } from '../hooks/useGithubStats'
 import { usePosts } from '../hooks/usePosts'
 import { formatDate, readingTime } from '../lib/format'
@@ -224,13 +225,15 @@ export default function BlogPost() {
   return (
     <>
       <section className="mx-auto max-w-site px-6 pt-16">
-        <img
-          src={post.image}
-          alt={post.title}
-          className="aspect-[16/7] w-full rounded-card object-cover object-top"
-        />
+        <Reveal>
+          <img
+            src={post.image}
+            alt={post.title}
+            className="aspect-[16/7] w-full rounded-card object-cover object-top"
+          />
+        </Reveal>
 
-        <div className="mx-auto mt-10 max-w-3xl text-center">
+        <Reveal delay={0.1} className="mx-auto mt-10 max-w-3xl text-center">
           <span className="inline-block rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-white">
             {post.category}
           </span>
@@ -258,7 +261,7 @@ export default function BlogPost() {
               </p>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <section className="mx-auto max-w-site px-6 pt-12 pb-16">
@@ -384,22 +387,26 @@ export default function BlogPost() {
       <Marquee />
 
       <section className="mx-auto max-w-site px-6 py-20">
-        <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-          <span className="h-px w-8 bg-primary" />
-          Actus & Blog
-        </p>
+        <Reveal>
+          <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
+            <span className="h-px w-8 bg-primary" />
+            Actus & Blog
+          </p>
 
-        <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-          À lire{' '}
-          <span className="font-medium text-primary italic">aussi</span>
-          <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
-        </h2>
+          <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
+            À lire{' '}
+            <span className="font-medium text-primary italic">aussi</span>
+            <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
+          </h2>
+        </Reveal>
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-3">
+        <Stagger className="mt-12 grid gap-8 lg:grid-cols-3">
           {related.map((item) => (
-            <RelatedCard key={item.slug} post={item} />
+            <StaggerItem key={item.slug}>
+              <RelatedCard post={item} />
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </section>
     </>
   )

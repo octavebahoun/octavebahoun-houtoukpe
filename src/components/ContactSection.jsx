@@ -3,6 +3,7 @@ import { FORMSPREE_ENDPOINT } from '../lib/api'
 import { socials } from '../lib/socials'
 import { CAL_URL } from './BookingBand'
 import { Calendar, Sparkle } from './icons'
+import { Reveal } from './Reveal'
 
 const interests = [
   'Ingénierie IA',
@@ -62,19 +63,24 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="mx-auto max-w-site px-6 py-20">
-      <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-        <span className="h-px w-8 bg-primary" />
-        Contact
-      </p>
+      <Reveal>
+        <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
+          <span className="h-px w-8 bg-primary" />
+          Contact
+        </p>
 
-      <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-        Parlons de votre{' '}
-        <span className="font-medium text-primary italic">prochain projet</span>
-        <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
-      </h2>
+        <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
+          Parlons de votre{' '}
+          <span className="font-medium text-primary italic">
+            prochain projet
+          </span>
+          <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
+        </h2>
+      </Reveal>
 
       <div className="mt-12 grid gap-8 lg:grid-cols-[1.6fr_1fr]">
-        <form onSubmit={handleSubmit} className="grid gap-5 sm:grid-cols-2">
+        <Reveal delay={0.08}>
+          <form onSubmit={handleSubmit} className="grid gap-5 sm:grid-cols-2">
           <div>
             <label className={labelClass} htmlFor="name">
               Votre nom *
@@ -225,8 +231,9 @@ export default function ContactSection() {
             </p>
           )}
         </form>
+        </Reveal>
 
-        <div className="self-start rounded-card bg-ink p-8">
+        <Reveal delay={0.16} className="self-start rounded-card bg-ink p-8">
           <h3 className="text-lg font-bold text-primary">Adresse</h3>
           <p className="mt-3 text-white/60">
             Cotonou, Littoral
@@ -262,7 +269,7 @@ export default function ContactSection() {
               ))}
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   )

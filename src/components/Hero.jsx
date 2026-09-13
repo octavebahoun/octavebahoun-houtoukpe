@@ -1,3 +1,4 @@
+import { motion } from 'motion/react'
 import { socials } from '../lib/socials'
 import { useGithubStats } from '../hooks/useGithubStats'
 import { CAL_URL } from './BookingBand'
@@ -30,19 +31,41 @@ export default function Hero() {
   return (
     <section id="home" className="relative mx-auto max-w-site overflow-hidden px-6 pt-12">
       <div className="relative text-center">
-        <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center justify-center gap-3 text-sm font-semibold text-ink"
+        >
           <span className="h-px w-8 bg-primary" />
           Bonjour !
-        </p>
+        </motion.p>
 
-        <h1 className="mt-5 text-5xl font-extrabold tracking-tight sm:text-6xl">
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+          className="mt-5 text-5xl font-extrabold tracking-tight sm:text-6xl"
+        >
           Je suis <span className="text-primary">Oktav Bahoun</span>
           <Sparkle className="ml-3 inline-block size-4 -translate-y-3 text-ink" />
-        </h1>
+        </motion.h1>
 
-        <p className="mt-4 text-lg">Ingénieur IA freelance & open source</p>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.16 }}
+          className="mt-4 text-lg"
+        >
+          Ingénieur IA freelance & open source
+        </motion.p>
 
-        <div className="absolute top-0 right-0 hidden size-28 lg:block">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
+          className="absolute top-0 right-0 hidden size-28 lg:block"
+        >
           <svg viewBox="0 0 100 100" className="size-full animate-spin-slow">
             <defs>
               <path
@@ -59,11 +82,16 @@ export default function Hero() {
           <span className="absolute inset-0 m-auto flex size-11 items-center justify-center rounded-full bg-primary text-white">
             <ArrowUpRight className="size-5" />
           </span>
-        </div>
+        </motion.div>
       </div>
 
       <div className="mt-12 grid items-center gap-12 lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
-        <div className="order-2 lg:order-1">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.28 }}
+          className="order-2 lg:order-1"
+        >
           <span className="font-serif text-6xl leading-none text-primary">&ldquo;</span>
           <p className="mt-2 max-w-xs text-lg">
             Oktav transforme les idées en applications web soignées – vivement
@@ -87,9 +115,14 @@ export default function Hero() {
               </p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="relative order-1 mx-auto w-72 sm:w-80 lg:order-2 lg:w-[420px]">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.18 }}
+          className="relative order-1 mx-auto w-72 sm:w-80 lg:order-2 lg:w-[420px]"
+        >
           <HeroBlob className="absolute left-1/2 top-8 aspect-square w-[125%] -translate-x-1/2" />
 
           <img
@@ -117,9 +150,14 @@ export default function Hero() {
               Prendre un RDV
             </a>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="order-3 flex flex-col items-center gap-3 lg:items-end">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.32 }}
+          className="order-3 flex flex-col items-center gap-3 lg:items-end"
+        >
           <div className="flex items-center gap-3">
             {skills.slice(0, 2).map((skill) => (
               <Pill key={skill.label} tone={skill.tone}>
@@ -158,7 +196,7 @@ export default function Hero() {
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

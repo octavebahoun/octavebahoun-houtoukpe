@@ -1,4 +1,5 @@
 import { ClipboardCheck } from './icons'
+import { Reveal } from './Reveal'
 
 const education = [
   {
@@ -64,22 +65,28 @@ function Column({ title, Icon, items }) {
 export default function ExperienceSection() {
   return (
     <section className="mx-auto max-w-site px-6 py-20">
-      <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-        <span className="h-px w-8 bg-primary" />
-        Formation & Expérience
-      </p>
+      <Reveal>
+        <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
+          <span className="h-px w-8 bg-primary" />
+          Formation & Expérience
+        </p>
 
-      <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-        Mon{' '}
-        <span className="font-medium text-primary italic">
-          parcours scolaire
-        </span>{' '}
-        & professionnel
-      </h2>
+        <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
+          Mon{' '}
+          <span className="font-medium text-primary italic">
+            parcours scolaire
+          </span>{' '}
+          & professionnel
+        </h2>
+      </Reveal>
 
       <div className="mt-14 grid gap-8 lg:grid-cols-2">
-        <Column title="Formation" Icon={GraduationIcon} items={education} />
-        <Column title="Expérience" Icon={ClipboardCheck} items={work} />
+        <Reveal delay={0.05}>
+          <Column title="Formation" Icon={GraduationIcon} items={education} />
+        </Reveal>
+        <Reveal delay={0.15}>
+          <Column title="Expérience" Icon={ClipboardCheck} items={work} />
+        </Reveal>
       </div>
     </section>
   )

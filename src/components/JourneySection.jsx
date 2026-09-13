@@ -1,4 +1,5 @@
 import { Sparkle } from './icons'
+import { Reveal, Stagger, StaggerItem } from './Reveal'
 
 const journey = [
   {
@@ -27,22 +28,24 @@ export default function JourneySection() {
   return (
     <section className="bg-soft py-20">
       <div className="mx-auto max-w-site px-6">
-        <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-          <span className="h-px w-8 bg-primary" />
-          Mon Parcours
-        </p>
+        <Reveal>
+          <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
+            <span className="h-px w-8 bg-primary" />
+            Mon Parcours
+          </p>
 
-        <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-          Mon chemin{' '}
-          <span className="font-medium text-primary italic">
-            jusqu&apos;ici
-          </span>
-          <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
-        </h2>
+          <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Mon chemin{' '}
+            <span className="font-medium text-primary italic">
+              jusqu&apos;ici
+            </span>
+            <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
+          </h2>
+        </Reveal>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <Stagger className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {journey.map((item, index) => (
-            <div
+            <StaggerItem
               key={item.year}
               className="relative overflow-hidden rounded-card bg-white p-7"
             >
@@ -55,9 +58,9 @@ export default function JourneySection() {
               </span>
               <h3 className="mt-2 text-xl font-bold">{item.title}</h3>
               <p className="mt-3 text-sm">{item.text}</p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   )

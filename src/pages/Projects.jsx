@@ -5,6 +5,7 @@ import FaqSection from '../components/FaqSection'
 import { ArrowUpRight, Sparkle } from '../components/icons'
 import Marquee from '../components/Marquee'
 import PageHeader from '../components/PageHeader'
+import { Reveal, Stagger, StaggerItem } from '../components/Reveal'
 import { useProjects } from '../hooks/useProjects'
 
 function ProjectCard({ project, reversed }) {
@@ -100,26 +101,26 @@ export default function Projects() {
       <Marquee />
 
       <section className="mx-auto max-w-site px-6 py-20">
-        <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-          <span className="h-px w-8 bg-primary" />
-          Mon Portfolio
-        </p>
+        <Reveal>
+          <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
+            <span className="h-px w-8 bg-primary" />
+            Mon Portfolio
+          </p>
 
-        <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-          Découvrez mes{' '}
-          <span className="font-medium text-primary italic">réalisations</span>
-          <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
-        </h2>
+          <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Découvrez mes{' '}
+            <span className="font-medium text-primary italic">réalisations</span>
+            <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
+          </h2>
+        </Reveal>
 
-        <div className="mt-14 flex flex-col gap-6">
+        <Stagger className="mt-14 flex flex-col gap-6">
           {projects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              reversed={index % 2 === 1}
-            />
+            <StaggerItem key={project.id}>
+              <ProjectCard project={project} reversed={index % 2 === 1} />
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </section>
 
       <BookingBand />

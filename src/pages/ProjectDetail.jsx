@@ -5,6 +5,7 @@ import FaqSection from '../components/FaqSection'
 import HeroBlob from '../components/HeroBlob'
 import { ArrowUpRight, Sparkle } from '../components/icons'
 import Marquee from '../components/Marquee'
+import { Reveal, Stagger, StaggerItem } from '../components/Reveal'
 import { useProjects } from '../hooks/useProjects'
 
 function Section({ title, children }) {
@@ -82,14 +83,16 @@ export default function ProjectDetail() {
   return (
     <>
       <section className="mx-auto max-w-site px-6 pt-16">
-        <img
-          src={project.image}
-          alt={project.title}
-          className="aspect-[16/8] w-full rounded-card object-cover object-top"
-        />
+        <Reveal>
+          <img
+            src={project.image}
+            alt={project.title}
+            className="aspect-[16/8] w-full rounded-card object-cover object-top"
+          />
+        </Reveal>
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[1.6fr_1fr]">
-          <div>
+          <Reveal delay={0.08}>
             <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
               <span className="text-primary">{project.title}</span> —{' '}
               {project.subtitle}
@@ -135,9 +138,12 @@ export default function ProjectDetail() {
                 <p>{project.impact}</p>
               </Section>
             )}
-          </div>
+          </Reveal>
 
-          <aside className="relative self-start overflow-hidden rounded-card bg-primary p-8 text-white">
+          <Reveal
+            delay={0.16}
+            className="relative self-start overflow-hidden rounded-card bg-primary p-8 text-white"
+          >
             <HeroBlob className="pointer-events-none absolute -right-24 -bottom-28 w-80 opacity-30" />
             <div className="relative">
               {info.map((row) => (
@@ -157,27 +163,31 @@ export default function ProjectDetail() {
                 <ArrowUpRight className="size-4" />
               </a>
             </div>
-          </aside>
+          </Reveal>
         </div>
       </section>
 
       <section className="mx-auto max-w-site px-6 py-20">
-        <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-          <span className="h-px w-8 bg-primary" />
-          Autres projets
-        </p>
+        <Reveal>
+          <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
+            <span className="h-px w-8 bg-primary" />
+            Autres projets
+          </p>
 
-        <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-          À découvrir{' '}
-          <span className="font-medium text-primary italic">aussi</span>
-          <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
-        </h2>
+          <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
+            À découvrir{' '}
+            <span className="font-medium text-primary italic">aussi</span>
+            <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
+          </h2>
+        </Reveal>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {others.map((item) => (
-            <OtherCard key={item.id} project={item} />
+            <StaggerItem key={item.id}>
+              <OtherCard project={item} />
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </section>
 
       <Marquee />

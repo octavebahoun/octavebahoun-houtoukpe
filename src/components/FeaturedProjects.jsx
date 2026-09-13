@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ArrowUpRight, Sparkle } from './icons'
+import { Reveal, Stagger, StaggerItem } from './Reveal'
 
 const featured = [
   {
@@ -74,31 +75,35 @@ function Card({ project }) {
 export default function FeaturedProjects() {
   return (
     <section className="mx-auto max-w-site px-6 py-20">
-      <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-        <span className="h-px w-8 bg-primary" />
-        Projets en avant
-      </p>
+      <Reveal>
+        <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
+          <span className="h-px w-8 bg-primary" />
+          Projets en avant
+        </p>
 
-      <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-        Quelques{' '}
-        <span className="font-medium text-primary italic">réalisations</span>
-        <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
-      </h2>
+        <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
+          Quelques{' '}
+          <span className="font-medium text-primary italic">réalisations</span>
+          <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
+        </h2>
+      </Reveal>
 
-      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {featured.map((project) => (
-          <Card key={project.title} project={project} />
+          <StaggerItem key={project.title}>
+            <Card project={project} />
+          </StaggerItem>
         ))}
-      </div>
+      </Stagger>
 
-      <div className="mt-12 text-center">
+      <Reveal delay={0.1} className="mt-12 text-center">
         <Link
           to="/projects"
           className="inline-block rounded-full border-2 border-ink px-8 py-3.5 font-semibold text-ink transition-colors hover:border-primary hover:text-primary"
         >
           Voir tous les projets
         </Link>
-      </div>
+      </Reveal>
     </section>
   )
 }

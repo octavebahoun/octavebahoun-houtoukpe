@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useGithubStats } from '../hooks/useGithubStats'
 import HeroBlob from './HeroBlob'
 import { ArrowUpRight, Mail, MapPin, Sparkle } from './icons'
+import { Reveal } from './Reveal'
 
 export default function AboutMe({ withLink = false }) {
   const stats = useGithubStats()
@@ -9,7 +10,7 @@ export default function AboutMe({ withLink = false }) {
   return (
     <section className="bg-soft py-20">
       <div className="mx-auto grid max-w-site items-center gap-14 px-6 lg:grid-cols-2">
-        <div className="relative mx-auto w-72 sm:w-80">
+        <Reveal className="relative mx-auto w-72 sm:w-80">
           <HeroBlob className="absolute left-1/2 top-8 aspect-square w-[125%] -translate-x-1/2" />
           <img
             src="/images/profile-cutout.png"
@@ -35,9 +36,9 @@ export default function AboutMe({ withLink = false }) {
               AI Engineer
             </span>
           </div>
-        </div>
+        </Reveal>
 
-        <div>
+        <Reveal delay={0.12}>
           <p className="flex items-center gap-3 text-sm font-semibold text-ink">
             <span className="h-px w-8 bg-primary" />À propos
           </p>
@@ -102,7 +103,7 @@ export default function AboutMe({ withLink = false }) {
               <ArrowUpRight className="size-4" />
             </Link>
           )}
-        </div>
+        </Reveal>
       </div>
     </section>
   )

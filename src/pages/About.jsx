@@ -5,6 +5,7 @@ import { Eye, Lightbulb, Pencil, ClipboardCheck, Rocket } from '../components/ic
 import JourneySection from '../components/JourneySection'
 import Marquee from '../components/Marquee'
 import PageHeader from '../components/PageHeader'
+import { Reveal } from '../components/Reveal'
 
 const process = [
   {
@@ -34,14 +35,16 @@ export default function About() {
       <Marquee />
 
       <section className="mx-auto max-w-site px-6 pt-20">
-        <img
-          src="/images/about-banner.jpg"
-          alt="Profil GitHub d'Octave Bahoun-Houtoukpe"
-          className="aspect-[16/7] w-full rounded-card object-cover object-top"
-        />
+        <Reveal>
+          <img
+            src="/images/about-banner.jpg"
+            alt="Profil GitHub d'Octave Bahoun-Houtoukpe"
+            className="aspect-[16/7] w-full rounded-card object-cover object-top"
+          />
+        </Reveal>
 
         <div className="mt-14 grid gap-10 sm:grid-cols-2">
-          <div>
+          <Reveal delay={0.05}>
             <span className="flex size-12 items-center justify-center rounded-full bg-primary text-white">
               <Rocket />
             </span>
@@ -50,9 +53,9 @@ export default function About() {
               Rendre l&apos;IA utile et accessible : des outils simples qui
               résolvent de vrais problèmes, du Bénin au reste du monde.
             </p>
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal delay={0.15}>
             <span className="flex size-12 items-center justify-center rounded-full bg-primary text-white">
               <Eye />
             </span>
@@ -62,7 +65,7 @@ export default function About() {
               quand c&apos;est possible, avec une exigence de qualité à chaque
               étape.
             </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -71,21 +74,23 @@ export default function About() {
       </div>
 
       <section className="mx-auto max-w-site px-6 py-20">
-        <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-          <span className="h-px w-8 bg-primary" />
-          Ma Méthode
-        </p>
+        <Reveal>
+          <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
+            <span className="h-px w-8 bg-primary" />
+            Ma Méthode
+          </p>
 
-        <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-          Ma <span className="font-medium text-primary italic">Méthode</span> de
-          travail
-        </h2>
+          <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Ma <span className="font-medium text-primary italic">Méthode</span>{' '}
+            de travail
+          </h2>
+        </Reveal>
 
         <div className="relative mt-16 grid gap-12 sm:grid-cols-3">
           <span className="absolute top-7 right-[16%] left-[16%] hidden border-t-2 border-dashed border-line sm:block" />
 
-          {process.map((step) => (
-            <div key={step.number} className="relative text-center">
+          {process.map((step, index) => (
+            <Reveal key={step.number} delay={index * 0.12} className="relative text-center">
               <span className="relative inline-flex">
                 <span className="flex size-14 items-center justify-center rounded-full bg-primary text-white">
                   <step.Icon />
@@ -97,7 +102,7 @@ export default function About() {
 
               <h3 className="mt-6 text-xl font-bold">{step.title}</h3>
               <p className="mx-auto mt-3 max-w-xs text-sm">{step.text}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>

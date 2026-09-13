@@ -1,5 +1,6 @@
 import { CAL_URL } from './BookingBand'
 import { ArrowUpRight, Sparkle } from './icons'
+import { Reveal, Stagger, StaggerItem } from './Reveal'
 
 const plans = [
   {
@@ -52,7 +53,7 @@ const plans = [
 export default function PricingSection() {
   return (
     <section className="mx-auto max-w-site px-6 py-20">
-      <div className="flex flex-wrap items-end justify-between gap-6">
+      <Reveal className="flex flex-wrap items-end justify-between gap-6">
         <div>
           <p className="flex items-center gap-3 text-sm font-semibold text-ink">
             <span className="h-px w-8 bg-primary" />
@@ -79,11 +80,11 @@ export default function PricingSection() {
             <ArrowUpRight />
           </span>
         </a>
-      </div>
+      </Reveal>
 
-      <div className="mt-14 grid gap-6 lg:grid-cols-3">
+      <Stagger className="mt-14 grid gap-6 lg:grid-cols-3">
         {plans.map((plan) => (
-          <div key={plan.name} className="rounded-card bg-card p-4">
+          <StaggerItem key={plan.name} className="rounded-card bg-card p-4">
             <div className="rounded-2xl bg-primary p-6 text-white">
               <div className="flex items-center justify-between gap-4">
                 <p className="font-semibold">{plan.name}</p>
@@ -135,9 +136,9 @@ export default function PricingSection() {
                 </a>
               </div>
             )}
-          </div>
+          </StaggerItem>
         ))}
-      </div>
+      </Stagger>
     </section>
   )
 }

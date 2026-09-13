@@ -6,6 +6,7 @@ import FaqSection from '../components/FaqSection'
 import { ArrowUpRight, Sparkle } from '../components/icons'
 import Marquee from '../components/Marquee'
 import PageHeader from '../components/PageHeader'
+import { Reveal, Stagger, StaggerItem } from '../components/Reveal'
 import { usePosts } from '../hooks/usePosts'
 import { formatDate } from '../lib/format'
 
@@ -72,21 +73,25 @@ export default function Blog() {
       <Marquee />
 
       <section className="mx-auto max-w-site px-6 py-20">
-        <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-          <span className="h-px w-8 bg-primary" />
-          Actus & Blog
-        </p>
+        <Reveal>
+          <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
+            <span className="h-px w-8 bg-primary" />
+            Actus & Blog
+          </p>
 
-        <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-          Mes derniers{' '}
-          <span className="font-medium text-primary italic">articles</span>
-          <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
-        </h2>
+          <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Mes derniers{' '}
+            <span className="font-medium text-primary italic">articles</span>
+            <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
+          </h2>
+        </Reveal>
 
         <div className="mt-14 grid gap-10 lg:grid-cols-[1.8fr_1fr]">
-          <div className="flex flex-col gap-8">
+          <Stagger className="flex flex-col gap-8">
             {filtered.map((post) => (
-              <PostCard key={post.slug} post={post} />
+              <StaggerItem key={post.slug}>
+                <PostCard post={post} />
+              </StaggerItem>
             ))}
 
             {filtered.length === 0 && (
@@ -94,9 +99,9 @@ export default function Blog() {
                 Aucun article ne correspond à « {query} ».
               </p>
             )}
-          </div>
+          </Stagger>
 
-          <aside className="flex flex-col gap-10">
+          <Reveal delay={0.12} className="flex flex-col gap-10">
             <div>
               <SidebarTitle>Recherche</SidebarTitle>
               <div className="mt-4 flex items-center gap-3 rounded-field bg-card px-5 py-3.5">
@@ -179,7 +184,7 @@ export default function Blog() {
                 className="mx-auto mt-6 -mb-20 w-44"
               />
             </div>
-          </aside>
+          </Reveal>
         </div>
       </section>
 
