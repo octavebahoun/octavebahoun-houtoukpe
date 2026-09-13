@@ -14,7 +14,8 @@ const config = {
     },
     urls: {
         frontend: process.env.FRONTEND_URL,
-        admin: process.env.ADMIN_URL
+        admin: process.env.ADMIN_URL,
+        api: process.env.API_URL || 'http://localhost:5000'
     }
 }
 
@@ -23,7 +24,6 @@ const requiredVars = ['JWT_SECRET', 'FRONTEND_URL', 'ADMIN_URL', 'GITHUB_CLIENT_
 requiredVars.forEach(varname => {
     if (!process.env[varname]) {
         console.log(`Variable d'environnement manquante : ${varname} `);
-git 
     }
 })
 

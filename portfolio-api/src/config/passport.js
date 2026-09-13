@@ -3,11 +3,12 @@ const GitHubStrategy = require('passport-github2').Strategy
 const config = require('./env')
 const User = require('../models/User')
 
+if (config.github.clientId && config.github.clientSecret) {
 passport.use(
     new GitHubStrategy({
         clientID: config.github.clientId,
         clientSecret: config.github.clientSecret,
-        callbackURL: '/api/admin/auth/github/callback'
+        callbackURL: `${config.urls.api}/api/admin/auth/callback`
     },
         async (accessToken, refreshToken, profile, done) => {
             try {
@@ -46,4 +47,7 @@ passport.deserializeUser(async (id, done) => {
         done(error)
     }
 })
+} else {
+    console.log("GitHub OAuth désactivé : GITHUB_CLIENT_ID / SECRET manquants")
+}
 module.exports = passport
