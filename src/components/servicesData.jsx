@@ -1,9 +1,11 @@
 import {
   DataIllustration,
+  DevWebIllustration,
   DevopsIllustration,
   LlmIllustration,
   NeuralIllustration,
   RagIllustration,
+  SaasIllustration,
 } from './illustrations'
 import NodeGraph from './NodeGraph'
 
@@ -66,13 +68,7 @@ export const services = [
         <path d="M9 8l-4 4 4 4M15 8l4 4-4 4" />
       </svg>
     ),
-    visual: (
-      <img
-        src="/images/services/dev-web.jpg"
-        alt="Waaloge — plateforme de logement étudiant"
-        className="aspect-[16/7] w-full object-cover object-top"
-      />
-    ),
+    visual: <DevWebIllustration />,
   },
   {
     title: 'Applications SaaS',
@@ -84,13 +80,7 @@ export const services = [
         <path d="M12 4 21 8l-9 4-9-4 9-4zM3 12l9 4 9-4M3 16l9 4 9-4" />
       </svg>
     ),
-    visual: (
-      <img
-        src="/images/services/saas.jpg"
-        alt="Contravo — bureau numérique pour freelances"
-        className="aspect-[16/7] w-full object-cover object-top"
-      />
-    ),
+    visual: <SaasIllustration />,
   },
   {
     title: 'Intégration LLM & APIs',

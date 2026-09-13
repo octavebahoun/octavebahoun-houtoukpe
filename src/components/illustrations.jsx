@@ -309,3 +309,129 @@ export function DevopsIllustration() {
     </svg>
   )
 }
+
+export function DevWebIllustration() {
+  const blocks = [140, 120, 150, 96]
+
+  return (
+    <svg viewBox="0 0 520 300" className="w-full" aria-hidden="true">
+      <Dots id="dots-devweb" />
+
+      <rect x="40" y="46" width="330" height="208" rx="16" fill="#111" stroke="#2a2a2a" />
+      <circle cx="66" cy="72" r="5" fill="#fe4619" />
+      <circle cx="84" cy="72" r="5" fill="#3a3a3a" />
+      <circle cx="102" cy="72" r="5" fill="#3a3a3a" />
+      <rect x="150" y="66" width="196" height="12" rx="6" fill="#1c1c1c" />
+      <line x1="40" y1="92" x2="370" y2="92" stroke="#2a2a2a" />
+
+      <rect x="64" y="112" width="120" height="14" rx="6" fill="#fe4619" className="animate-fade-line" />
+      <rect
+        x="64"
+        y="136"
+        width="220"
+        height="8"
+        rx="4"
+        fill="#2e2e2e"
+        className="animate-fade-line"
+        style={{ animationDelay: '0.12s' }}
+      />
+
+      {blocks.map((width, index) => (
+        <rect
+          key={width + index}
+          x={64 + (index % 2) * 150}
+          y={166 + Math.floor(index / 2) * 42}
+          width={width}
+          height="30"
+          rx="8"
+          fill="#161616"
+          stroke="#2e2e2e"
+          className="animate-fade-line"
+          style={{ animationDelay: `${0.24 + index * 0.12}s` }}
+        />
+      ))}
+
+      <rect x="398" y="70" width="82" height="160" rx="16" fill="#161616" stroke="#2e2e2e" />
+      <rect
+        x="410"
+        y="86"
+        width="58"
+        height="10"
+        rx="5"
+        fill="#fe4619"
+        className="animate-fade-line"
+        style={{ animationDelay: '0.4s' }}
+      />
+      <rect x="410" y="104" width="58" height="7" rx="3" fill="#2e2e2e" />
+      <rect x="410" y="120" width="42" height="7" rx="3" fill="#2e2e2e" />
+      <rect x="410" y="150" width="58" height="34" rx="8" fill="#111" stroke="#2e2e2e" />
+      <rect x="422" y="200" width="34" height="8" rx="4" fill="#fe4619" className="animate-blink" />
+    </svg>
+  )
+}
+
+export function SaasIllustration() {
+  const bars = [40, 60, 48, 72, 54]
+
+  return (
+    <svg viewBox="0 0 520 300" className="w-full" aria-hidden="true">
+      <Dots id="dots-saas" />
+
+      <rect x="40" y="46" width="440" height="208" rx="16" fill="#111" stroke="#2a2a2a" />
+      <line x1="150" y1="46" x2="150" y2="254" stroke="#2a2a2a" />
+
+      <rect x="64" y="74" width="62" height="10" rx="5" fill="#fe4619" />
+      <rect x="64" y="98" width="62" height="8" rx="4" fill="#2e2e2e" />
+      <rect x="64" y="116" width="48" height="8" rx="4" fill="#2e2e2e" />
+      <rect x="64" y="134" width="56" height="8" rx="4" fill="#2e2e2e" />
+
+      {[0, 1, 2].map((index) => (
+        <g key={index}>
+          <rect x={172 + index * 100} y="72" width="86" height="52" rx="10" fill="#161616" stroke="#2e2e2e" />
+          <rect
+            x={186 + index * 100}
+            y="86"
+            width={index === 1 ? 40 : 28}
+            height="9"
+            rx="4"
+            fill={index === 1 ? '#fe4619' : '#2e2e2e'}
+            className="animate-fade-line"
+            style={{ animationDelay: `${index * 0.15}s` }}
+          />
+          <rect x={186 + index * 100} y="102" width="54" height="7" rx="3" fill="#2e2e2e" />
+        </g>
+      ))}
+
+      <rect x="172" y="140" width="286" height="94" rx="10" fill="#161616" stroke="#2e2e2e" />
+
+      {bars.map((height, index) => (
+        <rect
+          key={height + index}
+          x={190 + index * 40}
+          y={226 - height}
+          width="22"
+          height={height}
+          rx="5"
+          fill={index === 3 ? '#fe4619' : '#262626'}
+          className="animate-bar"
+          style={{
+            animationDelay: `${index * 0.12}s`,
+            transformBox: 'fill-box',
+            transformOrigin: 'bottom',
+          }}
+        />
+      ))}
+
+      <path
+        d="M190,200 C230,194 250,176 290,170 C330,164 360,156 430,150"
+        fill="none"
+        stroke="#fe4619"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeDasharray="360"
+        strokeDashoffset="360"
+        className="animate-draw"
+      />
+    </svg>
+  )
+}
