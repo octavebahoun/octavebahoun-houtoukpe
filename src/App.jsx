@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import About from './pages/About'
+import Admin from './pages/Admin'
 import Blog from './pages/Blog'
 import BlogPost from './pages/BlogPost'
 import Faq from './pages/Faq'
@@ -51,15 +52,24 @@ function AnimatedRoutes() {
   )
 }
 
+function SiteLayout() {
+  return (
+    <div className="bg-grid min-h-screen">
+      <Navbar />
+      <AnimatedRoutes />
+      <Footer />
+    </div>
+  )
+}
+
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="bg-grid min-h-screen">
-        <ScrollToTop />
-        <Navbar />
-        <AnimatedRoutes />
-        <Footer />
-      </div>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/admin" element={<Admin />} />
+        <Route path="*" element={<SiteLayout />} />
+      </Routes>
     </BrowserRouter>
   )
 }

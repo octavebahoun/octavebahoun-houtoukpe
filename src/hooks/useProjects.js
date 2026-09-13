@@ -44,7 +44,7 @@ function normalize(project) {
       ? String(new Date(project.createdAt).getFullYear())
       : '',
     role: project.collaborators?.length ? 'Équipe' : 'Solo',
-    link: project.links?.demo ?? project.links?.github ?? '#',
+    link: project.links?.live ?? project.links?.demo ?? project.links?.github ?? '#',
     repo: repoFromLink(project.links?.github),
     image: imageByTitle[key] ?? '/images/projects/jarvis.jpg',
   }
