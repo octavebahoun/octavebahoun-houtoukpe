@@ -10,12 +10,18 @@ export default function AboutMe({ withLink = false }) {
   return (
     <section className="bg-soft py-20">
       <div className="mx-auto grid max-w-site items-center gap-14 px-6 lg:grid-cols-2">
-        <Reveal className="relative mx-auto w-72 sm:w-80">
+        <Reveal className="group relative mx-auto w-72 sm:w-80">
           <HeroBlob className="absolute left-1/2 top-8 aspect-square w-[125%] -translate-x-1/2" />
           <img
             src="/images/profile-cutout.png"
             alt="Oktav Bahoun"
             className="relative w-full"
+          />
+          <img
+            src="/images/profile-cutout-black.png"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full transition-opacity duration-500 ease-out group-hover:opacity-0"
           />
 
           <div className="absolute top-12 -left-2 rounded-card bg-white p-4 shadow-soft">

@@ -121,7 +121,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.18 }}
-          className="relative order-1 mx-auto w-72 sm:w-80 lg:order-2 lg:w-[420px]"
+          className="group relative order-1 mx-auto w-72 sm:w-80 lg:order-2 lg:w-[420px]"
         >
           <HeroBlob className="absolute left-1/2 top-8 aspect-square w-[125%] -translate-x-1/2" />
 
@@ -129,6 +129,12 @@ export default function Hero() {
             src="/images/profile-cutout.png"
             alt="Oktav Bahoun"
             className="relative w-full"
+          />
+          <img
+            src="/images/profile-cutout-black.png"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full transition-opacity duration-500 ease-out group-hover:opacity-0"
           />
 
           <div className="absolute bottom-16 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3">
