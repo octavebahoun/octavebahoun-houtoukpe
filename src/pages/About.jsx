@@ -11,6 +11,7 @@ import { Button } from '../components/ui/Button'
 import { SectionHeading } from '../components/ui/SectionHeading'
 import { Spotlight } from '../components/ui/Spotlight'
 import { GITHUB_URL, profile } from '../data/profile'
+import { pageMeta } from '../data/seo'
 import { usePageMeta } from '../hooks/usePageMeta'
 
 const principles = [
@@ -37,11 +38,7 @@ const principles = [
 ]
 
 export default function About() {
-  usePageMeta({
-    title: 'À propos',
-    description:
-      "Le parcours d'Octave Précieux Bahoun-Houtoukpe : de l'INSTI Lokossa à CY Tech, co-fondateur et directeur technique d'Excellence Team, ingénierie IA et open source.",
-  })
+  usePageMeta(pageMeta.about)
 
   return (
     <>

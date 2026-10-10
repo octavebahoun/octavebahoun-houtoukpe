@@ -5,14 +5,11 @@ import { Reveal } from '../components/Reveal'
 import { Button } from '../components/ui/Button'
 import { CAL_URL } from '../data/profile'
 import { faqs } from '../data/faq'
+import { pageMeta } from '../data/seo'
 import { usePageMeta } from '../hooks/usePageMeta'
 
 export default function Faq() {
-  usePageMeta({
-    title: 'FAQ',
-    description:
-      'Disponibilité, technologies, déroulé d’un projet, stages, code source : les réponses aux questions les plus fréquentes.',
-  })
+  usePageMeta(pageMeta.faq)
 
   return (
     <>

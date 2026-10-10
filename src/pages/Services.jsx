@@ -8,14 +8,11 @@ import { Reveal } from '../components/Reveal'
 import ServicesPanels from '../components/ServicesPanels'
 import { Button } from '../components/ui/Button'
 import { CAL_URL } from '../data/profile'
+import { pageMeta } from '../data/seo'
 import { usePageMeta } from '../hooks/usePageMeta'
 
 export default function Services() {
-  usePageMeta({
-    title: 'Services & tarifs',
-    description:
-      'Ingénierie IA, agents et automatisation, développement web, SaaS, RAG, data science et DevOps : ce que je construis, comment je travaille et combien ça coûte.',
-  })
+  usePageMeta(pageMeta.services)
 
   return (
     <>

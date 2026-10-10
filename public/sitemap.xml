@@ -23,12 +23,12 @@
   <url>
     <loc>https://octave.excellenceteam.site/blog</loc>
     <lastmod>2026-10-10</lastmod>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://octave.excellenceteam.site/faq</loc>
     <lastmod>2026-10-10</lastmod>
-    <priority>0.5</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://octave.excellenceteam.site/projects/gentube</loc>
@@ -108,16 +108,16 @@
   <url>
     <loc>https://octave.excellenceteam.site/blog/video-remix-studio</loc>
     <lastmod>2026-08-26</lastmod>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://octave.excellenceteam.site/blog/scholaris-veille-n8n</loc>
     <lastmod>2026-07-12</lastmod>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://octave.excellenceteam.site/blog/waaloge-retour-experience</loc>
     <lastmod>2026-06-03</lastmod>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
   </url>
 </urlset>

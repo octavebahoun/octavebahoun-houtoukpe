@@ -6,6 +6,7 @@ import { ArrowUpRight, Search } from '../components/icons'
 import PageHeader from '../components/PageHeader'
 import { Reveal } from '../components/Reveal'
 import { EASE_EXPO } from '../lib/easing'
+import { pageMeta } from '../data/seo'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { usePosts } from '../hooks/usePosts'
 import { cx } from '../lib/cx'
@@ -87,11 +88,7 @@ function PostCard({ post, ref }) {
 }
 
 export default function Blog() {
-  usePageMeta({
-    title: 'Journal',
-    description:
-      "Retours d'expérience techniques d'Oktav Bahoun : agents IA, automatisation n8n, produits web livrés pour des clients.",
-  })
+  usePageMeta(pageMeta.blog)
   const posts = usePosts()
   const [query, setQuery] = useState('')
   const [tag, setTag] = useState(null)

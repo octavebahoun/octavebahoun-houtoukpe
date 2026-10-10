@@ -9,6 +9,7 @@ import { Accent } from '../components/ui/Bits'
 import { SectionHeading } from '../components/ui/SectionHeading'
 import { categories, hiddenRepos, repoNotes } from '../data/projects'
 import { GITHUB_URL } from '../data/profile'
+import { pageMeta } from '../data/seo'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { useProjects } from '../hooks/useProjects'
 import { cx } from '../lib/cx'
@@ -110,11 +111,7 @@ function RepoList({ repos }) {
 }
 
 export default function Projects() {
-  usePageMeta({
-    title: 'Projets',
-    description:
-      "SaaS, agents IA, plateformes web, outils open source : les projets conçus et livrés par Oktav Bahoun, avec leurs études de cas.",
-  })
+  usePageMeta(pageMeta.projects)
   const projects = useProjects()
   const github = useGithub()
   const [filter, setFilter] = useState('all')

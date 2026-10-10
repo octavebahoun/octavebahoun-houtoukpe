@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import { prerenderMeta } from './scripts/prerender-meta.mjs'
 
 // Les en-têtes de sécurité de production (vercel.json) sont aussi appliqués à
 // `pnpm preview` : on teste localement exactement ce qui sera servi.
@@ -16,7 +17,7 @@ const securityHeaders = Object.fromEntries(
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), prerenderMeta()],
   preview: {
     headers: securityHeaders,
   },

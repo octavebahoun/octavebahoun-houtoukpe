@@ -42,7 +42,16 @@ pnpm build && pnpm preview   # build de production, servi avec les en-têtes de 
 
 GITHUB_TOKEN=$(gh auth token) node scripts/github-snapshot.mjs   # rafraîchit src/data/github.json
 node scripts/sitemap.mjs                                         # régénère public/sitemap.xml
+python3 scripts/og-images.py                                     # régénère les images de partage (public/og/)
 ```
+
+### Aperçus de partage (LinkedIn, WhatsApp, X…)
+
+Ces robots n'exécutent pas le JavaScript. Au build, `scripts/prerender-meta.mjs` écrit donc
+une copie de `index.html` par route (`dist/projects/gentube.html`…) avec son titre, sa
+description et son image de partage ; Vercel les sert sans extension (`cleanUrls`).
+Les routes viennent de `scripts/routes.mjs` (source unique pour le sitemap et les images).
+Après un ajout de projet : `python3 scripts/og-images.py && node scripts/sitemap.mjs`.
 
 `src/data/github.json` est un instantané affiché au premier rendu ; le site recharge les
 données fraîches depuis l'API GitHub une fois par session.
