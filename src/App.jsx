@@ -2,6 +2,7 @@ import { AnimatePresence, MotionConfig, motion } from 'motion/react'
 import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
 import { CommandPaletteProvider } from './components/CommandPalette'
+import Deferred from './components/Deferred'
 import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import { SmoothScroll } from './components/providers/SmoothScroll'
@@ -96,7 +97,9 @@ function SiteLayout() {
         <ScrollProgress />
         <Navbar />
         <AnimatedRoutes />
-        <Footer />
+        <Deferred minHeight={900}>
+          <Footer />
+        </Deferred>
       </CommandPaletteProvider>
     </SmoothScroll>
   )

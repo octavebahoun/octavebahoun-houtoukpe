@@ -1,36 +1,54 @@
 # Portfolio — Oktav Bahoun
 
-Portfolio personnel d'Octave Précieux Bahoun-Houtoukpe (« Oktav »), ingénieur IA & automatisation freelance.
+Portfolio d'Octave Précieux Bahoun-Houtoukpe (« Oktav »), ingénieur IA & builder open source.
+Étudiant ingénieur à CY Tech, co-fondateur et directeur technique d'Excellence Team.
 
 ## Stack
 
-- **React 19** + **Vite**
-- **Tailwind CSS v4** (design tokens dans `src/index.css`)
-- **React Router** (site multi-pages)
-- Contenu branché sur l'API headless (`portfolio-api`) + enrichissement GitHub live
+- **React 19** + **Vite 8** — pages chargées à la demande, sections de l'accueil montées à l'approche du scroll
+- **Tailwind CSS v4** — design tokens clair/sombre dans `src/index.css`
+- **Motion** (animations) + **Lenis** (défilement fluide, désactivé si « réduire les animations »)
+- Polices auto-hébergées : Plus Jakarta Sans, Instrument Serif, JetBrains Mono
+- Contenu branché sur l'API headless (back office `/admin`) + données GitHub en direct
 
-## Pages
+## Ce qu'il y a dedans
 
-- `/` — Accueil (hero, services, à propos, outils, parcours, projets, tarifs, blog, FAQ)
-- `/services` — 8 services en panneaux horizontaux
-- `/about` — vision, mission, parcours, méthode
-- `/projects` + `/projects/:id` — projets et détail projet
-- `/blog` + `/blog/:slug` — articles
-- `/faq` — questions fréquentes
-- Formulaire de contact (Formspree) + prise de RDV (Cal.com)
+- Hero animé (nom en révélation lettre par lettre, portrait en parallaxe, terminal qui tape les vrais chiffres GitHub)
+- Thème clair/sombre avec révélation circulaire (View Transitions API)
+- Palette de commandes `Ctrl/⌘ + K` (pages, projets, articles, actions)
+- Études de cas par projet, dont un schéma interactif du pipeline multi-agent de Video Remix Studio
+- Section open source : heatmap des contributions, langages, activité récente (API GitHub en direct)
+- Accessibilité : navigation clavier, lien d'évitement, `prefers-reduced-motion` respecté partout
 
-## Développement
+## Où modifier le contenu
+
+| Contenu | Fichier |
+| --- | --- |
+| Identité, contact, réseaux | `src/data/profile.js`, `src/lib/socials.js` |
+| Projets (visuels, chiffres, catégories) | `src/data/projects.js` |
+| Parcours | `src/data/timeline.js` |
+| Stack, FAQ, tarifs | `src/data/stack.js`, `src/data/faq.js`, `src/data/pricing.js` |
+| Articles de secours | `src/lib/fallbackPosts.js` |
+
+Les textes saisis dans le back office (`/admin`) priment sur ceux du catalogue local ;
+le catalogue apporte les visuels harmonisés, les chiffres clés et les catégories.
+
+## Scripts
 
 ```bash
 pnpm install
-pnpm dev
+pnpm dev                 # développement
+pnpm build && pnpm preview   # build de production, servi avec les en-têtes de sécurité de vercel.json
+
+GITHUB_TOKEN=$(gh auth token) node scripts/github-snapshot.mjs   # rafraîchit src/data/github.json
+node scripts/sitemap.mjs                                         # régénère public/sitemap.xml
 ```
 
-## Build
+`src/data/github.json` est un instantané affiché au premier rendu ; le site recharge les
+données fraîches depuis l'API GitHub une fois par session.
 
-```bash
-pnpm build
-pnpm preview
-```
+## Déploiement
 
-Le déploiement Vercel est configuré pour les routes SPA (`vercel.json`).
+Vercel (`vercel.json`) : réécriture SPA, cache long sur `/assets`, et en-têtes de sécurité
+(CSP stricte, HSTS, `nosniff`, `Referrer-Policy`, `Permissions-Policy`). Si vous ajoutez un
+service externe (analytics, embed…), pensez à l'autoriser dans la CSP.

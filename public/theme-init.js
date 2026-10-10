@@ -4,4 +4,4 @@ try {
   var stored = localStorage.getItem('oktav-theme')
   var dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches
   document.documentElement.classList.toggle('dark', dark)
-} catch (error) {}
+} catch {}
