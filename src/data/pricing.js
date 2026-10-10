@@ -1,0 +1,45 @@
+export const plans = [
+  {
+    name: 'À la journée',
+    price: '100 €',
+    prefix: 'À partir de',
+    unit: '/ jour',
+    pitch: 'Un renfort ponctuel sur une tâche précise : une fonctionnalité, un bug tenace, un prototype.',
+    features: [
+      { label: 'Cadrage du besoin', included: true },
+      { label: 'Code + documentation', included: true },
+      { label: 'Point quotidien', included: true },
+      { label: 'Support 7 jours', included: true },
+      { label: 'Déploiement', included: false },
+      { label: 'Suivi mensuel', included: false },
+    ],
+  },
+  {
+    name: 'Mission',
+    price: 'Sur devis',
+    pitch: "Un produit complet, de l'idée à la mise en ligne : on cadre, on prototype, on livre.",
+    featured: true,
+    features: [
+      { label: 'Cadrage + maquettes', included: true },
+      { label: 'Développement complet', included: true },
+      { label: 'Points réguliers', included: true },
+      { label: 'Déploiement', included: true },
+      { label: 'Documentation', included: true },
+      { label: 'Support 30 jours', included: true },
+      { label: 'Suivi mensuel', included: false },
+    ],
+  },
+  {
+    name: 'Suivi mensuel',
+    price: 'Sur devis',
+    pitch: 'Votre produit évolue chaque mois : nouvelles fonctionnalités, maintenance et support prioritaire.',
+    features: [
+      { label: 'Développement complet', included: true },
+      { label: 'Points hebdomadaires', included: true },
+      { label: 'Déploiement continu', included: true },
+      { label: 'Documentation', included: true },
+      { label: 'Support prioritaire', included: true },
+      { label: 'Évolutions continues', included: true },
+    ],
+  },
+]

@@ -1,82 +1,105 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { catalog } from '../data/projects'
 import { fetchProjects } from '../lib/api'
-import { fallbackProjects } from '../lib/fallbackProjects'
-import { enrichWithGithub } from '../lib/github'
+import { slugify } from '../lib/format'
+import { repoByFullName, useGithub } from '../lib/github'
 
-const imageByTitle = {
-  contravo: '/images/projects/contravo.jpg',
-  waaloge: '/images/projects/waaloge.jpg',
-  studynotes: '/images/projects/studynotes.jpg',
-  study: '/images/projects/studynotes.jpg',
-  vault: '/images/projects/vault.jpg',
-  'vaut-bibliotheque': '/images/projects/vault.jpg',
-  mecano: '/images/projects/mecano.jpg',
-  webgarage: '/images/projects/mecano.jpg',
-  jarvis: '/images/projects/jarvis.jpg',
-  'code-to-vector': '/images/projects/code-to-vector.jpg',
-  'cv-generator': '/images/projects/cv-generator.jpg',
-}
+const bySlug = new Map(catalog.map((project, index) => [project.slug, { ...project, order: index }]))
+const aliases = new Map(
+  catalog.flatMap((project) => [
+    [project.slug, project.slug],
+    ...(project.aliases ?? []).map((alias) => [alias, project.slug]),
+  ]),
+)
 
-function slugify(value) {
-  return (value ?? '')
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')
+// Une seule requête par session, partagée par toutes les pages
+let apiProjects = null
+let apiRequest = null
+
+function loadApiProjects() {
+  apiRequest ??= fetchProjects()
+    .then((data) => (Array.isArray(data) ? data : []))
+    .catch(() => [])
+    .then((data) => {
+      apiProjects = data
+      return data
+    })
+  return apiRequest
 }
 
 function repoFromLink(link) {
-  const match = /github\.com\/([^/]+\/[^/]+)/.exec(link ?? '')
+  const match = /github\.com\/([^/]+\/[^/#?]+)/.exec(link ?? '')
   return match ? match[1].replace(/\.git$/, '') : undefined
 }
 
-function normalize(project) {
+function filled(value, fallback) {
+  if (Array.isArray(value)) return value.length ? value : fallback
+  return value || fallback
+}
+
+// Les textes du back office priment ; le catalogue local apporte visuel, chiffres et catégories
+function fromApi(project, index) {
   const key = slugify(project.title)
+  const slug = aliases.get(key) ?? key
+  const local = bySlug.get(slug)
 
   return {
-    id: project._id,
-    title: project.title,
-    subtitle: project.shortDesc ?? '',
-    description: project.description ?? '',
-    stack: project.techStack ?? [],
-    year: project.createdAt
-      ? String(new Date(project.createdAt).getFullYear())
-      : '',
-    role: project.collaborators?.length ? 'Équipe' : 'Solo',
-    link: project.links?.demo ?? project.links?.github ?? '#',
-    repo: repoFromLink(project.links?.github),
-    image: imageByTitle[key] ?? '/images/projects/jarvis.jpg',
+    ...local,
+    slug,
+    apiId: project._id,
+    title: project.title || local?.title,
+    subtitle: filled(project.shortDesc, local?.subtitle),
+    description: filled(project.description, local?.description),
+    challenge: filled(project.challenge, local?.challenge),
+    solution: filled(project.solution, local?.solution),
+    impact: filled(project.impact, local?.impact),
+    features: filled(project.features, local?.features ?? []),
+    stack: filled(project.techStack, local?.stack ?? []),
+    link: project.links?.live ?? project.links?.demo ?? local?.link ?? project.links?.github,
+    repo: repoFromLink(project.links?.github) ?? local?.repo,
+    image: local?.image ?? project.image,
+    year:
+      local?.year ??
+      (project.createdAt ? String(new Date(project.createdAt).getFullYear()) : ''),
+    role: local?.role ?? (project.collaborators?.length ? 'Équipe' : 'Solo'),
+    categories: local?.categories ?? ['web'],
+    featured: Boolean(local?.featured || project.featured),
+    order: local?.order ?? catalog.length + index,
   }
 }
 
+function merge(api, github) {
+  const fromBackOffice = api.map(fromApi)
+  const known = new Set(fromBackOffice.map((project) => project.slug))
+  const localOnly = [...bySlug.values()].filter((project) => !known.has(project.slug))
+
+  return [...fromBackOffice, ...localOnly]
+    .sort((a, b) => a.order - b.order)
+    .map((project) => ({
+      ...project,
+      id: project.slug,
+      stars: repoByFullName(github, project.repo)?.stars ?? 0,
+    }))
+}
+
 export function useProjects() {
-  const [projects, setProjects] = useState(fallbackProjects)
+  const [api, setApi] = useState(apiProjects)
+  const github = useGithub()
 
   useEffect(() => {
+    if (apiProjects) return undefined
     let cancelled = false
-
-    async function load() {
-      let list = fallbackProjects
-
-      try {
-        const data = await fetchProjects()
-        if (Array.isArray(data) && data.length > 0) {
-          list = data.map(normalize)
-        }
-      } catch {
-        list = fallbackProjects
-      }
-
-      const enriched = await enrichWithGithub(list)
-      if (!cancelled) setProjects(enriched)
-    }
-
-    load()
+    loadApiProjects().then((data) => {
+      if (!cancelled) setApi(data)
+    })
     return () => {
       cancelled = true
     }
   }, [])
 
-  return projects
+  return useMemo(() => merge(api ?? [], github), [api, github])
+}
+
+export function findProject(projects, key) {
+  return projects.find((project) => project.slug === key || project.apiId === key)
 }

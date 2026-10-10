@@ -18,30 +18,38 @@ function normalize(post) {
     tags: post.tags ?? [],
     date: post.publishedAt ?? post.createdAt ?? '',
     author: 'Oktav Bahoun',
-    image: imageBySlug[post.slug] ?? '/images/blog/video-remix-studio.jpg',
+    image: post.image || imageBySlug[post.slug] || '/images/blog/video-remix-studio.jpg',
   }
 }
 
+// Une seule requête par session, partagée par toutes les pages
+let cache = null
+let request = null
+
+function loadPosts() {
+  request ??= fetchBlog()
+    .then((data) =>
+      Array.isArray(data) && data.length > 0
+        ? data.filter((post) => post.published !== false).map(normalize)
+        : fallbackPosts,
+    )
+    .catch(() => fallbackPosts)
+    .then((posts) => {
+      cache = posts
+      return posts
+    })
+  return request
+}
+
 export function usePosts() {
-  const [posts, setPosts] = useState(fallbackPosts)
+  const [posts, setPosts] = useState(cache ?? fallbackPosts)
 
   useEffect(() => {
+    if (cache) return undefined
     let cancelled = false
-
-    fetchBlog()
-      .then((data) => {
-        if (!cancelled && Array.isArray(data) && data.length > 0) {
-          setPosts(
-            data
-              .filter((post) => post.published !== false)
-              .map(normalize),
-          )
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setPosts(fallbackPosts)
-      })
-
+    loadPosts().then((data) => {
+      if (!cancelled) setPosts(data)
+    })
     return () => {
       cancelled = true
     }

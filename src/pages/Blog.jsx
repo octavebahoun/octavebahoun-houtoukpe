@@ -1,197 +1,177 @@
-import { useState } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import BookingBand from '../components/BookingBand'
-import ContactSection from '../components/ContactSection'
-import FaqSection from '../components/FaqSection'
-import { ArrowUpRight, Sparkle } from '../components/icons'
-import Marquee from '../components/Marquee'
+import CtaBand from '../components/CtaBand'
+import { ArrowUpRight, Search } from '../components/icons'
 import PageHeader from '../components/PageHeader'
-import { Reveal, Stagger, StaggerItem } from '../components/Reveal'
+import { Reveal } from '../components/Reveal'
+import { EASE_EXPO } from '../lib/easing'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { usePosts } from '../hooks/usePosts'
-import { formatDate } from '../lib/format'
+import { cx } from '../lib/cx'
+import { formatDate, readingTime } from '../lib/format'
 
-function PostCard({ post }) {
+function Featured({ post }) {
   return (
-    <Link
-      to={`/blog/${post.slug}`}
-      className="group rounded-card bg-card p-6 transition-colors hover:bg-soft"
-    >
-      <div className="relative">
-        <img
-          src={post.image}
-          alt={post.title}
-          loading="lazy"
-          className="aspect-[16/8] w-full rounded-2xl object-cover object-top"
-        />
-        <span className="absolute inset-0 m-auto flex size-12 items-center justify-center rounded-full bg-primary text-white transition-transform group-hover:scale-110">
-          <ArrowUpRight />
-        </span>
-      </div>
-
-      <div className="mt-6 flex flex-wrap gap-3">
-        <span className="rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-white">
-          {post.category}
-        </span>
-        <span className="rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-white">
-          {formatDate(post.date)}
-        </span>
-      </div>
-
-      <h3 className="mt-4 text-2xl font-bold tracking-tight transition-colors group-hover:text-primary">
-        {post.title}
-      </h3>
-      <p className="mt-3">{post.excerpt}</p>
-    </Link>
+    <Reveal>
+      <Link
+        to={`/blog/${post.slug}`}
+        className="group grid grid-cols-1 overflow-hidden rounded-[28px] border border-line bg-surface lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]"
+      >
+        <div className="relative aspect-[16/10] overflow-hidden bg-card lg:aspect-auto">
+          <img
+            src={post.image}
+            alt=""
+            className="size-full object-cover transition-transform duration-[1.2s] ease-out-expo group-hover:scale-[1.04]"
+          />
+          <span className="absolute top-5 left-5 rounded-full bg-primary px-3 py-1 font-mono text-[11px] font-semibold text-white">
+            À la une
+          </span>
+        </div>
+        <div className="flex flex-col p-7 sm:p-10">
+          <p className="font-mono text-xs text-faint">
+            {formatDate(post.date)} · {readingTime(post.content)}
+          </p>
+          <h2 className="mt-5 text-3xl font-bold tracking-tight transition-colors group-hover:text-primary-ink sm:text-4xl">
+            {post.title}
+          </h2>
+          <p className="mt-4 text-[17px] leading-relaxed">{post.excerpt}</p>
+          <div className="mt-6 flex flex-wrap gap-1.5">
+            {post.tags.map((tag) => (
+              <span key={tag} className="rounded-full border border-line px-3 py-1 text-xs text-muted">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <span className="mt-auto flex items-center gap-2 pt-10 font-semibold text-ink">
+            Lire l&apos;article
+            <span className="flex size-10 items-center justify-center rounded-full bg-primary text-white transition-transform duration-500 ease-out-expo group-hover:rotate-45">
+              <ArrowUpRight className="size-4" />
+            </span>
+          </span>
+        </div>
+      </Link>
+    </Reveal>
   )
 }
 
-function SidebarTitle({ children }) {
+function PostCard({ post, ref }) {
   return (
-    <h3 className="flex items-center gap-3 font-bold text-ink">
-      <span className="h-5 w-1 rounded-full bg-primary" />
-      {children}
-    </h3>
+    <motion.article
+      ref={ref}
+      layout
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.97 }}
+      transition={{ duration: 0.55, ease: EASE_EXPO }}
+    >
+      <Link to={`/blog/${post.slug}`} className="group block">
+        <div className="aspect-[16/10] overflow-hidden rounded-[22px] border border-line bg-card">
+          <img
+            src={post.image}
+            alt=""
+            loading="lazy"
+            className="size-full object-cover transition-transform duration-[1.2s] ease-out-expo group-hover:scale-[1.04]"
+          />
+        </div>
+        <p className="mt-5 font-mono text-xs text-faint">
+          {post.category} · {formatDate(post.date)}
+        </p>
+        <h3 className="mt-2 text-2xl font-bold tracking-tight transition-colors group-hover:text-primary-ink">
+          {post.title}
+        </h3>
+        <p className="mt-2 line-clamp-2 text-[15px]">{post.excerpt}</p>
+      </Link>
+    </motion.article>
   )
 }
 
 export default function Blog() {
+  usePageMeta({
+    title: 'Journal',
+    description:
+      "Retours d'expérience techniques d'Oktav Bahoun : agents IA, automatisation n8n, produits web livrés pour des clients.",
+  })
   const posts = usePosts()
   const [query, setQuery] = useState('')
+  const [tag, setTag] = useState(null)
+  const tags = useMemo(() => [...new Set(posts.flatMap((post) => post.tags))], [posts])
 
-  const filtered = posts.filter((post) =>
-    `${post.title} ${post.tags.join(' ')}`
-      .toLowerCase()
-      .includes(query.trim().toLowerCase()),
-  )
-
-  const recent = posts.slice(0, 3)
-  const tags = [...new Set(posts.flatMap((post) => post.tags))]
+  const searching = query.trim() || tag
+  const filtered = posts.filter((post) => {
+    const text = `${post.title} ${post.excerpt} ${post.tags.join(' ')}`.toLowerCase()
+    return (!tag || post.tags.includes(tag)) && text.includes(query.trim().toLowerCase())
+  })
+  const [featured, ...rest] = posts
 
   return (
     <>
-      <PageHeader title="Blog" crumb="Blog" />
-      <Marquee />
+      <PageHeader
+        crumb="Blog"
+        title="Journal"
+        count={posts.length}
+        description="Ce que je construis, ce qui casse, ce que j'en retiens. Des retours d'expérience techniques, écrits pour être utiles."
+      />
 
-      <section className="mx-auto max-w-site px-6 py-20">
-        <Reveal>
-          <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-            <span className="h-px w-8 bg-primary" />
-            Actus & Blog
-          </p>
+      <section className="pb-12" aria-label="Articles">
+        <div className="container-site">
+          {!searching && featured && <Featured post={featured} />}
 
-          <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Mes derniers{' '}
-            <span className="font-medium text-primary italic">articles</span>
-            <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
-          </h2>
-        </Reveal>
-
-        <div className="mt-14 grid gap-10 lg:grid-cols-[1.8fr_1fr]">
-          <Stagger className="flex flex-col gap-8">
-            {filtered.map((post) => (
-              <StaggerItem key={post.slug}>
-                <PostCard post={post} />
-              </StaggerItem>
-            ))}
-
-            {filtered.length === 0 && (
-              <p className="rounded-card bg-card p-8 text-center">
-                Aucun article ne correspond à « {query} ».
-              </p>
-            )}
-          </Stagger>
-
-          <Reveal delay={0.12} className="flex flex-col gap-10">
-            <div>
-              <SidebarTitle>Recherche</SidebarTitle>
-              <div className="mt-4 flex items-center gap-3 rounded-field bg-card px-5 py-3.5">
-                <input
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Rechercher un article"
-                  aria-label="Rechercher un article"
-                  className="w-full bg-transparent text-[15px] text-ink placeholder:text-faint focus:outline-none"
-                />
-                <svg
-                  viewBox="0 0 24 24"
-                  className="size-5 shrink-0 fill-none stroke-current stroke-2 text-ink"
-                  aria-hidden="true"
-                >
-                  <circle cx="11" cy="11" r="7" />
-                  <path d="m20 20-3.5-3.5" strokeLinecap="round" />
-                </svg>
-              </div>
-            </div>
-
-            <div>
-              <SidebarTitle>Tags populaires</SidebarTitle>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {tags.map((tag) => (
-                  <button
-                    key={tag}
-                    type="button"
-                    onClick={() => setQuery(tag)}
-                    className="rounded-full bg-card px-4 py-2 text-sm transition-colors hover:bg-primary hover:text-white"
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <SidebarTitle>Articles récents</SidebarTitle>
-              <div className="mt-4 flex flex-col gap-4">
-                {recent.map((post) => (
-                  <Link
-                    key={post.slug}
-                    to={`/blog/${post.slug}`}
-                    className="group flex items-center gap-4"
-                  >
-                    <img
-                      src={post.image}
-                      alt=""
-                      loading="lazy"
-                      className="size-16 shrink-0 rounded-xl object-cover object-top"
-                    />
-                    <div>
-                      <p className="font-semibold leading-snug text-ink transition-colors group-hover:text-primary">
-                        {post.title}
-                      </p>
-                      <p className="mt-1 text-sm text-faint">
-                        {formatDate(post.date)}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <div className="relative overflow-hidden rounded-card bg-primary px-8 pt-8 text-center text-white">
-              <p className="font-semibold">Besoin d&apos;un dev ?</p>
-              <p className="mt-2 text-xl font-bold">
-                Un projet IA ou web en tête ?
-              </p>
-              <a
-                href="#contact"
-                className="mt-5 inline-block rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-hover"
+          <div className="mt-14 flex flex-wrap items-center justify-between gap-4">
+            <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5 sm:mx-0 sm:flex-wrap sm:px-0">
+              <button
+                type="button"
+                onClick={() => setTag(null)}
+                className={cx(
+                  'shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition-colors',
+                  !tag ? 'border-ink bg-ink text-paper' : 'border-line text-muted hover:text-ink',
+                )}
               >
-                Me contacter
-              </a>
-              <img
-                src="/images/profile-cutout.png"
-                alt=""
-                className="mx-auto mt-6 -mb-20 w-44"
-              />
+                Tout
+              </button>
+              {tags.map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => setTag(item === tag ? null : item)}
+                  className={cx(
+                    'shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition-colors',
+                    item === tag ? 'border-ink bg-ink text-paper' : 'border-line text-muted hover:text-ink',
+                  )}
+                >
+                  {item}
+                </button>
+              ))}
             </div>
-          </Reveal>
+            <label className="flex h-11 w-full items-center gap-3 rounded-full border border-line bg-surface px-4 focus-within:border-primary sm:w-72">
+              <Search className="size-4 text-faint" />
+              <input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Rechercher un article"
+                aria-label="Rechercher un article"
+                className="w-full bg-transparent text-[15px] text-ink placeholder:text-faint focus:outline-none"
+              />
+            </label>
+          </div>
+
+          <motion.div layout className="mt-10 grid gap-x-6 gap-y-14 md:grid-cols-2">
+            <AnimatePresence mode="popLayout">
+              {(searching ? filtered : rest).map((post) => (
+                <PostCard key={post.slug} post={post} />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+          {searching && filtered.length === 0 && (
+            <p className="mt-6 rounded-card border border-line bg-surface p-10 text-center">
+              Aucun article ne correspond à votre recherche.
+            </p>
+          )}
         </div>
       </section>
 
-      <BookingBand />
-      <ContactSection />
-      <FaqSection limit={4} />
-      <Marquee />
+      <CtaBand />
     </>
   )
 }

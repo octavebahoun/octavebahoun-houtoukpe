@@ -1,111 +1,243 @@
-import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react'
+import { useEffect, useState } from 'react'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { EMAIL } from '../data/profile'
+import { cx } from '../lib/cx'
+import { anchorHandler } from '../lib/navigation'
+import { prefetchProps } from '../lib/routes'
+import { socials } from '../lib/socials'
+import { useCommandPalette } from './CommandPalette'
+import { ArrowUpRight, Search } from './icons'
+import Logo from './Logo'
+import { EASE_EXPO } from '../lib/easing'
+import ThemeToggle from './ThemeToggle'
+import { Kbd } from './ui/Bits'
+import { Button } from './ui/Button'
 
 const links = [
   { label: 'Accueil', to: '/' },
+  { label: 'Projets', to: '/projects' },
   { label: 'Services', to: '/services' },
   { label: 'À propos', to: '/about' },
-  { label: 'Projets', to: '/projects' },
-  { label: 'Blogs', to: '/blog' },
+  { label: 'Blog', to: '/blog' },
   { label: 'FAQ', to: '/faq' },
 ]
 
-function Logo() {
+const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
+
+function DesktopLinks() {
   return (
-    <NavLink to="/" className="flex items-center gap-2.5">
-      <span className="flex size-10 items-center justify-center rounded-full bg-primary">
-        <svg viewBox="0 0 24 24" className="size-4.5 fill-white" aria-hidden="true">
-          <path d="M12 2c1.25 4.7 3.55 7 8.25 8.25-4.7 1.25-7 3.55-8.25 8.25C10.75 13.8 8.45 11.5 3.75 10.25 8.45 9 10.75 6.7 12 2z" />
-        </svg>
-      </span>
-      <span className="text-xl font-bold text-ink">
-        Oktav<span className="text-primary">.</span>
-      </span>
-    </NavLink>
+    <ul className="hidden items-center gap-1 lg:flex">
+      {links.map((link) => (
+        <li key={link.to}>
+          <NavLink
+            to={link.to}
+            end={link.to === '/'}
+            {...prefetchProps(link.to)}
+            className={({ isActive }) =>
+              cx(
+                'relative block rounded-full px-4 py-2 text-[14.5px] font-medium transition-colors',
+                isActive ? 'text-ink' : 'text-muted hover:text-ink',
+              )
+            }
+          >
+            {({ isActive }) => (
+              <>
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-active"
+                    className="absolute inset-0 -z-10 rounded-full bg-card"
+                    transition={{ type: 'spring', stiffness: 400, damping: 34 }}
+                  />
+                )}
+                {link.label}
+              </>
+            )}
+          </NavLink>
+        </li>
+      ))}
+    </ul>
   )
 }
 
-function DesktopLink({ to, label }) {
+function MobileMenu({ onClose }) {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    window.__lenis?.stop()
+    document.documentElement.style.overflow = 'hidden'
+    return () => {
+      window.__lenis?.start()
+      document.documentElement.style.overflow = ''
+    }
+  }, [])
+
   return (
-    <NavLink
-      to={to}
-      end={to === '/'}
-      className={({ isActive }) =>
-        `border-b-2 pb-0.5 text-[15px] font-medium transition-colors hover:text-primary ${
-          isActive ? 'border-primary text-primary' : 'border-transparent text-ink'
-        }`
-      }
+    <motion.div
+      initial={{ clipPath: 'inset(0 0 100% 0)' }}
+      animate={{ clipPath: 'inset(0 0 0% 0)' }}
+      exit={{ clipPath: 'inset(0 0 100% 0)' }}
+      transition={{ duration: 0.6, ease: EASE_EXPO }}
+      className="fixed inset-0 z-40 flex flex-col bg-paper px-6 pt-28 pb-10 lg:hidden"
     >
-      {label}
-    </NavLink>
+      <nav className="flex flex-col">
+        {links.map((link, index) => (
+          <motion.div
+            key={link.to}
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, ease: EASE_EXPO, delay: 0.12 + index * 0.05 }}
+            className="border-b border-line"
+          >
+            <NavLink
+              to={link.to}
+              end={link.to === '/'}
+              onClick={onClose}
+              {...prefetchProps(link.to)}
+              className={({ isActive }) =>
+                cx(
+                  'flex items-center justify-between py-4 text-4xl font-extrabold tracking-tight',
+                  isActive ? 'text-primary' : 'text-ink',
+                )
+              }
+            >
+              {link.label}
+              <span className="kicker" aria-hidden="true">0{index + 1}</span>
+            </NavLink>
+          </motion.div>
+        ))}
+      </nav>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.45 }}
+        className="mt-auto space-y-6"
+      >
+        <a
+          href="/#contact"
+          onClick={(event) => {
+            onClose()
+            anchorHandler(navigate, '/#contact')(event)
+          }}
+          className="flex h-14 items-center justify-center gap-3 rounded-full bg-ink text-base font-semibold text-paper"
+        >
+          Démarrer un projet
+          <ArrowUpRight className="size-4" />
+        </a>
+        <div className="flex flex-col items-start gap-4 text-sm min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between">
+          <a href={`mailto:${EMAIL}`} className="font-medium text-ink">
+            {EMAIL}
+          </a>
+          <div className="flex gap-2">
+            {socials.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={label}
+                className="flex size-10 items-center justify-center rounded-full border border-line text-ink"
+              >
+                <Icon className="size-4" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
   )
 }
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false)
+  // Le menu reste lié à la page où il a été ouvert : changer de page le referme
+  const [openOn, setOpenOn] = useState(null)
+  const [hidden, setHidden] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const { scrollY } = useScroll()
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const palette = useCommandPalette()
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const previous = scrollY.getPrevious() ?? 0
+    setScrolled(latest > 24)
+    setHidden(latest > previous && latest > 420)
+  })
+
+  const open = openOn === pathname
+  const setOpen = (value) => setOpenOn(value ? pathname : null)
 
   return (
-    <header className="mx-auto max-w-site px-6 pt-6">
-      <nav className="relative flex items-center justify-between rounded-full bg-white py-3 pr-3 pl-6 shadow-soft">
-        <Logo />
-
-        <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-9 lg:flex">
-          {links.map((link) => (
-            <li key={link.label}>
-              <DesktopLink to={link.to} label={link.label} />
-            </li>
-          ))}
-        </ul>
-
-        <a
-          href="#contact"
-          className="hidden rounded-full bg-ink px-8 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-primary lg:block"
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4">
+      <motion.nav
+        aria-label="Navigation principale"
+        animate={{ y: hidden && !open ? -110 : 0 }}
+        transition={{ duration: 0.45, ease: EASE_EXPO }}
+        className="relative z-50 mx-auto max-w-[1320px]"
+      >
+        <div
+          className={cx(
+            'flex h-16 items-center justify-between gap-4 rounded-full border pr-2 pl-4 transition-[background-color,border-color,box-shadow] duration-500 sm:pl-5',
+            scrolled || open
+              ? 'border-line bg-surface/80 shadow-soft backdrop-blur-xl backdrop-saturate-150'
+              : 'border-transparent bg-transparent',
+          )}
         >
-          Me contacter
-        </a>
+          <Logo onClick={() => setOpen(false)} />
 
-        <button
-          type="button"
-          aria-label="Ouvrir le menu"
-          aria-expanded={open}
-          onClick={() => setOpen((value) => !value)}
-          className="flex size-10 items-center justify-center rounded-full bg-ink text-white lg:hidden"
-        >
-          <svg viewBox="0 0 24 24" className="size-5 fill-none stroke-current stroke-2" aria-hidden="true">
-            {open ? (
-              <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
-            ) : (
-              <path d="M4 7h16M4 12h16M4 17h16" strokeLinecap="round" />
-            )}
-          </svg>
-        </button>
-      </nav>
+          <DesktopLinks />
 
-      {open && (
-        <div className="mt-3 flex flex-col gap-1 rounded-card bg-white p-4 shadow-soft lg:hidden">
-          {links.map((link) => (
-            <NavLink
-              key={link.label}
-              to={link.to}
-              end={link.to === '/'}
-              onClick={() => setOpen(false)}
-              className={({ isActive }) =>
-                `rounded-field px-4 py-2.5 text-sm font-medium transition-colors hover:bg-card ${
-                  isActive ? 'text-primary' : 'text-ink'
-                }`
-              }
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={palette.open}
+              aria-label="Ouvrir la recherche (Ctrl + K)"
+              className="flex h-10 items-center gap-2 rounded-full border border-line bg-surface pr-1.5 pl-3 text-sm text-muted transition-colors hover:border-ink/30 hover:text-ink"
             >
-              {link.label}
-            </NavLink>
-          ))}
-          <a
-            href="#contact"
-            className="mt-2 rounded-full bg-ink px-6 py-3 text-center text-sm font-semibold text-white"
-          >
-            Me contacter
-          </a>
+              <Search className="size-4" />
+              <span className="hidden xl:inline">Rechercher</span>
+              <Kbd className="hidden sm:inline-flex">{isMac ? '⌘K' : 'Ctrl K'}</Kbd>
+            </button>
+
+            <ThemeToggle />
+
+            <span className="hidden lg:block">
+              <Button
+                href="/#contact"
+                onClick={anchorHandler(navigate, '/#contact')}
+                size="sm"
+                magnetic={false}
+              >
+                Me contacter
+              </Button>
+            </span>
+
+            <button
+              type="button"
+              aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
+              aria-expanded={open}
+              onClick={() => setOpen(!open)}
+              className="relative flex size-10 items-center justify-center rounded-full bg-ink text-paper lg:hidden"
+            >
+              <span
+                className={cx(
+                  'absolute h-[1.5px] w-4 bg-current transition-transform duration-300',
+                  open ? 'rotate-45' : '-translate-y-[3.5px]',
+                )}
+              />
+              <span
+                className={cx(
+                  'absolute h-[1.5px] w-4 bg-current transition-transform duration-300',
+                  open ? '-rotate-45' : 'translate-y-[3.5px]',
+                )}
+              />
+            </button>
+          </div>
         </div>
-      )}
+      </motion.nav>
+
+      <AnimatePresence>{open && <MobileMenu onClose={() => setOpen(false)} />}</AnimatePresence>
     </header>
   )
 }

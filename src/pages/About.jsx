@@ -1,118 +1,148 @@
 import AboutMe from '../components/AboutMe'
-import BookingBand from '../components/BookingBand'
-import ContactSection from '../components/ContactSection'
-import { Eye, Lightbulb, Pencil, ClipboardCheck, Rocket } from '../components/icons'
-import JourneySection from '../components/JourneySection'
-import Marquee from '../components/Marquee'
+import CtaBand from '../components/CtaBand'
+import HeroBlob from '../components/HeroBlob'
+import { Bolt, Code, Heart, Sparkle } from '../components/icons'
 import PageHeader from '../components/PageHeader'
-import { Reveal } from '../components/Reveal'
+import { Reveal, Stagger, StaggerItem } from '../components/Reveal'
+import StackSection from '../components/StackSection'
+import Timeline from '../components/Timeline'
+import { Accent } from '../components/ui/Bits'
+import { Button } from '../components/ui/Button'
+import { SectionHeading } from '../components/ui/SectionHeading'
+import { Spotlight } from '../components/ui/Spotlight'
+import { GITHUB_URL, profile } from '../data/profile'
+import { usePageMeta } from '../hooks/usePageMeta'
 
-const process = [
+const principles = [
   {
-    number: '01',
-    Icon: Lightbulb,
-    title: 'Recherche & cadrage',
-    text: "Comprendre le besoin réel, les utilisateurs et les contraintes avant d'écrire la moindre ligne de code.",
+    Icon: Bolt,
+    title: 'Livrer, puis itérer',
+    text: "Un prototype qui tourne vaut mieux qu'une maquette parfaite. On met en ligne tôt, on apprend vite, on améliore souvent.",
   },
   {
-    number: '02',
-    Icon: Pencil,
-    title: 'Conception & prototypage',
-    text: 'Maquettes, architecture et prototype rapide : on valide la direction avant de construire.',
+    Icon: Code,
+    title: 'Open source par défaut',
+    text: "Ce que j'apprends, je le partage : la plupart de mes projets sont publics, ce site compris. Le code se lit, se critique, se forke.",
   },
   {
-    number: '03',
-    Icon: ClipboardCheck,
-    title: 'Tests & itération',
-    text: 'Mise en production progressive, tests, retours utilisateurs et améliorations continues.',
+    Icon: Sparkle,
+    title: "L'IA utile, pas décorative",
+    text: "Un LLM n'est qu'un composant. Je l'utilise quand il résout un vrai problème — avec des replis déterministes quand il se trompe.",
+  },
+  {
+    Icon: Heart,
+    title: 'Les détails qu’on ressent',
+    text: "Un temps de chargement, une animation, un message d'erreur clair : c'est là que se joue la confiance d'un utilisateur.",
   },
 ]
 
 export default function About() {
+  usePageMeta({
+    title: 'À propos',
+    description:
+      "Le parcours d'Octave Précieux Bahoun-Houtoukpe : de l'INSTI Lokossa à CY Tech, co-fondateur et directeur technique d'Excellence Team, ingénierie IA et open source.",
+  })
+
   return (
     <>
-      <PageHeader title="À propos" crumb="À propos" />
-      <Marquee />
+      <PageHeader
+        crumb="À propos"
+        title="À propos"
+        description={`${profile.fullName}, dit Oktav. Étudiant ingénieur, builder et co-fondateur — entre le Bénin et la France.`}
+        aside={
+          <Button href={GITHUB_URL} variant="ghost">
+            Mon GitHub
+          </Button>
+        }
+      />
 
-      <section className="mx-auto max-w-site px-6 pt-20">
-        <Reveal>
-          <img
-            src="/images/about-banner.jpg"
-            alt="Profil GitHub d'Octave Bahoun-Houtoukpe"
-            className="aspect-[16/7] w-full rounded-card object-cover object-top"
-          />
-        </Reveal>
+      <AboutMe index="01" />
 
-        <div className="mt-14 grid gap-10 sm:grid-cols-2">
-          <Reveal delay={0.05}>
-            <span className="flex size-12 items-center justify-center rounded-full bg-primary text-white">
-              <Rocket />
-            </span>
-            <h2 className="mt-5 text-2xl font-bold">Ma vision</h2>
-            <p className="mt-3">
-              Rendre l&apos;IA utile et accessible : des outils simples qui
-              résolvent de vrais problèmes, du Bénin au reste du monde.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.15}>
-            <span className="flex size-12 items-center justify-center rounded-full bg-primary text-white">
-              <Eye />
-            </span>
-            <h2 className="mt-5 text-2xl font-bold">Ma mission</h2>
-            <p className="mt-3">
-              Concevoir et livrer des produits web & IA soignés, en open source
-              quand c&apos;est possible, avec une exigence de qualité à chaque
-              étape.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      <div className="mt-20">
-        <AboutMe />
-      </div>
-
-      <section className="mx-auto max-w-site px-6 py-20">
-        <Reveal>
-          <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-            <span className="h-px w-8 bg-primary" />
-            Ma Méthode
-          </p>
-
-          <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Ma <span className="font-medium text-primary italic">Méthode</span>{' '}
-            de travail
-          </h2>
-        </Reveal>
-
-        <div className="relative mt-16 grid gap-12 sm:grid-cols-3">
-          <span className="absolute top-7 right-[16%] left-[16%] hidden border-t-2 border-dashed border-line sm:block" />
-
-          {process.map((step, index) => (
-            <Reveal key={step.number} delay={index * 0.12} className="relative text-center">
-              <span className="relative inline-flex">
-                <span className="flex size-14 items-center justify-center rounded-full bg-primary text-white">
-                  <step.Icon />
-                </span>
-                <span className="absolute -right-2 -bottom-1 flex size-7 items-center justify-center rounded-full bg-ink text-xs font-bold text-white">
-                  {step.number}
-                </span>
+      <section className="py-24 sm:py-32" aria-labelledby="principles-title">
+        <div className="container-site">
+          <SectionHeading
+            index="02"
+            label="Principes"
+            title={
+              <span id="principles-title">
+                Ce qui guide mon <Accent>travail</Accent>
               </span>
-
-              <h3 className="mt-6 text-xl font-bold">{step.title}</h3>
-              <p className="mx-auto mt-3 max-w-xs text-sm">{step.text}</p>
-            </Reveal>
-          ))}
+            }
+            description="Quatre règles simples, appliquées à chaque projet — du hackathon de 48 h au SaaS en production."
+          />
+          <Stagger className="mt-14 grid gap-4 sm:grid-cols-2">
+            {principles.map((principle, index) => (
+              <StaggerItem key={principle.title} className="h-full">
+                <Spotlight className="h-full rounded-card border border-line bg-surface p-7 sm:p-9">
+                  <div className="flex items-center justify-between">
+                    <span className="flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                      <principle.Icon className="size-6" />
+                    </span>
+                    <span className="font-mono text-xs text-faint">0{index + 1}</span>
+                  </div>
+                  <h3 className="mt-6 text-2xl font-bold tracking-tight">{principle.title}</h3>
+                  <p className="mt-3 text-[15.5px] leading-relaxed">{principle.text}</p>
+                </Spotlight>
+              </StaggerItem>
+            ))}
+          </Stagger>
         </div>
       </section>
 
-      <JourneySection />
+      <Timeline index="03" />
+      <StackSection index="04" />
 
-      <Marquee />
-      <BookingBand />
-      <ContactSection />
-      <Marquee />
+      <section className="py-24 sm:py-32" aria-labelledby="beyond-title">
+        <div className="container-site">
+          <SectionHeading
+            index="05"
+            label="Hors du code"
+            title={
+              <span id="beyond-title">
+                Le reste du <Accent>temps</Accent>
+              </span>
+            }
+          />
+          <div className="mt-14 grid gap-4 lg:grid-cols-3">
+            <Reveal className="rounded-card border border-line bg-surface p-7">
+              <p className="kicker">Langues</p>
+              <ul className="mt-6 space-y-4">
+                {profile.spokenLanguages.map((language) => (
+                  <li key={language.name} className="flex items-center justify-between">
+                    <span className="text-lg font-semibold text-ink">{language.name}</span>
+                    <span className="rounded-full bg-card px-3 py-1 text-sm">{language.level}</span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+
+            <Reveal delay={0.08} className="rounded-card border border-line bg-surface p-7">
+              <p className="kicker">Centres d&apos;intérêt</p>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {profile.interests.map((interest) => (
+                  <span key={interest} className="rounded-full border border-line px-4 py-2 font-semibold text-ink">
+                    {interest}
+                  </span>
+                ))}
+              </div>
+              <p className="mt-6 text-[15px]">Ce qui m&apos;occupe quand l&apos;éditeur est fermé.</p>
+            </Reveal>
+
+            <Reveal delay={0.16} className="relative overflow-hidden rounded-card bg-night p-7 text-white">
+              <HeroBlob className="pointer-events-none absolute -right-20 -bottom-24 w-72 opacity-40" />
+              <p className="kicker relative text-white/45">Certification</p>
+              <p className="relative mt-6 text-3xl font-bold text-white">Python</p>
+              <p className="relative mt-1 text-white/60">Kaggle · 2026</p>
+              <p className="relative mt-8 text-[15px] text-white/60">
+                Et l&apos;essentiel du reste appris en construisant : documentation, open source,
+                hackathons.
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <CtaBand />
     </>
   )
 }

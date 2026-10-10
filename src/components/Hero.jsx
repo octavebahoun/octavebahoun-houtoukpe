@@ -1,209 +1,371 @@
-import { motion } from 'motion/react'
-import { socials } from '../lib/socials'
-import { useGithubStats } from '../hooks/useGithubStats'
-import { CAL_URL } from './BookingBand'
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from 'motion/react'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { CAL_URL, profile } from '../data/profile'
+import { formatNumber } from '../lib/format'
+import { useGithub } from '../lib/github'
+import { goTo } from '../lib/navigation'
+import { useCommandPalette } from './CommandPalette'
 import HeroBlob from './HeroBlob'
-import { ArrowUpRight, Sparkle } from './icons'
+import { ArrowDown, ArrowUpRight, Sparkle } from './icons'
+import { EASE_EXPO } from '../lib/easing'
+import { Kbd, StatusDot } from './ui/Bits'
+import { Button } from './ui/Button'
+import { LiveClock } from './ui/LiveClock'
 
-const skills = [
-  { label: 'React', tone: 'dark' },
-  { label: 'Node.js', tone: 'orange' },
-  { label: 'Python', tone: 'dark' },
-  { label: 'Open Source', tone: 'orange' },
-  { label: 'Ingénierie IA', tone: 'dark' },
+const chips = [
+  { label: 'LangGraph', className: 'left-[4%] top-[24%]', depth: 1.4, delay: 0 },
+  { label: 'React 19', className: 'left-[30%] top-[6%]', depth: 1.1, delay: 1.2 },
+  { label: 'Python', className: 'left-[-3%] top-[54%]', depth: 0.8, delay: 0.6 },
+  { label: 'RAG · pgvector', className: 'right-[-3%] top-[46%]', depth: 1.6, delay: 1.8 },
+  { label: 'Next.js', className: 'right-[2%] top-[66%]', depth: 0.9, delay: 0.9 },
 ]
 
-function Pill({ tone = 'orange', children }) {
+function Letters({ text, delay = 0, className }) {
   return (
-    <span
-      className={`rounded-full px-5 py-2.5 text-sm font-semibold text-white ${
-        tone === 'dark' ? 'bg-ink' : 'bg-primary'
-      }`}
-    >
-      {children}
+    <span className={className} aria-hidden="true">
+      {[...text].map((letter, index) => (
+        <span key={`${letter}-${index}`} className="inline-block overflow-hidden pb-[0.06em] align-bottom">
+          <motion.span
+            className="inline-block"
+            initial={{ y: '105%' }}
+            animate={{ y: '0%' }}
+            transition={{ duration: 1.1, ease: EASE_EXPO, delay: delay + index * 0.045 }}
+          >
+            {letter}
+          </motion.span>
+        </span>
+      ))}
     </span>
   )
 }
 
-export default function Hero() {
-  const stats = useGithubStats()
+// Petit terminal qui « tape » les vrais chiffres GitHub
+function TerminalCard({ contributions, pullRequests }) {
+  const lines = [
+    { prompt: true, text: 'git log --since="1 year" --oneline | wc -l' },
+    { text: `${formatNumber(contributions)} contributions` },
+    { prompt: true, text: 'gh pr list --author @me --state all' },
+    { text: `${formatNumber(pullRequests)} pull requests` },
+  ]
+  const reduced = useReducedMotion()
+  const [visible, setVisible] = useState(() => (reduced ? lines.length : 0))
+
+  useEffect(() => {
+    if (visible >= lines.length) return undefined
+    const timeout = setTimeout(() => setVisible((count) => count + 1), visible === 0 ? 1700 : 650)
+    return () => clearTimeout(timeout)
+  }, [visible, lines.length])
 
   return (
-    <section id="home" className="relative mx-auto max-w-site overflow-hidden px-6 pt-12">
-      <div className="relative text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="flex items-center justify-center gap-3 text-sm font-semibold text-ink"
-        >
-          <span className="h-px w-8 bg-primary" />
-          Bonjour !
-        </motion.p>
+    <div className="w-[280px] overflow-hidden rounded-2xl border border-white/10 bg-night font-mono text-[11.5px] leading-relaxed text-white/80 shadow-lift sm:w-[310px]">
+      <div className="flex items-center gap-1.5 border-b border-white/10 px-3.5 py-2.5">
+        <span className="size-2 rounded-full bg-[#ff5f57]" />
+        <span className="size-2 rounded-full bg-[#febc2e]" />
+        <span className="size-2 rounded-full bg-[#28c840]" />
+        <span className="ml-2 text-white/40">oktav@github ~</span>
+      </div>
+      <div className="min-h-[104px] px-3.5 py-3">
+        {lines.slice(0, visible).map((line, index) => (
+          <p key={index} className={line.prompt ? 'truncate text-white/55' : 'font-semibold text-white'}>
+            {line.prompt ? (
+              <>
+                <span className="text-primary">$</span> {line.text}
+              </>
+            ) : (
+              <>
+                <span className="text-emerald-400">✓</span> {line.text}
+              </>
+            )}
+          </p>
+        ))}
+        <span className="inline-block h-3.5 w-1.5 translate-y-0.5 animate-blink bg-primary" />
+      </div>
+    </div>
+  )
+}
 
-        <motion.h1
+function RotatingBadge({ onClick }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label="Me contacter"
+      className="group relative size-28 rounded-full bg-surface shadow-soft transition-transform duration-500 hover:scale-105 sm:size-32"
+    >
+      <svg viewBox="0 0 100 100" className="size-full animate-spin-slow text-ink">
+        <defs>
+          <path id="hero-badge-circle" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" />
+        </defs>
+        <text fontSize="9" fontWeight="600" fill="currentColor" fontFamily="var(--font-mono)">
+          {/* textLength ajuste l'espacement pour boucler exactement le cercle */}
+          <textPath href="#hero-badge-circle" textLength="228" lengthAdjust="spacing">
+            DISPONIBLE · FREELANCE · STAGE ·
+          </textPath>
+        </text>
+      </svg>
+      <span className="absolute inset-0 m-auto flex size-12 items-center justify-center rounded-full bg-primary text-white transition-transform duration-500 group-hover:rotate-45">
+        <ArrowUpRight className="size-5" />
+      </span>
+    </button>
+  )
+}
+
+export default function Hero() {
+  const navigate = useNavigate()
+  const palette = useCommandPalette()
+  const github = useGithub()
+  const section = useRef(null)
+  const reduced = useReducedMotion()
+
+  // Parallaxe souris
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const smoothX = useSpring(mouseX, { stiffness: 60, damping: 18, mass: 0.6 })
+  const smoothY = useSpring(mouseY, { stiffness: 60, damping: 18, mass: 0.6 })
+  const blobX = useTransform(smoothX, (value) => value * -36)
+  const blobY = useTransform(smoothY, (value) => value * -24)
+  const portraitX = useTransform(smoothX, (value) => value * 14)
+  const portraitY = useTransform(smoothY, (value) => value * 8)
+
+  // Parallaxe au défilement
+  const { scrollYProgress } = useScroll({ target: section, offset: ['start start', 'end start'] })
+  const visualY = useTransform(scrollYProgress, [0, 1], ['0%', '14%'])
+  const nameY = useTransform(scrollYProgress, [0, 1], ['0%', '-18%'])
+
+  function handlePointerMove(event) {
+    if (reduced || event.pointerType !== 'mouse') return
+    const rect = section.current.getBoundingClientRect()
+    mouseX.set((event.clientX - rect.left) / rect.width - 0.5)
+    mouseY.set((event.clientY - rect.top) / rect.height - 0.5)
+  }
+
+  const weeks = github.calendar.slice(-182)
+  const weekly = []
+  for (let index = 0; index < weeks.length; index += 7) {
+    weekly.push(weeks.slice(index, index + 7).reduce((sum, day) => sum + day.count, 0))
+  }
+  const peak = Math.max(...weekly, 1)
+
+  return (
+    <section
+      ref={section}
+      onPointerMove={handlePointerMove}
+      className="relative overflow-hidden pt-24 sm:pt-28"
+      aria-label="Présentation"
+    >
+      <div className="container-site grid min-h-[calc(100svh-6rem)] grid-cols-1 [grid-template-areas:'head'_'visual'_'body'] lg:min-h-[calc(100svh-7rem)] lg:grid-cols-[1fr_1fr] lg:grid-rows-[1fr_auto] lg:gap-x-6 lg:[grid-template-areas:'head_visual'_'body_visual']">
+        {/* Nom */}
+        <motion.div style={{ y: nameY }} className="relative z-10 flex flex-col justify-end pt-6 [grid-area:head] lg:pt-10">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: EASE_EXPO }}
+            className="flex flex-wrap items-center gap-x-4 gap-y-2"
+          >
+            <span className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface/90 py-1.5 pr-4 pl-3 text-[13px] font-medium text-ink">
+              <StatusDot />
+              {profile.availability}
+            </span>
+          </motion.div>
+
+          <h1 className="display mt-6 text-[21vw] leading-[0.8] tracking-[-0.055em] sm:text-[17vw] lg:text-[clamp(5rem,10.6vw,11rem)]">
+            <span className="sr-only">Oktav Bahoun — {profile.role}</span>
+            <Letters text="Oktav" delay={0.1} className="block" />
+            <span className="block">
+              <Letters text="Bahoun" delay={0.3} />
+              <motion.span
+                aria-hidden="true"
+                className="inline-block text-primary"
+                initial={{ scale: 0, rotate: -90 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: 'spring', stiffness: 260, damping: 14, delay: 0.85 }}
+              >
+                .
+              </motion.span>
+            </span>
+          </h1>
+        </motion.div>
+
+        {/* Portrait */}
+        <motion.div
+          style={{ y: visualY }}
+          className="relative mx-auto mt-6 aspect-[0.92] w-full max-w-[480px] self-end overflow-hidden [grid-area:visual] sm:max-w-[540px] sm:overflow-visible lg:mt-0 lg:max-w-none"
+        >
+          <motion.div
+            style={{ x: blobX, y: blobY }}
+            initial={{ scale: 0.6, opacity: 0, rotate: -40 }}
+            animate={{ scale: 1, opacity: 1, rotate: 0 }}
+            transition={{ duration: 1.4, ease: EASE_EXPO, delay: 0.35 }}
+            className="absolute inset-x-[1%] top-[9%] bottom-[-10%]"
+          >
+            <div className="size-full animate-[spin_80s_linear_infinite]">
+              <HeroBlob className="size-full" />
+            </div>
+          </motion.div>
+
+          {/* Pas de fondu d'opacité : le portrait est l'élément LCP, il doit être peint tout de suite */}
+          <motion.div
+            style={{ x: portraitX, y: portraitY }}
+            className="group absolute inset-x-[3%] bottom-0"
+          >
+            <motion.div
+              initial={{ y: 60 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 1.2, ease: EASE_EXPO, delay: 0.2 }}
+            >
+            <img
+              src="/images/portrait.webp"
+              alt="Portrait d'Octave Bahoun-Houtoukpe"
+              width="660"
+              height="715"
+              className="relative w-full select-none"
+            />
+            {/* Veste noire par défaut, couleur révélée au survol */}
+            <img
+              src="/images/portrait-black.webp"
+              alt=""
+              aria-hidden="true"
+              width="660"
+              height="715"
+              fetchPriority="high"
+              className="absolute inset-0 w-full transition-opacity duration-700 ease-out group-hover:opacity-0"
+            />
+            </motion.div>
+          </motion.div>
+
+          {chips.map((chip, index) => (
+            <Chip key={chip.label} chip={chip} index={index} smoothX={smoothX} smoothY={smoothY} />
+          ))}
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, ease: EASE_EXPO, delay: 1.1 }}
+            className="absolute top-[2%] right-[2%] hidden sm:block"
+          >
+            <RotatingBadge onClick={() => goTo(navigate, '/#contact')} />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, ease: EASE_EXPO, delay: 1.25 }}
+            className="absolute bottom-[11%] left-[-3%] hidden sm:block lg:left-[0%]"
+          >
+            <TerminalCard
+              contributions={github.totals.contributions}
+              pullRequests={github.totals.pullRequests}
+            />
+          </motion.div>
+        </motion.div>
+
+        {/* Pitch + actions */}
+        <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
-          className="mt-5 text-5xl font-extrabold tracking-tight sm:text-6xl"
+          transition={{ duration: 1, ease: EASE_EXPO, delay: 0.75 }}
+          className="relative z-10 pt-8 pb-12 [grid-area:body] lg:pt-10 lg:pb-14"
         >
-          Je suis <span className="text-primary">Oktav Bahoun</span>
-          <Sparkle className="ml-3 inline-block size-4 -translate-y-3 text-ink" />
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.16 }}
-          className="mt-4 text-lg"
-        >
-          Ingénieur IA freelance & open source
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.35 }}
-          className="absolute top-0 right-0 hidden size-28 lg:block"
-        >
-          <svg viewBox="0 0 100 100" className="size-full animate-spin-slow">
-            <defs>
-              <path
-                id="badge-circle"
-                d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"
-              />
-            </defs>
-            <text fontSize="11" fontWeight="600" letterSpacing="2.5" fill="#0d0d0d">
-              <textPath href="#badge-circle">
-                DISPONIBLE • FREELANCE • DISPONIBLE •
-              </textPath>
-            </text>
-          </svg>
-          <span className="absolute inset-0 m-auto flex size-11 items-center justify-center rounded-full bg-primary text-white">
-            <ArrowUpRight className="size-5" />
-          </span>
-        </motion.div>
-      </div>
-
-      <div className="mt-12 grid items-center gap-12 lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.28 }}
-          className="order-2 lg:order-1"
-        >
-          <span className="font-serif text-6xl leading-none text-primary">&ldquo;</span>
-          <p className="mt-2 max-w-xs text-lg">
-            Oktav transforme les idées en applications web soignées – vivement
-            recommandé !
+          <p className="max-w-xl text-lg leading-relaxed sm:text-xl">
+            <strong className="font-semibold text-ink">{profile.role}.</strong> Je conçois des
+            agents, des pipelines RAG et des produits SaaS qui tournent en production — de
+            Cotonou à Pau.
           </p>
 
-          <div className="mt-10 flex items-center gap-4">
-            {stats.avatar && (
-              <img
-                src={stats.avatar}
-                alt="Avatar GitHub"
-                className="size-12 rounded-full border-2 border-white shadow-soft"
-              />
-            )}
-            <div>
-              <p className="font-semibold text-primary">
-                {stats.repos} dépôts · {stats.stars} étoiles
-              </p>
-              <p className="text-sm text-faint">
-                {stats.followers} followers GitHub
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Button to="/projects" size="lg">
+              Voir mes projets
+            </Button>
+            <Button href={CAL_URL} variant="ghost" size="lg" icon={null}>
+              Réserver un appel
+            </Button>
+          </div>
+
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm">
+            <div className="flex items-center gap-3">
+              <div className="flex h-8 items-end gap-[3px]" aria-hidden="true">
+                {weekly.map((value, index) => (
+                  <motion.span
+                    key={index}
+                    className="w-[5px] origin-bottom rounded-full bg-primary"
+                    style={{ height: `${Math.max(12, (value / peak) * 100)}%`, opacity: 0.35 + (value / peak) * 0.65 }}
+                    initial={{ scaleY: 0 }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.8, ease: EASE_EXPO, delay: 1.1 + index * 0.025 }}
+                  />
+                ))}
+              </div>
+              <p className="leading-tight">
+                <span className="font-semibold text-ink">
+                  {formatNumber(github.totals.contributions)} contributions
+                </span>
+                <br />
+                <span className="text-faint">sur GitHub, ces 12 derniers mois</span>
               </p>
             </div>
-          </div>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.18 }}
-          className="group relative order-1 mx-auto w-72 sm:w-80 lg:order-2 lg:w-[420px]"
-        >
-          <HeroBlob className="absolute left-1/2 top-8 aspect-square w-[125%] -translate-x-1/2" />
-
-          <img
-            src="/images/profile-cutout.png"
-            alt="Oktav Bahoun"
-            className="relative w-full"
-          />
-          <img
-            src="/images/profile-cutout-black.png"
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 w-full transition-opacity duration-500 ease-out group-hover:opacity-0"
-          />
-
-          <div className="absolute bottom-16 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3">
-            <a
-              href="#projects"
-              className="flex items-center gap-3 rounded-full bg-ink py-2 pr-2 pl-6 font-semibold whitespace-nowrap text-white"
+            <button
+              type="button"
+              onClick={palette.open}
+              className="hidden items-center gap-2 text-faint transition-colors hover:text-ink md:flex"
             >
-              Portfolio
-              <span className="flex size-9 items-center justify-center rounded-full bg-primary text-white">
-                <ArrowUpRight />
-              </span>
-            </a>
-            <a
-              href={CAL_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-full border-2 border-ink bg-white px-6 py-2.5 font-semibold whitespace-nowrap text-ink transition-colors hover:border-primary hover:text-primary"
-            >
-              Prendre un RDV
-            </a>
-          </div>
-        </motion.div>
+              <Sparkle className="size-3.5 text-primary" />
+              Explorer au clavier <Kbd>⌘K</Kbd>
+            </button>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.32 }}
-          className="order-3 flex flex-col items-center gap-3 lg:items-end"
-        >
-          <div className="flex items-center gap-3">
-            {skills.slice(0, 2).map((skill) => (
-              <Pill key={skill.label} tone={skill.tone}>
-                {skill.label}
-              </Pill>
-            ))}
-          </div>
-          <div className="flex items-center gap-3 lg:pr-12">
-            <span className="flex size-11 items-center justify-center rounded-full bg-primary text-white">
-              <Sparkle />
-            </span>
-            <Pill tone={skills[2].tone}>{skills[2].label}</Pill>
-          </div>
-          <div className="flex items-center gap-3">
-            {skills.slice(3, 5).map((skill) => (
-              <Pill key={skill.label} tone={skill.tone}>
-                {skill.label}
-              </Pill>
-            ))}
-          </div>
-
-          <div className="mt-6 text-center lg:text-right">
-            <p className="text-sm">Suivez-moi</p>
-            <div className="mt-3 flex items-center gap-3 lg:justify-end">
-              {socials.map(({ label, href, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  target={href.startsWith('http') ? '_blank' : undefined}
-                  rel={href.startsWith('http') ? 'noreferrer' : undefined}
-                  className="flex size-11 items-center justify-center rounded-full bg-white text-ink shadow-soft transition-colors hover:text-primary"
-                >
-                  <Icon className="size-4.5" />
-                </a>
+            <p className="hidden items-center gap-3 font-mono text-xs text-faint xl:flex">
+              {profile.cities.map((city) => (
+                <span key={city.label}>
+                  {city.label.toUpperCase()}{' '}
+                  <LiveClock timeZone={city.timeZone} className="text-ink" />
+                </span>
               ))}
-            </div>
+            </p>
           </div>
         </motion.div>
       </div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.6 }}
+        className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-faint 2xl:flex"
+        aria-hidden="true"
+      >
+        <span className="kicker text-[10px]">Défiler</span>
+        <ArrowDown className="size-4 animate-float" />
+      </motion.div>
     </section>
+  )
+}
+
+function Chip({ chip, index, smoothX, smoothY }) {
+  const x = useTransform(smoothX, (value) => value * 60 * chip.depth)
+  const y = useTransform(smoothY, (value) => value * 40 * chip.depth)
+
+  return (
+    <motion.div
+      style={{ x, y }}
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ type: 'spring', stiffness: 220, damping: 16, delay: 0.95 + index * 0.08 }}
+      className={`absolute hidden sm:block ${chip.className}`}
+    >
+      <span
+        className="flex animate-float items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-2 text-[13px] font-semibold text-ink shadow-soft"
+        style={{ animationDelay: `${chip.delay}s` }}
+      >
+        <span className="size-1.5 rounded-full bg-primary" />
+        {chip.label}
+      </span>
+    </motion.div>
   )
 }

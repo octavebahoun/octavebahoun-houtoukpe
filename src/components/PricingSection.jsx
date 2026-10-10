@@ -1,144 +1,95 @@
-import { CAL_URL } from './BookingBand'
-import { ArrowUpRight, Sparkle } from './icons'
-import { Reveal, Stagger, StaggerItem } from './Reveal'
+import { useNavigate } from 'react-router-dom'
+import { plans } from '../data/pricing'
+import { CAL_URL } from '../data/profile'
+import { cx } from '../lib/cx'
+import { anchorHandler } from '../lib/navigation'
+import { Check, Close } from './icons'
+import { Stagger, StaggerItem } from './Reveal'
+import { Accent } from './ui/Bits'
+import { Button } from './ui/Button'
+import { SectionHeading } from './ui/SectionHeading'
 
-const plans = [
-  {
-    name: 'À la journée',
-    price: 'À partir de 100 €',
-    unit: '/ jour',
-    features: [
-      { label: 'Cadrage du besoin', included: true },
-      { label: 'Code + documentation', included: true },
-      { label: 'Point quotidien', included: true },
-      { label: 'Support 7 jours', included: true },
-      { label: 'Déploiement', included: false },
-      { label: 'Suivi mensuel', included: false },
-    ],
-  },
-  {
-    name: 'Mission',
-    price: 'Sur devis',
-    unit: '',
-    cta: 'Discutons de votre projet',
-    features: [
-      { label: 'Cadrage + maquettes', included: true },
-      { label: 'Développement complet', included: true },
-      { label: 'Points réguliers', included: true },
-      { label: 'Déploiement', included: true },
-      { label: 'Documentation', included: true },
-      { label: 'Support 30 jours', included: true },
-      { label: 'Suivi mensuel', included: false },
-      { label: 'Évolutions continues', included: false },
-    ],
-  },
-  {
-    name: 'Suivi mensuel',
-    price: 'Sur devis',
-    unit: '',
-    cta: 'Discutons de votre projet',
-    features: [
-      { label: 'Cadrage + maquettes', included: true },
-      { label: 'Développement complet', included: true },
-      { label: 'Points hebdomadaires', included: true },
-      { label: 'Déploiement', included: true },
-      { label: 'Documentation', included: true },
-      { label: 'Support prioritaire', included: true },
-      { label: 'Suivi mensuel', included: true },
-      { label: 'Évolutions continues', included: true },
-    ],
-  },
-]
+export default function PricingSection({ index = '03' }) {
+  const navigate = useNavigate()
 
-export default function PricingSection() {
   return (
-    <section className="mx-auto max-w-site px-6 py-20">
-      <Reveal className="flex flex-wrap items-end justify-between gap-6">
-        <div>
-          <p className="flex items-center gap-3 text-sm font-semibold text-ink">
-            <span className="h-px w-8 bg-primary" />
-            Tarifs
-          </p>
-
-          <h2 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Mes modes de{' '}
-            <span className="font-medium text-primary italic">
-              collaboration
+    <section id="tarifs" className="scroll-mt-24 py-24 sm:py-32" aria-labelledby="pricing-title">
+      <div className="container-site">
+        <SectionHeading
+          index={index}
+          label="Tarifs"
+          title={
+            <span id="pricing-title">
+              Travaillons <Accent>ensemble</Accent>
             </span>
-            <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
-          </h2>
-        </div>
+          }
+          description="Trois façons de collaborer, selon votre besoin. Chaque projet commence par un appel gratuit de 30 minutes pour cadrer le besoin."
+        />
 
-        <a
-          href={CAL_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-4 rounded-full bg-primary py-1.5 pr-1.5 pl-7 font-semibold text-white transition-colors hover:bg-primary-hover"
-        >
-          Discutons-en
-          <span className="flex size-11 items-center justify-center rounded-full bg-ink text-white">
-            <ArrowUpRight />
-          </span>
-        </a>
-      </Reveal>
-
-      <Stagger className="mt-14 grid gap-6 lg:grid-cols-3">
-        {plans.map((plan) => (
-          <StaggerItem key={plan.name} className="rounded-card bg-card p-4">
-            <div className="rounded-2xl bg-primary p-6 text-white">
-              <div className="flex items-center justify-between gap-4">
-                <p className="font-semibold">{plan.name}</p>
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white text-primary">
-                  <ArrowUpRight className="size-4" />
-                </span>
-              </div>
-
-              <p className="mt-8 text-4xl font-extrabold">
-                {plan.price}{' '}
-                <span className="text-base font-medium text-white/70">
-                  {plan.unit}
-                </span>
-              </p>
-            </div>
-
-            <ul className="mt-6 space-y-3 px-3 pb-3">
-              {plan.features.map((feature) => (
-                <li
-                  key={feature.label}
-                  className={`flex items-center gap-3 text-sm ${
-                    feature.included ? 'text-muted' : 'text-faint'
-                  }`}
-                >
-                  <span
-                    className={`flex size-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold ${
-                      feature.included
-                        ? 'bg-primary text-white'
-                        : 'bg-primary/25 text-white'
-                    }`}
-                  >
-                    ✓
+        <Stagger className="mt-14 grid gap-4 lg:grid-cols-3">
+          {plans.map((plan) => (
+            <StaggerItem key={plan.name} className="h-full">
+              <article
+                className={cx(
+                  'relative flex h-full flex-col rounded-[28px] border p-7 sm:p-8',
+                  plan.featured ? 'border-transparent bg-night text-white shadow-lift' : 'border-line bg-surface',
+                )}
+              >
+                {plan.featured && (
+                  <span className="absolute top-7 right-7 rounded-full bg-primary px-3 py-1 font-mono text-[11px] font-semibold text-white">
+                    Le plus demandé
                   </span>
-                  {feature.label}
-                </li>
-              ))}
-            </ul>
+                )}
+                <h3 className={cx('text-lg font-bold', plan.featured && 'text-white')}>{plan.name}</h3>
+                <p className={cx('mt-3 text-[15px] leading-relaxed', plan.featured ? 'text-white/60' : 'text-muted')}>
+                  {plan.pitch}
+                </p>
+                <p className="mt-8 flex items-baseline gap-2">
+                  {plan.prefix && (
+                    <span className={cx('text-sm', plan.featured ? 'text-white/50' : 'text-faint')}>{plan.prefix}</span>
+                  )}
+                  <span className={cx('display text-5xl', plan.featured ? 'text-white' : 'text-ink')}>{plan.price}</span>
+                  {plan.unit && <span className={cx('text-sm', plan.featured ? 'text-white/50' : 'text-faint')}>{plan.unit}</span>}
+                </p>
 
-            {plan.cta && (
-              <div className="px-3 pb-4">
-                <a
-                  href={CAL_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-hover"
-                >
-                  {plan.cta}
-                  <ArrowUpRight className="size-4" />
-                </a>
-              </div>
-            )}
-          </StaggerItem>
-        ))}
-      </Stagger>
+                <ul className={cx('mt-8 space-y-3 border-t pt-7 text-[15px]', plan.featured ? 'border-white/10' : 'border-line')}>
+                  {plan.features.map((feature) => (
+                    <li
+                      key={feature.label}
+                      className={cx(
+                        'flex items-center gap-3',
+                        !feature.included && 'line-through decoration-1 opacity-45',
+                      )}
+                    >
+                      <span
+                        className={cx(
+                          'flex size-5 shrink-0 items-center justify-center rounded-full',
+                          feature.included ? 'bg-primary text-white' : plan.featured ? 'bg-white/10' : 'bg-card',
+                        )}
+                      >
+                        {feature.included ? <Check className="size-3" /> : <Close className="size-3" />}
+                      </span>
+                      <span className={plan.featured ? 'text-white/85' : 'text-ink'}>{feature.label}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto pt-9">
+                  {plan.featured ? (
+                    <Button href="/#contact" onClick={anchorHandler(navigate, '/#contact')} variant="accent" className="w-full justify-between" magnetic={false}>
+                      Discutons de votre projet
+                    </Button>
+                  ) : (
+                    <Button href={CAL_URL} variant="ghost" className="w-full justify-between" magnetic={false}>
+                      Réserver un appel
+                    </Button>
+                  )}
+                </div>
+              </article>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </div>
     </section>
   )
 }

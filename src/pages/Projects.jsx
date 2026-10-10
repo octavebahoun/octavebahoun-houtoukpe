@@ -1,132 +1,174 @@
-import { Link } from 'react-router-dom'
-import BookingBand from '../components/BookingBand'
-import ContactSection from '../components/ContactSection'
-import FaqSection from '../components/FaqSection'
-import { ArrowUpRight, Sparkle } from '../components/icons'
-import Marquee from '../components/Marquee'
+import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
+import { useMemo, useState } from 'react'
+import CtaBand from '../components/CtaBand'
+import { ArrowUpRight, Star } from '../components/icons'
 import PageHeader from '../components/PageHeader'
-import { Reveal, Stagger, StaggerItem } from '../components/Reveal'
+import ProjectCard from '../components/ProjectCard'
+import { Reveal } from '../components/Reveal'
+import { Accent } from '../components/ui/Bits'
+import { SectionHeading } from '../components/ui/SectionHeading'
+import { categories, hiddenRepos, repoNotes } from '../data/projects'
+import { GITHUB_URL } from '../data/profile'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { useProjects } from '../hooks/useProjects'
+import { cx } from '../lib/cx'
+import { timeAgo } from '../lib/format'
+import { useGithub } from '../lib/github'
 
-function ProjectCard({ project, reversed }) {
-  const rows = [
-    { label: 'Stack', value: project.stack.join(' · ') },
-    { label: 'Année', value: project.year },
-    { label: 'Rôle', value: project.role },
-    {
-      label: 'GitHub',
-      value:
-        project.stars > 0
-          ? `★ ${project.stars} ${project.stars > 1 ? 'étoiles' : 'étoile'}`
-          : '',
-    },
-  ].filter((row) => row.value)
-
+function Filters({ value, onChange, counts }) {
   return (
-    <article className="grid items-center gap-8 rounded-card bg-card p-6 lg:grid-cols-2">
+    <LayoutGroup id="project-filters">
       <div
-        className={`overflow-hidden rounded-2xl bg-white ${
-          reversed ? 'lg:order-2' : ''
-        }`}
+        role="tablist"
+        aria-label="Filtrer les projets"
+        className="no-scrollbar -mx-5 flex gap-1 overflow-x-auto px-5 sm:mx-0 sm:flex-wrap sm:px-0"
       >
-        <Link to={`/projects/${project.id}`}>
-          <img
-            src={project.image}
-            alt={project.title}
-            loading="lazy"
-            className="aspect-[4/3] w-full object-cover object-top transition-transform duration-500 hover:scale-105"
-          />
-        </Link>
+        {categories.map((category) => {
+          const active = value === category.id
+          return (
+            <button
+              key={category.id}
+              type="button"
+              role="tab"
+              aria-selected={active}
+              onClick={() => onChange(category.id)}
+              className={cx(
+                'relative shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors',
+                active ? 'text-paper' : 'text-muted hover:text-ink',
+              )}
+            >
+              {active && (
+                <motion.span
+                  layoutId="filter-pill"
+                  className="absolute inset-0 -z-10 rounded-full bg-ink"
+                  transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                />
+              )}
+              {category.label}
+              <span className={cx('ml-1.5 font-mono text-[11px]', active ? 'text-paper/60' : 'text-faint')}>
+                {counts[category.id] ?? 0}
+              </span>
+            </button>
+          )
+        })}
       </div>
+    </LayoutGroup>
+  )
+}
 
-      <div className={reversed ? 'lg:order-1' : ''}>
-        <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">
-          <Link
-            to={`/projects/${project.id}`}
-            className="transition-colors hover:text-primary"
-          >
-            {project.title} –{' '}
-            <span className="text-primary">{project.subtitle}</span>
-          </Link>
-        </h3>
-
-        <p className="mt-4">{project.description}</p>
-
-        {rows.length > 0 && (
-          <dl className="mt-6 divide-y divide-line rounded-2xl bg-white px-6">
-            {rows.map((row) => (
-              <div
-                key={row.label}
-                className="flex items-center justify-between gap-4 py-3.5"
-              >
-                <dt className="text-sm">{row.label}</dt>
-                <dd className="text-right text-sm font-semibold text-ink">
-                  {row.value}
-                </dd>
-              </div>
+function RepoList({ repos }) {
+  return (
+    <section className="py-20 sm:py-28" aria-labelledby="repos-title">
+      <div className="container-site">
+        <SectionHeading
+          label="Encore plus"
+          title={
+            <span id="repos-title">
+              Le reste est sur <Accent>GitHub</Accent>
+            </span>
+          }
+          description="Expériences, outils, hackathons : les dépôts publics les plus récents, chargés en direct."
+        />
+        <Reveal className="mt-12 overflow-hidden rounded-[24px] border border-line bg-surface">
+          <ul className="divide-y divide-line">
+            {repos.map((repo) => (
+              <li key={repo.fullName}>
+                <a
+                  href={`https://github.com/${repo.fullName}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group grid items-center gap-x-6 gap-y-1 px-5 py-4 transition-colors hover:bg-card sm:grid-cols-[14rem_1fr_auto] sm:px-7"
+                >
+                  <span className="truncate font-mono text-sm font-semibold text-ink">{repo.name}</span>
+                  <span className="truncate text-sm">{repo.description || '—'}</span>
+                  <span className="flex items-center gap-4 font-mono text-xs text-faint">
+                    {repo.language && <span>{repo.language}</span>}
+                    {repo.stars > 0 && (
+                      <span className="flex items-center gap-1">
+                        <Star className="size-3" /> {repo.stars}
+                      </span>
+                    )}
+                    <span className="hidden md:inline">{timeAgo(repo.pushedAt)}</span>
+                    <ArrowUpRight className="size-4 text-ink opacity-0 transition-opacity group-hover:opacity-100" />
+                  </span>
+                </a>
+              </li>
             ))}
-          </dl>
-        )}
-
-        <Link
-          to={`/projects/${project.id}`}
-          className="mt-6 inline-flex items-center gap-2 font-semibold text-primary underline decoration-2 underline-offset-4 transition-colors hover:text-primary-hover"
-        >
-          Voir le détail
-          <ArrowUpRight className="size-4" />
-        </Link>
-
-        {project.link && project.link !== '#' && (
+          </ul>
           <a
-            href={project.link}
+            href={`${GITHUB_URL}?tab=repositories`}
             target="_blank"
             rel="noreferrer"
-            className="mt-6 ml-6 inline-flex items-center gap-2 font-semibold text-muted transition-colors hover:text-ink"
+            className="flex items-center justify-center gap-2 border-t border-line py-4 text-sm font-semibold text-ink transition-colors hover:bg-card"
           >
-            Voir le site
-            <ArrowUpRight className="size-4" />
+            Tous les dépôts sur GitHub <ArrowUpRight className="size-4 text-primary" />
           </a>
-        )}
+        </Reveal>
       </div>
-    </article>
+    </section>
   )
 }
 
 export default function Projects() {
+  usePageMeta({
+    title: 'Projets',
+    description:
+      "SaaS, agents IA, plateformes web, outils open source : les projets conçus et livrés par Oktav Bahoun, avec leurs études de cas.",
+  })
   const projects = useProjects()
+  const github = useGithub()
+  const [filter, setFilter] = useState('all')
+
+  const counts = useMemo(() => {
+    const result = { all: projects.length }
+    for (const project of projects) {
+      for (const category of project.categories ?? []) {
+        result[category] = (result[category] ?? 0) + 1
+      }
+    }
+    return result
+  }, [projects])
+
+  const visible =
+    filter === 'all' ? projects : projects.filter((project) => project.categories?.includes(filter))
+
+  const showcased = new Set(projects.map((project) => project.repo?.toLowerCase()).filter(Boolean))
+  const repos = (github.repos ?? [])
+    .map((repo) => ({ ...repo, description: repo.description || repoNotes[repo.name.toLowerCase()] }))
+    .filter(
+      (repo) =>
+        repo.description &&
+        !showcased.has(repo.fullName.toLowerCase()) &&
+        !hiddenRepos.includes(repo.name.toLowerCase()) &&
+        repo.name !== 'octavebahoun',
+    )
+    .slice(0, 8)
 
   return (
     <>
-      <PageHeader title="Projets" crumb="Projets" />
-      <Marquee />
+      <PageHeader
+        crumb="Projets"
+        title="Projets"
+        count={projects.length}
+        description="Des SaaS en production, des agents IA, des plateformes web et des outils open source. Filtrez par domaine, ouvrez une étude de cas."
+      />
 
-      <section className="mx-auto max-w-site px-6 py-20">
-        <Reveal>
-          <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-            <span className="h-px w-8 bg-primary" />
-            Mon Portfolio
-          </p>
+      <section className="pb-8" aria-label="Liste des projets">
+        <div className="container-site">
+          <Filters value={filter} onChange={setFilter} counts={counts} />
 
-          <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Découvrez mes{' '}
-            <span className="font-medium text-primary italic">réalisations</span>
-            <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
-          </h2>
-        </Reveal>
-
-        <Stagger className="mt-14 flex flex-col gap-6">
-          {projects.map((project, index) => (
-            <StaggerItem key={project.id}>
-              <ProjectCard project={project} reversed={index % 2 === 1} />
-            </StaggerItem>
-          ))}
-        </Stagger>
+          <motion.div layout className="mt-10 grid gap-x-6 gap-y-14 md:grid-cols-2">
+            <AnimatePresence mode="popLayout">
+              {visible.map((project, index) => (
+                <ProjectCard key={project.slug} project={project} index={index} />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        </div>
       </section>
 
-      <BookingBand />
-      <ContactSection />
-      <FaqSection limit={4} />
-      <Marquee />
+      {repos.length > 0 && <RepoList repos={repos} />}
+      <CtaBand />
     </>
   )
 }

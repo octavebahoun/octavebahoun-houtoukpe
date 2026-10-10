@@ -1,64 +1,83 @@
-import { Link } from 'react-router-dom'
-import AboutMe from '../components/AboutMe'
-import BlogTeaser from '../components/BlogTeaser'
-import BookingBand from '../components/BookingBand'
-import ContactSection from '../components/ContactSection'
-import ExperienceSection from '../components/ExperienceSection'
-import FaqSection from '../components/FaqSection'
-import FeaturedProjects from '../components/FeaturedProjects'
+import { lazy } from 'react'
+import Deferred from '../components/Deferred'
 import Hero from '../components/Hero'
-import { Sparkle } from '../components/icons'
-import JourneySection from '../components/JourneySection'
 import Marquee from '../components/Marquee'
-import PricingSection from '../components/PricingSection'
+import ProofBar from '../components/ProofBar'
 import { Reveal } from '../components/Reveal'
 import ServicesPanels from '../components/ServicesPanels'
-import ToolsSection from '../components/ToolsSection'
+import { Accent } from '../components/ui/Bits'
+import { Button } from '../components/ui/Button'
+import { SectionHeading } from '../components/ui/SectionHeading'
+import { usePageMeta } from '../hooks/usePageMeta'
+
+// Sections sous la ligne de flottaison : chargées et rendues à l'approche du scroll
+const AboutMe = lazy(() => import('../components/AboutMe'))
+const WorkStack = lazy(() => import('../components/WorkStack'))
+const AgentPipeline = lazy(() => import('../components/AgentPipeline'))
+const OpenSource = lazy(() => import('../components/OpenSource'))
+const Timeline = lazy(() => import('../components/Timeline'))
+const BlogTeaser = lazy(() => import('../components/BlogTeaser'))
+const FaqSection = lazy(() => import('../components/FaqSection'))
+const ContactSection = lazy(() => import('../components/ContactSection'))
 
 export default function Home() {
+  usePageMeta()
+
   return (
     <>
       <Hero />
+      <ProofBar />
       <Marquee />
 
-      <section className="mx-auto max-w-site px-6 py-20">
-        <Reveal>
-          <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-            <span className="h-px w-8 bg-primary" />
-            Ma Spécialisation
-          </p>
+      <section className="py-24 sm:py-32" aria-labelledby="services-title">
+        <div className="container-site">
+          <SectionHeading
+            index="02"
+            label="Services"
+            title={
+              <span id="services-title">
+                Ce que je <Accent>construis</Accent>
+              </span>
+            }
+            description="De l'agent IA au SaaS complet : je conçois, je code et je mets en production. Cliquez sur une carte pour la mettre en avant."
+          />
 
-          <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-            <span className="text-primary">Services</span> & Expertise
-            <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
-          </h2>
-        </Reveal>
+          <Reveal delay={0.1} className="mt-14">
+            <ServicesPanels limit={6} />
+          </Reveal>
 
-        <Reveal delay={0.12} className="mt-14">
-          <ServicesPanels limit={6} />
-        </Reveal>
-
-        <Reveal delay={0.1} className="mt-12 text-center">
-          <Link
-            to="/services"
-            className="inline-block rounded-full border-2 border-ink px-8 py-3.5 font-semibold text-ink transition-colors hover:border-primary hover:text-primary"
-          >
-            Voir tous les services
-          </Link>
-        </Reveal>
+          <Reveal className="mt-12 flex justify-center">
+            <Button to="/services" variant="ghost" size="lg">
+              Services & tarifs
+            </Button>
+          </Reveal>
+        </div>
       </section>
 
-      <AboutMe withLink />
-      <ToolsSection />
-      <ExperienceSection />
-      <FeaturedProjects />
-      <JourneySection />
-      <PricingSection />
-      <BookingBand />
-      <ContactSection />
-      <BlogTeaser />
-      <FaqSection limit={4} />
-      <Marquee />
+      <Deferred minHeight={1000}>
+        <AboutMe withLink />
+      </Deferred>
+      <Deferred minHeight={4200}>
+        <WorkStack />
+      </Deferred>
+      <Deferred minHeight={1300}>
+        <AgentPipeline />
+      </Deferred>
+      <Deferred minHeight={1300}>
+        <OpenSource />
+      </Deferred>
+      <Deferred minHeight={1700}>
+        <Timeline />
+      </Deferred>
+      <Deferred minHeight={900}>
+        <BlogTeaser />
+      </Deferred>
+      <Deferred minHeight={800}>
+        <FaqSection limit={5} />
+      </Deferred>
+      <Deferred minHeight={1300}>
+        <ContactSection />
+      </Deferred>
     </>
   )
 }

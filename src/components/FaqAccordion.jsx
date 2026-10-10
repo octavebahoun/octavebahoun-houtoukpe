@@ -1,71 +1,66 @@
-import { useState } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
+import { useId, useState } from 'react'
+import { faqs } from '../data/faq'
+import { cx } from '../lib/cx'
+import { Plus } from './icons'
+import { EASE_EXPO } from '../lib/easing'
 
-const faqs = [
-  {
-    question: 'Es-tu disponible pour une mission freelance ?',
-    answer:
-      'Oui. Je prends des missions freelance (via Malt ou en direct), en parallèle de mes études. Réponse sous 24 h, devis clair, et on démarre quand tout est validé.',
-  },
-  {
-    question: 'Sur quels types de projets travailles-tu ?',
-    answer:
-      "Surtout des produits web et des systèmes IA : applications SaaS, automatisations (n8n), intégration de LLM, RAG et agents. J'aime les projets concrets, avec un vrai usage derrière.",
-  },
-  {
-    question: 'Avec quelles technologies travailles-tu ?',
-    answer:
-      "React, Node.js, Python, LangGraph, n8n, LanceDB ou Chroma, FFmpeg... et l'IA quand elle apporte vraiment quelque chose au produit.",
-  },
-  {
-    question: 'Comment se passe un projet avec toi ?',
-    answer:
-      "Cadrage → prototype → itérations → mise en production. Tu vois l'avancement régulièrement, et chaque étape est validée avant de passer à la suivante.",
-  },
-  {
-    question: 'Peux-tu travailler avec des clients hors du Bénin ?',
-    answer:
-      'Oui, je travaille à distance avec des clients partout — je suis actuellement entre Cotonou (Bénin) et Pau (France).',
-  },
-  {
-    question: 'Puis-je voir le code de tes projets ?',
-    answer:
-      'Une bonne partie est open source sur GitHub (github.com/octavebahoun). Pour les projets clients, je partage le code uniquement avec leur accord.',
-  },
-]
-
-export default function FaqAccordion({ limit }) {
-  const [openIndex, setOpenIndex] = useState(1)
+export default function FaqAccordion({ limit, defaultOpen = 0 }) {
+  const [openIndex, setOpenIndex] = useState(defaultOpen)
   const visible = limit ? faqs.slice(0, limit) : faqs
+  const id = useId()
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="divide-y divide-line border-y border-line">
       {visible.map((faq, index) => {
         const open = index === openIndex
-
+        const panelId = `${id}-panel-${index}`
         return (
-          <div
-            key={faq.question}
-            className={`overflow-hidden rounded-card transition-colors ${
-              open ? 'bg-primary text-white' : 'bg-card'
-            }`}
-          >
-            <button
-              type="button"
-              aria-expanded={open}
-              onClick={() => setOpenIndex(open ? -1 : index)}
-              className="flex w-full items-center justify-between gap-6 px-7 py-6 text-left"
-            >
-              <span className="text-lg font-bold">{faq.question}</span>
-              <span
-                className={`text-2xl leading-none font-bold ${
-                  open ? 'text-white' : 'text-ink'
-                }`}
+          <div key={faq.question}>
+            <h3>
+              <button
+                type="button"
+                aria-expanded={open}
+                aria-controls={panelId}
+                onClick={() => setOpenIndex(open ? -1 : index)}
+                className="group flex w-full items-center justify-between gap-6 py-6 text-left"
               >
-                {open ? '−' : '+'}
-              </span>
-            </button>
-
-            {open && <p className="px-7 pb-7 text-white/80">{faq.answer}</p>}
+                <span className="flex items-baseline gap-4">
+                  <span className="font-mono text-xs text-faint">{String(index + 1).padStart(2, '0')}</span>
+                  <span
+                    className={cx(
+                      'text-lg font-semibold tracking-tight transition-colors sm:text-xl',
+                      open ? 'text-ink' : 'text-ink/80 group-hover:text-ink',
+                    )}
+                  >
+                    {faq.question}
+                  </span>
+                </span>
+                <span
+                  className={cx(
+                    'flex size-10 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ease-out-expo',
+                    open ? 'rotate-45 border-primary bg-primary text-white' : 'border-line text-ink group-hover:border-ink/30',
+                  )}
+                >
+                  <Plus className="size-4" />
+                </span>
+              </button>
+            </h3>
+            <AnimatePresence initial={false}>
+              {open && (
+                <motion.div
+                  id={panelId}
+                  role="region"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.5, ease: EASE_EXPO }}
+                  className="overflow-hidden"
+                >
+                  <p className="max-w-2xl pb-7 pl-9 text-[15.5px] leading-relaxed">{faq.answer}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         )
       })}

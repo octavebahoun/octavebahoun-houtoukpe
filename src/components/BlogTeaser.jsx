@@ -1,62 +1,96 @@
+import { AnimatePresence, motion, useMotionValue, useSpring } from 'motion/react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { usePosts } from '../hooks/usePosts'
-import { formatDate } from '../lib/format'
-import { Sparkle } from './icons'
-import { Reveal, Stagger, StaggerItem } from './Reveal'
+import { formatDate, readingTime } from '../lib/format'
+import { ArrowUpRight } from './icons'
+import { Reveal } from './Reveal'
+import { Accent } from './ui/Bits'
+import { Button } from './ui/Button'
+import { SectionHeading } from './ui/SectionHeading'
 
-export default function BlogTeaser() {
+export default function BlogTeaser({ index = '08' }) {
   const posts = usePosts()
-  const recent = posts.slice(0, 3)
+  const recent = posts.slice(0, 4)
+  const [hovered, setHovered] = useState(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const springX = useSpring(x, { stiffness: 260, damping: 26 })
+  const springY = useSpring(y, { stiffness: 260, damping: 26 })
+
+  function handleMove(event) {
+    const rect = event.currentTarget.getBoundingClientRect()
+    x.set(event.clientX - rect.left)
+    y.set(event.clientY - rect.top)
+  }
 
   return (
-    <section className="mx-auto max-w-site px-6 py-20">
-      <Reveal>
-        <p className="flex items-center justify-center gap-3 text-sm font-semibold text-ink">
-          <span className="h-px w-8 bg-primary" />
-          Actus & Blog
-        </p>
+    <section className="py-24 sm:py-32" aria-labelledby="blog-title">
+      <div className="container-site">
+        <SectionHeading
+          index={index}
+          label="Journal"
+          title={
+            <span id="blog-title">
+              Notes de <Accent>labo</Accent>
+            </span>
+          }
+          description="Ce que je construis, ce qui casse, ce que j'en retiens. Des retours d'expérience techniques, sans jargon inutile."
+          aside={
+            <div className="mt-6">
+              <Button to="/blog" variant="ghost">
+                Tous les articles
+              </Button>
+            </div>
+          }
+        />
 
-        <h2 className="mt-4 text-center text-4xl font-extrabold tracking-tight sm:text-5xl">
-          Mes derniers{' '}
-          <span className="font-medium text-primary italic">articles</span>
-          <Sparkle className="ml-2 inline-block size-4 -translate-y-3 text-ink" />
-        </h2>
-      </Reveal>
+        <div className="relative mt-14" onPointerMove={handleMove} onPointerLeave={() => setHovered(null)}>
+          <ul className="border-t border-line">
+            {recent.map((post, postIndex) => (
+              <Reveal as="li" key={post.slug} delay={postIndex * 0.06} y={20} className="border-b border-line">
+                <Link
+                  to={`/blog/${post.slug}`}
+                  onPointerEnter={() => setHovered(post)}
+                  className="group grid items-center gap-x-8 gap-y-3 py-7 sm:grid-cols-[8.5rem_1fr_auto] sm:py-9"
+                >
+                  <span className="font-mono text-xs text-faint">{formatDate(post.date, { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                  <span>
+                    <span className="block text-xl font-bold tracking-tight text-ink transition-transform duration-500 ease-out-expo group-hover:translate-x-2 sm:text-[1.65rem]">
+                      {post.title}
+                    </span>
+                    <span className="mt-2 block text-sm text-faint">
+                      {post.category} · {readingTime(post.content)}
+                    </span>
+                  </span>
+                  <span className="hidden size-12 items-center justify-center rounded-full border border-line text-ink transition-all duration-500 ease-out-expo group-hover:rotate-45 group-hover:border-primary group-hover:bg-primary group-hover:text-white sm:flex">
+                    <ArrowUpRight className="size-5" />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </ul>
 
-      <Stagger className="mt-12 grid gap-8 lg:grid-cols-3">
-        {recent.map((post) => (
-          <StaggerItem key={post.slug}>
-            <Link to={`/blog/${post.slug}`} className="group block">
-              <img
-                src={post.image}
-                alt={post.title}
-                loading="lazy"
-                className="aspect-[16/9] w-full rounded-2xl object-cover object-top"
-              />
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="rounded-full bg-primary px-3.5 py-1 text-xs font-medium text-white">
-                  {post.category}
-                </span>
-                <span className="rounded-full bg-primary px-3.5 py-1 text-xs font-medium text-white">
-                  {formatDate(post.date)}
-                </span>
-              </div>
-              <h3 className="mt-3 text-lg font-bold transition-colors group-hover:text-primary">
-                {post.title}
-              </h3>
-            </Link>
-          </StaggerItem>
-        ))}
-      </Stagger>
-
-      <Reveal delay={0.1} className="mt-12 text-center">
-        <Link
-          to="/blog"
-          className="inline-block rounded-full border-2 border-ink px-8 py-3.5 font-semibold text-ink transition-colors hover:border-primary hover:text-primary"
-        >
-          Voir tous les articles
-        </Link>
-      </Reveal>
+          {/* Aperçu flottant qui suit le curseur (souris uniquement) */}
+          <AnimatePresence>
+            {hovered && (
+              <motion.div
+                key="preview"
+                style={{ x: springX, y: springY }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.25 }}
+                className="pointer-events-none absolute top-0 left-0 z-20 hidden [@media(pointer:fine)]:lg:block"
+              >
+                <div className="-translate-x-1/2 -translate-y-[115%] overflow-hidden rounded-2xl border border-line bg-surface shadow-lift">
+                  <img src={hovered.image} alt="" className="aspect-[16/10] w-72 object-cover" />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
     </section>
   )
 }

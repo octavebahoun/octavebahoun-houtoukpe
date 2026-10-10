@@ -1,25 +1,23 @@
-@import 'tailwindcss';
+@import 'tailwindcss' source('.');
+@import 'lenis/dist/lenis.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: 'Plus Jakarta Sans', Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', ui-serif, Georgia, serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --color-primary: #fe4619;
-  --color-primary-hover: #e03a10;
-  --color-ink: #0d0d0d;
-  --color-soft: #f0f0f0;
-  --color-card: #f7f7f7;
-  --color-line: #e0e0e0;
-  --color-muted: #6b6b6b;
-  --color-faint: #9a9a9a;
+  --radius-card: 24px;
+  --radius-field: 14px;
 
-  --radius-card: 20px;
-  --radius-field: 12px;
+  --container-site: 1280px;
+  --container-prose: 720px;
 
-  --shadow-soft: 0 4px 20px rgb(0 0 0 / 0.05);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-snappy: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --container-site: 1240px;
-
-  --animate-spin-slow: spin-slow 20s linear infinite;
+  --animate-spin-slow: spin-slow 22s linear infinite;
   --animate-marquee: marquee 32s linear infinite;
   --animate-dash: dash 2.6s linear infinite;
   --animate-node: node-pulse 2.8s ease-in-out infinite;
@@ -27,6 +25,10 @@
   --animate-draw: draw 2.2s ease-out forwards;
   --animate-blink: blink 1.1s steps(2, start) infinite;
   --animate-fade-line: fade-line 0.7s ease-out both;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-ping-soft: ping-soft 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+  --animate-cell: cell-in 0.5s var(--ease-snappy) both;
 
   @keyframes spin-slow {
     to {
@@ -80,38 +82,280 @@
       transform: translateX(-8px);
     }
   }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes ping-soft {
+    75%,
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+
+  @keyframes cell-in {
+    from {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+  }
+}
+
+/* Couleurs sémantiques : elles basculent avec la classe .dark posée sur <html> */
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-ink: var(--primary-ink);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-soft: var(--soft);
+  --color-night: var(--night);
+  --color-night-2: var(--night-2);
+  --shadow-soft: var(--shadow-soft);
+  --shadow-lift: var(--shadow-lift);
+}
+
+:root {
+  --primary: #fe4619;
+  --primary-hover: #e03a10;
+  --primary-ink: #c2330e;
+  --ink: #0d0d0d;
+  --muted: #57564f;
+  --faint: #6b6a64;
+  --line: #e4e2db;
+  --paper: #f6f5f1;
+  --surface: #ffffff;
+  --card: #efede7;
+  --soft: #ebe9e2;
+  --night: #0d0d0d;
+  --night-2: #181817;
+  --grid-line: rgb(13 13 13 / 0.05);
+  --shadow-soft: 0 1px 2px rgb(13 13 13 / 0.04), 0 10px 30px -14px rgb(13 13 13 / 0.14);
+  --shadow-lift: 0 2px 6px rgb(13 13 13 / 0.05), 0 30px 60px -22px rgb(13 13 13 / 0.3);
+  color-scheme: light;
+}
+
+.dark {
+  --primary: #ff5a2b;
+  --primary-hover: #ff7148;
+  --primary-ink: #ff7a52;
+  --ink: #f2f1ec;
+  --muted: #a8a69f;
+  --faint: #84837d;
+  --line: #262624;
+  --paper: #0a0a09;
+  --surface: #121211;
+  --card: #181816;
+  --soft: #0f0f0e;
+  --night: #151513;
+  --night-2: #1e1e1c;
+  --grid-line: rgb(255 255 255 / 0.035);
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.5), 0 10px 30px -14px rgb(0 0 0 / 0.7);
+  --shadow-lift: 0 2px 6px rgb(0 0 0 / 0.5), 0 30px 60px -22px rgb(0 0 0 / 0.85);
+  color-scheme: dark;
+}
+
+/* L'admin reste toujours en clair, quel que soit le thème du site */
+.theme-light {
+  --primary: #fe4619;
+  --primary-hover: #e03a10;
+  --primary-ink: #c2330e;
+  --ink: #0d0d0d;
+  --muted: #57564f;
+  --faint: #6b6a64;
+  --line: #e4e2db;
+  --paper: #f6f5f1;
+  --surface: #ffffff;
+  --card: #efede7;
+  --soft: #ebe9e2;
+  --night: #0d0d0d;
+  --night-2: #181817;
+  --grid-line: rgb(13 13 13 / 0.05);
+  color-scheme: light;
+  color: var(--muted);
 }
 
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
   body {
+    min-height: 100dvh;
     font-family: var(--font-sans);
     font-size: 16px;
-    line-height: 1.7;
-    color: var(--color-muted);
-    background: #fff;
+    line-height: 1.65;
+    color: var(--muted);
+    background-color: var(--paper);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.4s var(--ease-snappy);
+  }
+
+  /* Grille + grain : une couche fixe, peinte une seule fois */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.055 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size:
+      160px 160px,
+      88px 88px,
+      88px 88px;
+    mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, #000 40%, transparent 100%);
   }
 
   h1,
   h2,
   h3,
   h4 {
-    color: var(--color-ink);
-    font-weight: 700;
-    line-height: 1.15;
+    color: var(--ink);
+    font-weight: 750;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   ::selection {
-    background: var(--color-primary);
+    background: var(--primary);
     color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  img {
+    -webkit-user-drag: none;
+  }
+
+  /* Transition de thème : révélation circulaire (View Transitions API) */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: var(--primary);
+    padding-right: 0.06em;
+  }
+
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  .display {
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.92;
+  }
+
+  /* Article de blog */
+  .prose-oktav {
+    color: var(--muted);
+    font-size: 1.0625rem;
+    line-height: 1.8;
+  }
+
+  .prose-oktav strong {
+    color: var(--ink);
+    font-weight: 650;
+  }
+
+  .prose-oktav code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    padding: 0.15em 0.4em;
+    border-radius: 6px;
+    background: var(--card);
+    color: var(--ink);
   }
 }
 
 @utility bg-grid {
-  background-color: #fafafa;
-  background-image:
-    linear-gradient(to right, rgb(13 13 13 / 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(13 13 13 / 0.035) 1px, transparent 1px);
-  background-size: 88px 88px;
+  background-color: var(--paper);
+}
+
+@utility container-site {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--container-site);
+  padding-inline: 1.25rem;
+
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility text-stroke {
+  -webkit-text-stroke: 1.5px currentColor;
+  color: transparent;
+}
+
+@utility mask-fade-x {
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }

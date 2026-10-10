@@ -204,3 +204,266 @@ export function Instagram({ className = 'size-4' }) {
     </svg>
   )
 }
+
+function Stroke({ className = 'size-5', strokeWidth = 2, children }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={`fill-none stroke-current ${className}`}
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      {children}
+    </svg>
+  )
+}
+
+export function Sun(props) {
+  return (
+    <Stroke {...props}>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+    </Stroke>
+  )
+}
+
+export function Moon(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+    </Stroke>
+  )
+}
+
+export function Search(props) {
+  return (
+    <Stroke {...props}>
+      <circle cx="11" cy="11" r="7" />
+      <path d="m20 20-3.5-3.5" />
+    </Stroke>
+  )
+}
+
+export function Copy(props) {
+  return (
+    <Stroke {...props}>
+      <rect x="9" y="9" width="12" height="12" rx="2.5" />
+      <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" />
+    </Stroke>
+  )
+}
+
+export function Check(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M20 6 9 17l-5-5" />
+    </Stroke>
+  )
+}
+
+export function ArrowRight(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </Stroke>
+  )
+}
+
+export function ArrowLeft(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M19 12H5M11 18l-6-6 6-6" />
+    </Stroke>
+  )
+}
+
+export function ArrowDown(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M12 5v14M6 13l6 6 6-6" />
+    </Stroke>
+  )
+}
+
+export function ArrowUp(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M12 19V5M6 11l6-6 6 6" />
+    </Stroke>
+  )
+}
+
+export function Plus(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M12 5v14M5 12h14" />
+    </Stroke>
+  )
+}
+
+export function Close(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M6 6l12 12M18 6 6 18" />
+    </Stroke>
+  )
+}
+
+export function Terminal(props) {
+  return (
+    <Stroke {...props}>
+      <path d="m5 7 5 5-5 5M12 19h7" />
+    </Stroke>
+  )
+}
+
+export function GitBranch(props) {
+  return (
+    <Stroke {...props}>
+      <circle cx="6" cy="5" r="2" />
+      <circle cx="6" cy="19" r="2" />
+      <circle cx="18" cy="7" r="2" />
+      <path d="M6 7v10M18 9c0 5-6 4-11 8" />
+    </Stroke>
+  )
+}
+
+export function GitMerge(props) {
+  return (
+    <Stroke {...props}>
+      <circle cx="6" cy="5" r="2" />
+      <circle cx="6" cy="19" r="2" />
+      <circle cx="18" cy="12" r="2" />
+      <path d="M6 7v10M6 7c0 4 4 5 10 5" />
+    </Stroke>
+  )
+}
+
+export function GitPullRequest(props) {
+  return (
+    <Stroke {...props}>
+      <circle cx="6" cy="6" r="2" />
+      <circle cx="6" cy="18" r="2" />
+      <circle cx="18" cy="18" r="2" />
+      <path d="M6 8v8M18 16V9a2 2 0 0 0-2-2h-4M14 4l-3 3 3 3" />
+    </Stroke>
+  )
+}
+
+export function Star(props) {
+  return (
+    <Stroke {...props}>
+      <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9L12 3z" />
+    </Stroke>
+  )
+}
+
+export function Code(props) {
+  return (
+    <Stroke {...props}>
+      <path d="m9 8-4 4 4 4M15 8l4 4-4 4" />
+    </Stroke>
+  )
+}
+
+export function Globe(props) {
+  return (
+    <Stroke {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+    </Stroke>
+  )
+}
+
+export function Clock(props) {
+  return (
+    <Stroke {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </Stroke>
+  )
+}
+
+export function Command(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M9 6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6z" />
+    </Stroke>
+  )
+}
+
+export function Send(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" />
+    </Stroke>
+  )
+}
+
+export function Layers(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M12 3 21 8l-9 5-9-5 9-5zM3 13l9 5 9-5" />
+    </Stroke>
+  )
+}
+
+export function Cpu(props) {
+  return (
+    <Stroke {...props}>
+      <rect x="6" y="6" width="12" height="12" rx="2" />
+      <path d="M10 10h4v4h-4zM9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4" />
+    </Stroke>
+  )
+}
+
+export function Book(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14zM4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5" />
+    </Stroke>
+  )
+}
+
+export function Link(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M10 14a4 4 0 0 0 5.66 0l2.83-2.83a4 4 0 0 0-5.66-5.66L11.5 6.9" />
+      <path d="M14 10a4 4 0 0 0-5.66 0L5.5 12.83a4 4 0 0 0 5.66 5.66l1.34-1.39" />
+    </Stroke>
+  )
+}
+
+export function Play(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M7 4v16l13-8L7 4z" />
+    </Stroke>
+  )
+}
+
+export function Pause(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M8 5v14M16 5v14" />
+    </Stroke>
+  )
+}
+
+export function Bolt(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z" />
+    </Stroke>
+  )
+}
+
+export function Heart(props) {
+  return (
+    <Stroke {...props}>
+      <path d="M20.8 5.6a5.5 5.5 0 0 0-7.8 0L12 6.7l-1-1.1a5.5 5.5 0 1 0-7.8 7.8l1 1.1L12 22l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z" />
+    </Stroke>
+  )
+}
