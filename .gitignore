@@ -22,3 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Fichiers de travail locaux (maquettes, photos sources, notes) : jamais publiés
+/[0-9]*.png
+/video.mp4
+/etudiant photo.png
+/professionelle photo.jpeg
+/DESIGN_SYSTEM.md
+/VISUALS_PROMPTS.md
+/portfolio-oktav-data-enrichi.md
+/design/
+/.claude/
