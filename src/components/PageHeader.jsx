@@ -17,7 +17,7 @@ export default function PageHeader({ crumb, title, description, aside, count }) 
             Accueil
           </Link>
           <span className="text-line">/</span>
-          <span className="text-primary">{crumb}</span>
+          <span className="text-primary-ink">{crumb}</span>
         </motion.nav>
 
         <h1 className="display mt-6 text-[clamp(3.6rem,11vw,10rem)] leading-[0.85] tracking-[-0.055em]">
@@ -36,7 +36,7 @@ export default function PageHeader({ crumb, title, description, aside, count }) 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
-              className="ml-2 align-top font-mono text-[0.16em] font-medium tracking-normal text-primary"
+              className="ml-2 align-top font-mono text-[0.16em] font-medium tracking-normal text-primary-ink"
             >
               ({count})
             </motion.sup>

@@ -113,7 +113,7 @@ export default function ContactSection({ index = '10' }) {
   }
 
   return (
-    <section id="contact" className="scroll-mt-24 py-24 sm:py-32" aria-labelledby="contact-title">
+    <section id="contact" className="scroll-mt-24 py-16 sm:py-24 lg:py-28" aria-labelledby="contact-title">
       <div className="container-site">
         <SectionHeading
           index={index}
@@ -123,7 +123,7 @@ export default function ContactSection({ index = '10' }) {
               Un projet ? <Accent>Parlons-en.</Accent>
             </span>
           }
-          description="Mission freelance, stage, collaboration open source ou simple question : quelques lignes suffisent. Je réponds sous 24 h."
+          description="Mission freelance, stage, collaboration open source ou simple question : quelques lignes suffisent. Je réponds sous 24&nbsp;h."
         />
 
         <div className="mt-14 grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)]">
@@ -181,7 +181,7 @@ export default function ContactSection({ index = '10' }) {
                 <button
                   type="submit"
                   disabled={status === 'sending'}
-                  className="group inline-flex h-14 items-center gap-3 rounded-full bg-primary pr-2 pl-7 font-semibold text-white transition-[background-color,box-shadow] hover:bg-primary-hover hover:shadow-lift disabled:cursor-wait disabled:opacity-70"
+                  className="group inline-flex h-14 items-center gap-3 rounded-full bg-primary-strong pr-2 pl-7 font-semibold text-white transition-[background-color,box-shadow] hover:bg-primary-strong-hover hover:shadow-lift disabled:cursor-wait disabled:opacity-70"
                 >
                   {status === 'sending' ? 'Envoi en cours…' : 'Envoyer le message'}
                   <span className="flex size-10 items-center justify-center rounded-full bg-night text-white transition-transform duration-500 ease-out-expo group-hover:translate-x-0.5 group-hover:-rotate-12">
@@ -202,7 +202,7 @@ export default function ContactSection({ index = '10' }) {
                     className="flex items-center gap-3 rounded-field bg-primary/10 px-5 py-4 text-sm font-semibold text-primary-ink"
                     role="status"
                   >
-                    <Check className="size-4" /> Message envoyé ! Je vous réponds sous 24 h.
+                    <Check className="size-4" /> Message envoyé ! Je vous réponds sous 24&nbsp;h.
                   </motion.p>
                 )}
                 {status === 'error' && (
@@ -229,7 +229,7 @@ export default function ContactSection({ index = '10' }) {
             <div className="relative overflow-hidden rounded-[28px] bg-night p-7 text-white sm:p-8">
               <div aria-hidden="true" className="pointer-events-none absolute -top-24 -right-20 size-64 rounded-full bg-primary/30 blur-[80px]" />
               <p className="relative flex items-center gap-2.5 text-sm font-semibold">
-                <StatusDot /> Réponse sous 24 h
+                <StatusDot /> Réponse sous 24&nbsp;h
               </p>
               <p className="relative mt-2 text-sm text-white/55">{profile.availability}.</p>
 
@@ -240,8 +240,8 @@ export default function ContactSection({ index = '10' }) {
                   className="group flex w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 text-left transition-colors hover:border-white/25"
                 >
                   <Copy className="size-4 text-primary" />
-                  <span className="min-w-0 flex-1 truncate text-[15px] font-medium">{EMAIL}</span>
-                  <span className="font-mono text-[11px] text-white/40 group-hover:text-white/70">copier</span>
+                  <span className="min-w-0 flex-1 text-[15px] font-medium [overflow-wrap:anywhere]">{EMAIL}</span>
+                  <span className="font-mono text-[11px] text-white/60 group-hover:text-white/70 max-sm:hidden">copier</span>
                 </button>
                 <a
                   href={CAL_URL}
@@ -250,8 +250,8 @@ export default function ContactSection({ index = '10' }) {
                   className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3.5 transition-colors hover:border-white/25"
                 >
                   <Calendar className="size-4 text-primary" />
-                  <span className="flex-1 text-[15px] font-medium">Réserver 30 min — gratuit</span>
-                  <ArrowUpRight className="size-4 text-white/40 transition-transform group-hover:rotate-45 group-hover:text-white" />
+                  <span className="flex-1 text-[15px] font-medium">Réserver 30&nbsp;min — gratuit</span>
+                  <ArrowUpRight className="size-4 text-white/60 transition-transform group-hover:rotate-45 group-hover:text-white" />
                 </a>
                 <div className="grid grid-cols-2 gap-2">
                   {[
@@ -266,13 +266,13 @@ export default function ContactSection({ index = '10' }) {
                       className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-medium transition-colors hover:border-white/25"
                     >
                       {link.label}
-                      <ArrowUpRight className="size-3.5 text-white/40 group-hover:text-white" />
+                      <ArrowUpRight className="size-3.5 text-white/60 group-hover:text-white" />
                     </a>
                   ))}
                 </div>
               </div>
 
-              <p className="relative mt-7 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs text-white/45">
+              <p className="relative mt-7 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs text-white/60">
                 {profile.cities.map((city) => (
                   <span key={city.label}>
                     {city.label} <LiveClock timeZone={city.timeZone} className="text-white/85" />
@@ -281,7 +281,8 @@ export default function ContactSection({ index = '10' }) {
               </p>
             </div>
 
-            <div className="rounded-[28px] border border-line bg-surface p-7 sm:p-8">
+            {/* Résumé des tarifs : détaillé sur /services, masqué sur mobile pour raccourcir l'accueil */}
+            <div className="rounded-[28px] border border-line bg-surface p-7 max-sm:hidden sm:p-8">
               <p className="kicker">Modes de collaboration</p>
               <ul className="mt-5 divide-y divide-line">
                 {plans.map((plan) => (

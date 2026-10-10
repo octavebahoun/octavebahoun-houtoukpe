@@ -13,7 +13,7 @@ export default function PricingSection({ index = '03' }) {
   const navigate = useNavigate()
 
   return (
-    <section id="tarifs" className="scroll-mt-24 py-24 sm:py-32" aria-labelledby="pricing-title">
+    <section id="tarifs" className="scroll-mt-24 py-16 sm:py-24 lg:py-28" aria-labelledby="pricing-title">
       <div className="container-site">
         <SectionHeading
           index={index}
@@ -23,7 +23,7 @@ export default function PricingSection({ index = '03' }) {
               Travaillons <Accent>ensemble</Accent>
             </span>
           }
-          description="Trois façons de collaborer, selon votre besoin. Chaque projet commence par un appel gratuit de 30 minutes pour cadrer le besoin."
+          description="Trois façons de collaborer, selon votre besoin. Chaque projet commence par un appel gratuit de 30&nbsp;minutes pour cadrer le besoin."
         />
 
         <Stagger className="mt-14 grid gap-4 lg:grid-cols-3">
@@ -36,7 +36,7 @@ export default function PricingSection({ index = '03' }) {
                 )}
               >
                 {plan.featured && (
-                  <span className="absolute top-7 right-7 rounded-full bg-primary px-3 py-1 font-mono text-[11px] font-semibold text-white">
+                  <span className="absolute top-7 right-7 rounded-full bg-primary-strong px-3 py-1 font-mono text-[11px] font-semibold text-white">
                     Le plus demandé
                   </span>
                 )}

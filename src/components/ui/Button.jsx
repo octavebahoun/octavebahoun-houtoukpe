@@ -10,7 +10,7 @@ const variants = {
     bubble: 'bg-primary text-white',
   },
   accent: {
-    base: 'bg-primary text-white hover:bg-primary-hover hover:shadow-lift',
+    base: 'bg-primary-strong text-white hover:bg-primary-strong-hover hover:shadow-lift',
     bubble: 'bg-night text-white',
   },
   ghost: {

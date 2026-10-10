@@ -14,12 +14,14 @@ export const categories = [
 // Dépôts visibles sur le GitHub d'Oktav qui ne sont pas ses projets : jamais affichés
 export const hiddenRepos = ['agritracebio']
 
-// Descriptions pour les dépôts qui n'en ont pas sur GitHub
+// Descriptions affichées à la place de celles de GitHub (manquantes ou à corriger)
 export const repoNotes = {
   'octavebahoun-houtoukpe': 'Ce portfolio — React 19, Tailwind CSS v4, Motion, Lenis',
   findspeed: 'Trouver un produit et la cabine qui le vend au marché de PK3 — PWA Next.js + Laravel',
   fier2: 'FIERI Research — plateforme de gestion de la recherche académique',
   gentube: 'Gentube — SaaS multi-tenant de génération vidéo IA',
+  exo_data_ia_learning:
+    'Exercices de machine learning et de data science : Keras, PyTorch, scikit-learn.',
 }
 
 export const catalog = [
@@ -43,7 +45,7 @@ export const catalog = [
     ],
     metrics: [
       { value: '392', label: 'tests automatisés' },
-      { value: '30 s', label: 'de calcul par vidéo' },
+      { value: '30\u00a0s', label: 'de calcul par vidéo' },
       { value: '1080p', label: 'rendus prêts à publier' },
     ],
     stack: ['Next.js 15', 'TypeScript', 'Drizzle', 'PostgreSQL', 'AWS Lambda', 'Cloudflare R2'],
@@ -68,7 +70,7 @@ export const catalog = [
     solution:
       'Six agents LangGraph (Intent → Retriever → Analyzer → Planner → Editor → Validator) partagent un état commun. Indexation locale avec PySceneDetect, Librosa, OpenCV, YOLO11, Florence-2 et SigLIP, stockée dans LanceDB ; assemblage final en une seule commande FFmpeg.',
     impact:
-      'Un montage en 10 à 40 secondes, zéro pixel généré, 0 $ en mode local. V1 complète en 10 sprints, avec une quarantaine de tests et une CLI.',
+      'Un montage en 10 à 40 secondes, zéro pixel généré, 0\u00a0$ en mode local. V1 complète en 10 sprints, avec une quarantaine de tests et une CLI.',
     features: [
       'Pipeline de 6 agents LangGraph',
       'Coupes calées sur les beats (Librosa)',
@@ -78,13 +80,13 @@ export const catalog = [
     metrics: [
       { value: '6', label: 'agents LangGraph' },
       { value: '0', label: 'pixel généré' },
-      { value: '10–40 s', label: 'par montage' },
+      { value: '10–40\u00a0s', label: 'par montage' },
     ],
     stack: ['Python', 'LangGraph', 'LanceDB', 'FFmpeg', 'YOLO11', 'SigLIP'],
     categories: ['ia', 'oss'],
     year: '2026',
     role: 'Solo — conception & développement',
-    status: 'V1 terminée',
+    status: 'V1 livrée · en pause',
     repo: 'octavebahoun/video-remix-studio',
     link: 'https://github.com/octavebahoun/video-remix-studio',
     article: '/blog/video-remix-studio',
@@ -147,7 +149,7 @@ export const catalog = [
     metrics: [
       { value: '2/4', label: 'phases livrées' },
       { value: '3', label: 'couches de mémoire' },
-      { value: '★ 4', label: 'sur GitHub' },
+      { value: '★\u00a04', label: 'sur GitHub' },
     ],
     stack: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL', 'Redis', 'Docker'],
     categories: ['ia', 'oss'],

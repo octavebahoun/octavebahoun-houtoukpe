@@ -9,7 +9,7 @@ const steps = [
   {
     Icon: Lightbulb,
     title: 'Cadrage',
-    duration: '1 appel · 30 min',
+    duration: '1 appel · 30\u00a0min',
     text: "Comprendre le besoin réel, les utilisateurs et les contraintes avant d'écrire la moindre ligne de code.",
   },
   {
@@ -34,7 +34,7 @@ const steps = [
 
 export default function ProcessSection({ index = '02' }) {
   return (
-    <section className="py-24 sm:py-32" aria-labelledby="process-title">
+    <section className="py-16 sm:py-24 lg:py-28" aria-labelledby="process-title">
       <div className="container-site">
         <SectionHeading
           index={index}
@@ -44,7 +44,7 @@ export default function ProcessSection({ index = '02' }) {
               Comment on <Accent>avance</Accent>
             </span>
           }
-          description="Une méthode simple, éprouvée sur une douzaine de produits : vous voyez l'avancement à chaque étape, et rien ne part en production sans votre validation."
+          description="Une méthode simple, éprouvée sur une quinzaine de projets : vous voyez l'avancement à chaque étape, et rien ne part en production sans votre validation."
         />
 
         <div className="relative mt-16">
@@ -66,7 +66,7 @@ export default function ProcessSection({ index = '02' }) {
                 </span>
                 <div className="mt-6 rounded-card border border-line bg-surface p-6">
                   <p className="flex items-center justify-between font-mono text-xs text-faint">
-                    <span className="text-primary">0{stepIndex + 1}</span>
+                    <span className="text-primary-ink">0{stepIndex + 1}</span>
                     {step.duration}
                   </p>
                   <h3 className="mt-4 text-xl font-bold tracking-tight">{step.title}</h3>

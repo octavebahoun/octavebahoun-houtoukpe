@@ -15,7 +15,7 @@ const steps = [
     model: 'Llama 70B',
     fallback: 'repli regex',
     text: '« edit sombre avec flashs » devient un objet structuré : ambiance, personnage, couleur, effets, BPM cible, durée.',
-    log: 'intent     mood=dark · effects=[flash] · bpm≈128 · 30 s',
+    log: 'intent     mood=dark · effects=[flash] · bpm≈128 · 30\u00a0s',
   },
   {
     name: 'Retriever',
@@ -180,8 +180,8 @@ function Diagram({ active, onSelect }) {
               width={NODE_W}
               height={NODE_H}
               rx="15"
-              fill={isActive ? '#fe4619' : '#1b1b19'}
-              stroke={isActive ? '#fe4619' : done ? 'rgb(254 70 25 / 0.45)' : 'rgb(255 255 255 / 0.12)'}
+              fill={isActive ? '#d0380c' : '#1b1b19'}
+              stroke={isActive ? '#d0380c' : done ? 'rgb(254 70 25 / 0.45)' : 'rgb(255 255 255 / 0.12)'}
               style={{ transition: 'fill 0.4s, stroke 0.4s' }}
             />
             <text x={x + 16} y={ROW_Y + 26} fill={isActive ? 'rgb(255 255 255 / 0.75)' : 'rgb(255 255 255 / 0.4)'} fontSize="10.5" fontFamily="var(--font-mono)">
@@ -229,13 +229,13 @@ export default function AgentPipeline() {
   const step = steps[active]
 
   return (
-    <section ref={ref} className="px-3 sm:px-4" aria-labelledby="pipeline-title">
-      <div className="relative overflow-hidden rounded-[32px] bg-night py-20 text-white sm:rounded-[40px] sm:py-28">
+    <section ref={ref} className="container-site" aria-labelledby="pipeline-title">
+      <div className="relative overflow-hidden rounded-[28px] border border-transparent bg-night py-16 text-white sm:rounded-[36px] sm:py-24 dark:border-white/[0.07]">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute top-0 right-0 size-[40rem] translate-x-1/3 -translate-y-1/2 rounded-full bg-primary/15 blur-[140px]"
         />
-        <div className="container-site relative">
+        <div className="relative px-5 sm:px-10 lg:px-14">
           <SectionHeading
             index="05"
             label="Sous le capot"
@@ -261,12 +261,12 @@ export default function AgentPipeline() {
                   onClick={() => select(index)}
                   className={cx(
                     'flex w-full items-center gap-4 rounded-2xl border px-4 py-3 text-left transition-colors',
-                    index === active ? 'border-primary bg-primary text-white' : 'border-white/10 bg-white/[0.03] text-white/70',
+                    index === active ? 'border-primary-strong bg-primary-strong text-white' : 'border-white/10 bg-white/[0.03] text-white/70',
                   )}
                 >
-                  <span className="font-mono text-xs opacity-70">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="font-mono text-xs">{String(index + 1).padStart(2, '0')}</span>
                   <span className="font-bold">{item.name}</span>
-                  <span className="ml-auto font-mono text-[11px] opacity-70">{item.model}</span>
+                  <span className="ml-auto font-mono text-[11px]">{item.model}</span>
                 </button>
               </li>
             ))}
@@ -275,7 +275,7 @@ export default function AgentPipeline() {
           <div className="mt-4 grid grid-cols-1 gap-4 md:mt-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
             <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-7 sm:p-8">
               <div className="flex items-center justify-between gap-4">
-                <span className="font-mono text-xs text-white/45">
+                <span className="font-mono text-xs text-white/60">
                   Agent {String(active + 1).padStart(2, '0')} / 06
                 </span>
                 <button
@@ -322,8 +322,8 @@ export default function AgentPipeline() {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-3xl border border-white/10 bg-black/40 font-mono text-[12.5px]">
-              <div className="flex items-center justify-between border-b border-white/10 px-5 py-3 text-white/40">
+            <div className="overflow-hidden rounded-3xl border border-white/10 bg-black/40 font-mono text-[12.5px] max-md:hidden">
+              <div className="flex items-center justify-between border-b border-white/10 px-5 py-3 text-white/60">
                 <span className="flex items-center gap-2">
                   <Terminal className="size-4" /> vrs — exécution simulée
                 </span>
@@ -339,7 +339,7 @@ export default function AgentPipeline() {
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.35, delay: index === active ? 0.1 : 0 }}
-                    className={index === active ? 'text-white' : 'text-white/45'}
+                    className={index === active ? 'text-white' : 'text-white/60'}
                   >
                     <span className="text-primary">→</span> {item.log}
                   </motion.p>

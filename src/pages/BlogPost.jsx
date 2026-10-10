@@ -1,7 +1,6 @@
 import { motion } from 'motion/react'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import CtaBand from '../components/CtaBand'
 import { ArrowLeft, ArrowUpRight, Link as LinkIcon, LinkedIn, XIcon } from '../components/icons'
 import { Reveal, Stagger, StaggerItem } from '../components/Reveal'
 import { EASE_EXPO } from '../lib/easing'
@@ -160,7 +159,7 @@ export default function BlogPost() {
             transition={{ duration: 0.7, ease: EASE_EXPO }}
             className="kicker mt-10"
           >
-            <span className="text-primary">{post.category}</span> · {formatDate(post.date)} · {readingTime(post.content)}
+            <span className="text-primary-ink">{post.category}</span> · {formatDate(post.date)} · {readingTime(post.content)}
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
@@ -270,7 +269,7 @@ export default function BlogPost() {
       </div>
 
       {related.length > 0 && (
-        <section className="py-24 sm:py-32">
+        <section className="py-16 sm:py-24 lg:py-28">
           <div className="container-site">
             <p className="kicker">À lire aussi</p>
             <Stagger className="mt-8 grid gap-6 md:grid-cols-2">
@@ -292,7 +291,6 @@ export default function BlogPost() {
         </section>
       )}
 
-      <CtaBand />
     </article>
   )
 }

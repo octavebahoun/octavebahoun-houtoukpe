@@ -15,6 +15,15 @@ const suggestions = [
 export default function NotFound() {
   usePageMeta({ title: 'Page introuvable' })
   const { pathname } = useLocation()
+
+  // Une adresse inconnue servie par l'application ne doit pas être indexée
+  useEffect(() => {
+    const meta = document.createElement('meta')
+    meta.name = 'robots'
+    meta.content = 'noindex'
+    document.head.appendChild(meta)
+    return () => meta.remove()
+  }, [])
   const [lines, setLines] = useState(0)
 
   useEffect(() => {
@@ -54,7 +63,7 @@ export default function NotFound() {
             <span className="size-2.5 rounded-full bg-[#ff5f57]" />
             <span className="size-2.5 rounded-full bg-[#febc2e]" />
             <span className="size-2.5 rounded-full bg-[#28c840]" />
-            <span className="ml-3 text-white/40">oktav — zsh</span>
+            <span className="ml-3 text-white/60">oktav — zsh</span>
           </div>
           <div className="space-y-2 p-5 leading-relaxed">
             <p>

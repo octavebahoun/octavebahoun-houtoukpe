@@ -1,11 +1,18 @@
+// Un formateur par jeu d'options : en recréer un à chaque appel coûte cher
+// (la heatmap GitHub formate 365 dates d'un coup)
+const dateFormats = new Map()
+
 export function formatDate(value, options) {
   if (!value) return ''
   const date = new Date(value)
   if (Number.isNaN(date.getTime())) return ''
-  return date.toLocaleDateString(
-    'fr-FR',
-    options ?? { day: 'numeric', month: 'long', year: 'numeric' },
-  )
+  const key = JSON.stringify(options ?? null)
+  let format = dateFormats.get(key)
+  if (!format) {
+    format = new Intl.DateTimeFormat('fr-FR', options ?? { day: 'numeric', month: 'long', year: 'numeric' })
+    dateFormats.set(key, format)
+  }
+  return format.format(date)
 }
 
 export function readingTime(content = '') {

@@ -1,10 +1,11 @@
-import { excellenceTeam } from '../data/profile'
+import { useProjects } from '../hooks/useProjects'
 import { useGithub } from '../lib/github'
 import { Reveal } from './Reveal'
 import { CountUp } from './ui/CountUp'
 
 export default function ProofBar() {
   const github = useGithub()
+  const projects = useProjects()
 
   const stats = [
     {
@@ -14,12 +15,7 @@ export default function ProofBar() {
     },
     { value: github.user.publicRepos, label: 'dépôts publics', note: 'sur github.com/octavebahoun' },
     { value: github.totals.pullRequests, label: 'pull requests', note: 'ouvertes & fusionnées' },
-    {
-      value: excellenceTeam.projects,
-      label: 'produits livrés',
-      note: 'avec Excellence Team',
-      suffix: '',
-    },
+    { value: projects.length, label: 'projets documentés', note: 'études de cas en ligne' },
   ]
 
   return (

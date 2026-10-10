@@ -1,7 +1,7 @@
 export const plans = [
   {
     name: 'À la journée',
-    price: '100 €',
+    price: '100\u00a0€',
     prefix: 'À partir de',
     unit: '/ jour',
     pitch: 'Un renfort ponctuel sur une tâche précise : une fonctionnalité, un bug tenace, un prototype.',

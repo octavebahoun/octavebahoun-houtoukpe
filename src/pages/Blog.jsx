@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import CtaBand from '../components/CtaBand'
 import { ArrowUpRight, Search } from '../components/icons'
 import PageHeader from '../components/PageHeader'
 import { Reveal } from '../components/Reveal'
@@ -25,7 +24,7 @@ function Featured({ post }) {
             alt=""
             className="size-full object-cover transition-transform duration-[1.2s] ease-out-expo group-hover:scale-[1.04]"
           />
-          <span className="absolute top-5 left-5 rounded-full bg-primary px-3 py-1 font-mono text-[11px] font-semibold text-white">
+          <span className="absolute top-5 left-5 rounded-full bg-primary-strong px-3 py-1 font-mono text-[11px] font-semibold text-white">
             À la une
           </span>
         </div>
@@ -168,7 +167,6 @@ export default function Blog() {
         </div>
       </section>
 
-      <CtaBand />
     </>
   )
 }

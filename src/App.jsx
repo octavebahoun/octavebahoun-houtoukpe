@@ -10,6 +10,7 @@ import { ThemeProvider } from './components/providers/ThemeProvider'
 import { Toaster } from './components/providers/Toaster'
 import { EASE_EXPO } from './lib/easing'
 import ScrollProgress from './components/ScrollProgress'
+import { requestMountAll } from './lib/mountAll'
 import { loaders, prefetch } from './lib/routes'
 import { scrollToTarget } from './lib/scroll'
 import Home from './pages/Home'
@@ -54,7 +55,9 @@ function AnimatedRoutes() {
   const location = useLocation()
 
   return (
-    <AnimatePresence mode="wait" onExitComplete={() => scrollToTarget(0, { immediate: true })}>
+    // initial={false} : pas de fondu au premier chargement, le contenu est peint tout de suite (LCP) ;
+    // les changements de page gardent leur transition
+    <AnimatePresence initial={false} mode="wait" onExitComplete={() => scrollToTarget(0, { immediate: true })}>
       <motion.main
         key={location.pathname}
         id="contenu"
@@ -82,8 +85,23 @@ function AnimatedRoutes() {
   )
 }
 
+// À la première interaction (touche — Tab, Ctrl+F… —, clic, toucher ou défilement), on monte
+// toutes les sections : rien n'apparaît vide au défilement et le clavier atteint tout le contenu
+function useInteractionMountAll() {
+  useEffect(() => {
+    const events = ['keydown', 'pointerdown', 'touchstart', 'wheel', 'scroll']
+    const onInteraction = () => {
+      requestMountAll()
+      events.forEach((name) => window.removeEventListener(name, onInteraction))
+    }
+    events.forEach((name) => window.addEventListener(name, onInteraction, { passive: true }))
+    return () => events.forEach((name) => window.removeEventListener(name, onInteraction))
+  }, [])
+}
+
 function SiteLayout() {
   usePrefetchPages()
+  useInteractionMountAll()
 
   return (
     <SmoothScroll>

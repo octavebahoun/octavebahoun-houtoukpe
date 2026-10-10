@@ -1,4 +1,4 @@
-import { lazy } from 'react'
+import { lazy, useEffect } from 'react'
 import Deferred from '../components/Deferred'
 import Hero from '../components/Hero'
 import Marquee from '../components/Marquee'
@@ -11,17 +11,40 @@ import { SectionHeading } from '../components/ui/SectionHeading'
 import { usePageMeta } from '../hooks/usePageMeta'
 
 // Sections sous la ligne de flottaison : chargées et rendues à l'approche du scroll
-const AboutMe = lazy(() => import('../components/AboutMe'))
-const WorkStack = lazy(() => import('../components/WorkStack'))
-const AgentPipeline = lazy(() => import('../components/AgentPipeline'))
-const OpenSource = lazy(() => import('../components/OpenSource'))
-const Timeline = lazy(() => import('../components/Timeline'))
-const BlogTeaser = lazy(() => import('../components/BlogTeaser'))
-const FaqSection = lazy(() => import('../components/FaqSection'))
-const ContactSection = lazy(() => import('../components/ContactSection'))
+const sections = {
+  about: () => import('../components/AboutMe'),
+  work: () => import('../components/WorkStack'),
+  pipeline: () => import('../components/AgentPipeline'),
+  openSource: () => import('../components/OpenSource'),
+  timeline: () => import('../components/Timeline'),
+  blog: () => import('../components/BlogTeaser'),
+  faq: () => import('../components/FaqSection'),
+  contact: () => import('../components/ContactSection'),
+}
+const AboutMe = lazy(sections.about)
+const WorkStack = lazy(sections.work)
+const AgentPipeline = lazy(sections.pipeline)
+const OpenSource = lazy(sections.openSource)
+const Timeline = lazy(sections.timeline)
+const BlogTeaser = lazy(sections.blog)
+const FaqSection = lazy(sections.faq)
+const ContactSection = lazy(sections.contact)
+
+// Télécharge le code des sections pendant un temps mort : au montage, plus d'attente réseau
+function usePreloadSections() {
+  useEffect(() => {
+    const idle = window.requestIdleCallback ?? ((callback) => setTimeout(callback, 1500))
+    const cancel = window.cancelIdleCallback ?? clearTimeout
+    const handle = idle(() => Object.values(sections).forEach((load) => load().catch(() => {})), {
+      timeout: 4000,
+    })
+    return () => cancel(handle)
+  }, [])
+}
 
 export default function Home() {
   usePageMeta()
+  usePreloadSections()
 
   return (
     <>
@@ -29,30 +52,33 @@ export default function Home() {
       <ProofBar />
       <Marquee />
 
-      <section className="py-24 sm:py-32" aria-labelledby="services-title">
-        <div className="container-site">
-          <SectionHeading
-            index="02"
-            label="Services"
-            title={
-              <span id="services-title">
-                Ce que je <Accent>construis</Accent>
-              </span>
-            }
-            description="De l'agent IA au SaaS complet : je conçois, je code et je mets en production. Cliquez sur une carte pour la mettre en avant."
-          />
+      {/* Sous la ligne de flottaison, même sur grand écran : montée juste après le premier rendu */}
+      <Deferred minHeight={1200}>
+        <section className="py-16 sm:py-24 lg:py-28" aria-labelledby="services-title">
+          <div className="container-site">
+            <SectionHeading
+              index="02"
+              label="Services"
+              title={
+                <span id="services-title">
+                  Ce que je <Accent>construis</Accent>
+                </span>
+              }
+              description="Six de mes huit expertises, de l'agent IA au SaaS complet. Cliquez sur une carte pour l'afficher en grand."
+            />
 
-          <Reveal delay={0.1} className="mt-14">
-            <ServicesPanels limit={6} />
-          </Reveal>
+            <Reveal delay={0.1} className="mt-14">
+              <ServicesPanels limit={6} />
+            </Reveal>
 
-          <Reveal className="mt-12 flex justify-center">
-            <Button to="/services" variant="ghost" size="lg">
-              Services & tarifs
-            </Button>
-          </Reveal>
-        </div>
-      </section>
+            <Reveal className="mt-12 flex justify-center">
+              <Button to="/services" variant="ghost" size="lg">
+                Services & tarifs
+              </Button>
+            </Reveal>
+          </div>
+        </section>
+      </Deferred>
 
       <Deferred minHeight={1000}>
         <AboutMe withLink />
@@ -67,7 +93,7 @@ export default function Home() {
         <OpenSource />
       </Deferred>
       <Deferred minHeight={1700}>
-        <Timeline />
+        <Timeline compact />
       </Deferred>
       <Deferred minHeight={900}>
         <BlogTeaser />

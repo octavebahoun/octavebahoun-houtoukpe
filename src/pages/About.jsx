@@ -1,6 +1,4 @@
 import AboutMe from '../components/AboutMe'
-import CtaBand from '../components/CtaBand'
-import HeroBlob from '../components/HeroBlob'
 import { Bolt, Code, Heart, Sparkle } from '../components/icons'
 import PageHeader from '../components/PageHeader'
 import { Reveal, Stagger, StaggerItem } from '../components/Reveal'
@@ -55,7 +53,7 @@ export default function About() {
 
       <AboutMe index="01" />
 
-      <section className="py-24 sm:py-32" aria-labelledby="principles-title">
+      <section className="py-16 sm:py-24 lg:py-28" aria-labelledby="principles-title">
         <div className="container-site">
           <SectionHeading
             index="02"
@@ -89,7 +87,7 @@ export default function About() {
       <Timeline index="03" />
       <StackSection index="04" />
 
-      <section className="py-24 sm:py-32" aria-labelledby="beyond-title">
+      <section className="py-16 sm:py-24 lg:py-28" aria-labelledby="beyond-title">
         <div className="container-site">
           <SectionHeading
             index="05"
@@ -126,8 +124,8 @@ export default function About() {
             </Reveal>
 
             <Reveal delay={0.16} className="relative overflow-hidden rounded-card bg-night p-7 text-white">
-              <HeroBlob className="pointer-events-none absolute -right-20 -bottom-24 w-72 opacity-40" />
-              <p className="kicker relative text-white/45">Certification</p>
+              <div aria-hidden="true" className="pointer-events-none absolute -right-16 -bottom-20 size-64 rounded-full bg-primary/35 blur-[70px]" />
+              <p className="kicker relative text-white/60">Certification</p>
               <p className="relative mt-6 text-3xl font-bold text-white">Python</p>
               <p className="relative mt-1 text-white/60">Kaggle · 2026</p>
               <p className="relative mt-8 text-[15px] text-white/60">
@@ -139,7 +137,6 @@ export default function About() {
         </div>
       </section>
 
-      <CtaBand />
     </>
   )
 }

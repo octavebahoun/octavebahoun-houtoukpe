@@ -1,4 +1,3 @@
-import CtaBand from '../components/CtaBand'
 import FaqSection from '../components/FaqSection'
 import Marquee from '../components/Marquee'
 import PageHeader from '../components/PageHeader'
@@ -42,7 +41,6 @@ export default function Services() {
       <ProcessSection index="01" />
       <PricingSection index="02" />
       <FaqSection limit={4} index="03" />
-      <CtaBand />
     </>
   )
 }

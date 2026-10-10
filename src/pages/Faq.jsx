@@ -1,4 +1,3 @@
-import CtaBand from '../components/CtaBand'
 import FaqAccordion from '../components/FaqAccordion'
 import PageHeader from '../components/PageHeader'
 import { Reveal } from '../components/Reveal'
@@ -31,7 +30,6 @@ export default function Faq() {
           </Reveal>
         </div>
       </section>
-      <CtaBand />
     </>
   )
 }

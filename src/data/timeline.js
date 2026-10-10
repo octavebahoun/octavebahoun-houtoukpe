@@ -13,7 +13,7 @@ export const timeline = [
     kind: 'Entrepreneuriat',
     title: 'Co-fondateur & directeur technique',
     org: 'Excellence Team',
-    text: "Un collectif d'étudiants ingénieurs et designers. Je pilote l'architecture et l'ingénierie IA : 12 projets livrés, 5 en open source, plus de 2 000 utilisateurs.",
+    text: "Un collectif d'étudiants ingénieurs et designers, dont je pilote l'architecture et l'ingénierie IA. Le collectif a livré 12 projets (5 en open source) à plus de 2\u00a0000 utilisateurs.",
     tags: ['Contravo', 'Gentube', 'Waaloge'],
     highlight: true,
   },

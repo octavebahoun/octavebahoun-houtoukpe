@@ -3,7 +3,8 @@
 // repli instantané (premier rendu, quota API dépassé, hors ligne).
 //
 // Usage : GITHUB_TOKEN=xxx node scripts/github-snapshot.mjs
-// (le jeton est optionnel mais évite la limite de 60 requêtes/heure)
+// (le jeton est optionnel mais évite la limite de 60 requêtes/heure).
+// Au build (pnpm build), le rafraîchissement n'a lieu que si GITHUB_TOKEN est défini.
 
 import { writeFile } from 'node:fs/promises'
 
@@ -98,71 +99,87 @@ function streaks(days) {
   return { longest, current }
 }
 
-const user = await get(`https://api.github.com/users/${USER}`)
-const repos = await get(
-  `https://api.github.com/users/${USER}/repos?per_page=100&sort=pushed`,
-)
-const own = repos.filter(
-  (repo) => !repo.fork && !HIDDEN.includes(repo.name.toLowerCase()),
-)
+async function main() {
+  const user = await get(`https://api.github.com/users/${USER}`)
+  const repos = await get(
+    `https://api.github.com/users/${USER}/repos?per_page=100&sort=pushed`,
+  )
+  const own = repos.filter(
+    (repo) => !repo.fork && !HIDDEN.includes(repo.name.toLowerCase()),
+  )
 
-const languages = {}
-for (const repo of own) {
-  const bytes = await get(repo.languages_url).catch(() => ({}))
-  for (const [language, size] of Object.entries(bytes)) {
-    languages[language] = (languages[language] ?? 0) + size
+  const languages = {}
+  for (const repo of own) {
+    const bytes = await get(repo.languages_url).catch(() => ({}))
+    for (const [language, size] of Object.entries(bytes)) {
+      languages[language] = (languages[language] ?? 0) + size
+    }
   }
-}
-const totalBytes = Object.values(languages).reduce((sum, size) => sum + size, 0)
-const topLanguages = Object.entries(languages)
-  .sort((a, b) => b[1] - a[1])
-  .slice(0, 6)
-  .map(([name, size]) => ({
-    name,
-    share: Math.round((size / totalBytes) * 1000) / 10,
+  const totalBytes = Object.values(languages).reduce((sum, size) => sum + size, 0)
+  const topLanguages = Object.entries(languages)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([name, size]) => ({
+      name,
+      share: Math.round((size / totalBytes) * 1000) / 10,
+    }))
+
+  const calendarData = await fetch(
+    `https://github-contributions-api.jogruber.de/v4/${USER}?y=last`,
+  ).then((response) => response.json())
+  const calendar = calendarData.contributions.map(({ date, count }) => ({
+    date,
+    count,
   }))
 
-const calendarData = await fetch(
-  `https://github-contributions-api.jogruber.de/v4/${USER}?y=last`,
-).then((response) => response.json())
-const calendar = calendarData.contributions.map(({ date, count }) => ({
-  date,
-  count,
-}))
+  const pullRequests = await get(
+    `https://api.github.com/search/issues?q=author:${USER}+type:pr&per_page=1`,
+  )
 
-const pullRequests = await get(
-  `https://api.github.com/search/issues?q=author:${USER}+type:pr&per_page=1`,
-)
+  const events = await get(
+    `https://api.github.com/users/${USER}/events/public?per_page=60`,
+  )
+  const activity = toActivity(events)
 
-const events = await get(
-  `https://api.github.com/users/${USER}/events/public?per_page=60`,
-)
-const activity = toActivity(events)
+  const snapshot = {
+    generatedAt: new Date().toISOString(),
+    user: {
+      login: user.login,
+      name: user.name,
+      avatar: user.avatar_url,
+      followers: user.followers,
+      following: user.following,
+      publicRepos: user.public_repos,
+      createdAt: user.created_at,
+    },
+    totals: {
+      contributions: calendarData.total?.lastYear ?? 0,
+      pullRequests: pullRequests.total_count,
+      stars: own.reduce((sum, repo) => sum + repo.stargazers_count, 0),
+      ...streaks(calendar),
+    },
+    languages: topLanguages,
+    calendar,
+    activity,
+    repos: own.map(toRepo),
+  }
 
-const snapshot = {
-  generatedAt: new Date().toISOString(),
-  user: {
-    login: user.login,
-    name: user.name,
-    avatar: user.avatar_url,
-    followers: user.followers,
-    following: user.following,
-    publicRepos: user.public_repos,
-    createdAt: user.created_at,
-  },
-  totals: {
-    contributions: calendarData.total?.lastYear ?? 0,
-    pullRequests: pullRequests.total_count,
-    stars: own.reduce((sum, repo) => sum + repo.stargazers_count, 0),
-    ...streaks(calendar),
-  },
-  languages: topLanguages,
-  calendar,
-  activity,
-  repos: own.map(toRepo),
+  await writeFile(OUT, `${JSON.stringify(snapshot)}\n`)
+  console.log(
+    `github.json : ${snapshot.totals.contributions} contributions, ${own.length} dépôts, ${activity.length} activités`,
+  )
 }
 
-await writeFile(OUT, `${JSON.stringify(snapshot)}\n`)
-console.log(
-  `github.json : ${snapshot.totals.contributions} contributions, ${own.length} dépôts, ${activity.length} activités`,
-)
+// --best-effort (utilisé au build Vercel) : sans GITHUB_TOKEN ou en cas d'erreur,
+// on garde l'instantané existant au lieu de faire échouer le déploiement
+const bestEffort = process.argv.includes('--best-effort')
+if (bestEffort && !process.env.GITHUB_TOKEN) {
+  console.log('github.json : pas de GITHUB_TOKEN, instantané existant conservé')
+} else {
+  try {
+    await main()
+  } catch (error) {
+    if (!bestEffort) throw error
+    console.warn(`github.json : rafraîchissement ignoré (${error.message})`)
+  }
+}

@@ -9,9 +9,11 @@ import {
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CAL_URL, profile } from '../data/profile'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import { formatNumber } from '../lib/format'
 import { useGithub } from '../lib/github'
 import { goTo } from '../lib/navigation'
+import { shortcutLabel } from '../lib/platform'
 import { useCommandPalette } from './CommandPalette'
 import HeroBlob from './HeroBlob'
 import { ArrowDown, ArrowUpRight, Sparkle } from './icons'
@@ -28,19 +30,16 @@ const chips = [
   { label: 'Next.js', className: 'right-[2%] top-[66%]', depth: 0.9, delay: 0.9 },
 ]
 
+// Animations d'entrée en CSS pur (lettres, histogramme) : rien à calculer en JavaScript
+// pendant le premier rendu, le plus coûteux sur mobile
 function Letters({ text, delay = 0, className }) {
   return (
     <span className={className} aria-hidden="true">
       {[...text].map((letter, index) => (
         <span key={`${letter}-${index}`} className="inline-block overflow-hidden pb-[0.06em] align-bottom">
-          <motion.span
-            className="inline-block"
-            initial={{ y: '105%' }}
-            animate={{ y: '0%' }}
-            transition={{ duration: 1.1, ease: EASE_EXPO, delay: delay + index * 0.045 }}
-          >
+          <span className="inline-block animate-rise" style={{ animationDelay: `${delay + index * 0.045}s` }}>
             {letter}
-          </motion.span>
+          </span>
         </span>
       ))}
     </span>
@@ -70,7 +69,7 @@ function TerminalCard({ contributions, pullRequests }) {
         <span className="size-2 rounded-full bg-[#ff5f57]" />
         <span className="size-2 rounded-full bg-[#febc2e]" />
         <span className="size-2 rounded-full bg-[#28c840]" />
-        <span className="ml-2 text-white/40">oktav@github ~</span>
+        <span className="ml-2 text-white/60">oktav@github ~</span>
       </div>
       <div className="min-h-[104px] px-3.5 py-3">
         {lines.slice(0, visible).map((line, index) => (
@@ -100,7 +99,7 @@ function RotatingBadge({ onClick }) {
       aria-label="Me contacter"
       className="group relative size-28 rounded-full bg-surface shadow-soft transition-transform duration-500 hover:scale-105 sm:size-32"
     >
-      <svg viewBox="0 0 100 100" className="size-full animate-spin-slow text-ink">
+      <svg viewBox="0 0 100 100" className="size-full animate-spin-slow text-ink" aria-hidden="true">
         <defs>
           <path id="hero-badge-circle" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" />
         </defs>
@@ -124,6 +123,8 @@ export default function Hero() {
   const github = useGithub()
   const section = useRef(null)
   const reduced = useReducedMotion()
+  // Pastilles, badge et terminal ne s'affichent qu'à partir de 640 px : inutile de les monter avant
+  const wide = useMediaQuery('(min-width: 640px)')
 
   // Parallaxe souris
   const mouseX = useMotionValue(0)
@@ -161,9 +162,9 @@ export default function Hero() {
       className="relative overflow-hidden pt-24 sm:pt-28"
       aria-label="Présentation"
     >
-      <div className="container-site grid min-h-[calc(100svh-6rem)] grid-cols-1 [grid-template-areas:'head'_'visual'_'body'] lg:min-h-[calc(100svh-7rem)] lg:grid-cols-[1fr_1fr] lg:grid-rows-[1fr_auto] lg:gap-x-6 lg:[grid-template-areas:'head_visual'_'body_visual']">
+      <div className="container-site grid grid-cols-1 [grid-template-areas:'head'_'body'_'visual'] lg:min-h-[calc(100svh-7rem)] lg:grid-cols-[1fr_1fr] lg:grid-rows-[1fr_auto] lg:gap-x-6 lg:[grid-template-areas:'head_visual'_'body_visual']">
         {/* Nom */}
-        <motion.div style={{ y: nameY }} className="relative z-10 flex flex-col justify-end pt-6 [grid-area:head] lg:pt-10">
+        <motion.div style={{ y: nameY }} className="relative z-10 flex flex-col justify-end pt-4 [grid-area:head] sm:pt-6 lg:pt-10">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -197,7 +198,7 @@ export default function Hero() {
         {/* Portrait */}
         <motion.div
           style={{ y: visualY }}
-          className="relative mx-auto mt-6 aspect-[0.92] w-full max-w-[480px] self-end overflow-hidden [grid-area:visual] sm:max-w-[540px] sm:overflow-visible lg:mt-0 lg:max-w-none"
+          className="relative mx-auto aspect-[0.92] w-full max-w-[380px] self-end overflow-hidden [grid-area:visual] sm:max-w-[540px] sm:overflow-visible lg:mt-0 lg:max-w-none"
         >
           <motion.div
             style={{ x: blobX, y: blobY }}
@@ -241,38 +242,42 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {chips.map((chip, index) => (
-            <Chip key={chip.label} chip={chip} index={index} smoothX={smoothX} smoothY={smoothY} />
-          ))}
+          {wide && (
+            <>
+              {chips.map((chip, index) => (
+                <Chip key={chip.label} chip={chip} index={index} smoothX={smoothX} smoothY={smoothY} />
+              ))}
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.6 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, ease: EASE_EXPO, delay: 1.1 }}
-            className="absolute top-[2%] right-[2%] hidden sm:block"
-          >
-            <RotatingBadge onClick={() => goTo(navigate, '/#contact')} />
-          </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.9, ease: EASE_EXPO, delay: 1.1 }}
+                className="absolute top-[2%] right-[2%] hidden sm:block"
+              >
+                <RotatingBadge onClick={() => goTo(navigate, '/#contact')} />
+              </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, ease: EASE_EXPO, delay: 1.25 }}
-            className="absolute bottom-[11%] left-[-3%] hidden sm:block lg:left-[0%]"
-          >
-            <TerminalCard
-              contributions={github.totals.contributions}
-              pullRequests={github.totals.pullRequests}
-            />
-          </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1, ease: EASE_EXPO, delay: 1.25 }}
+                className="absolute bottom-[11%] left-[-3%] hidden sm:block lg:left-[0%]"
+              >
+                <TerminalCard
+                  contributions={github.totals.contributions}
+                  pullRequests={github.totals.pullRequests}
+                />
+              </motion.div>
+            </>
+          )}
         </motion.div>
 
         {/* Pitch + actions */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: EASE_EXPO, delay: 0.75 }}
-          className="relative z-10 pt-8 pb-12 [grid-area:body] lg:pt-10 lg:pb-14"
+          initial={{ y: 16 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 1, ease: EASE_EXPO, delay: 0.2 }}
+          className="relative z-10 pt-6 pb-10 [grid-area:body] sm:pt-8 sm:pb-12 lg:pt-10 lg:pb-14"
         >
           <p className="max-w-xl text-lg leading-relaxed sm:text-xl">
             <strong className="font-semibold text-ink">{profile.role}.</strong> Je conçois des
@@ -293,13 +298,14 @@ export default function Hero() {
             <div className="flex items-center gap-3">
               <div className="flex h-8 items-end gap-[3px]" aria-hidden="true">
                 {weekly.map((value, index) => (
-                  <motion.span
+                  <span
                     key={index}
-                    className="w-[5px] origin-bottom rounded-full bg-primary"
-                    style={{ height: `${Math.max(12, (value / peak) * 100)}%`, opacity: 0.35 + (value / peak) * 0.65 }}
-                    initial={{ scaleY: 0 }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.8, ease: EASE_EXPO, delay: 1.1 + index * 0.025 }}
+                    className="w-[5px] origin-bottom animate-bar rounded-full bg-primary"
+                    style={{
+                      height: `${Math.max(12, (value / peak) * 100)}%`,
+                      opacity: 0.35 + (value / peak) * 0.65,
+                      animationDelay: `${1.1 + index * 0.025}s`,
+                    }}
                   />
                 ))}
               </div>
@@ -318,7 +324,7 @@ export default function Hero() {
               className="hidden items-center gap-2 text-faint transition-colors hover:text-ink md:flex"
             >
               <Sparkle className="size-3.5 text-primary" />
-              Explorer au clavier <Kbd>⌘K</Kbd>
+              Explorer au clavier <Kbd>{shortcutLabel}</Kbd>
             </button>
 
             <p className="hidden items-center gap-3 font-mono text-xs text-faint xl:flex">

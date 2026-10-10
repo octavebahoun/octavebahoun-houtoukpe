@@ -25,11 +25,3 @@ export const profile = {
   ],
   interests: ['Open source', 'Musique', 'Voyage', 'Anime'],
 }
-
-// Chiffres publiés par Excellence Team (excellenceteam.site)
-export const excellenceTeam = {
-  url: 'https://excellenceteam.site',
-  projects: 12,
-  openSource: 5,
-  users: '2 000',
-}

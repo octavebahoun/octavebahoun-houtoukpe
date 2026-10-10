@@ -137,7 +137,7 @@ export default function OpenSource() {
   const { totals } = github
 
   return (
-    <section className="py-24 sm:py-32" aria-labelledby="oss-title">
+    <section className="py-16 sm:py-24 lg:py-28" aria-labelledby="oss-title">
       <div className="container-site">
         <SectionHeading
           index="06"
@@ -183,10 +183,10 @@ export default function OpenSource() {
         </Reveal>
 
         <Stagger className="mt-4 grid gap-4 lg:grid-cols-3">
-          <StaggerItem className="h-full">
+          <StaggerItem className="h-full max-sm:hidden">
             <Languages languages={github.languages} />
           </StaggerItem>
-          <StaggerItem className="h-full">
+          <StaggerItem className="h-full max-sm:hidden">
             <Activity activity={github.activity} />
           </StaggerItem>
           <StaggerItem className="h-full">

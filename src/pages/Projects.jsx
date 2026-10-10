@@ -1,6 +1,5 @@
 import { AnimatePresence, LayoutGroup, motion } from 'motion/react'
 import { useMemo, useState } from 'react'
-import CtaBand from '../components/CtaBand'
 import { ArrowUpRight, Star } from '../components/icons'
 import PageHeader from '../components/PageHeader'
 import ProjectCard from '../components/ProjectCard'
@@ -131,10 +130,11 @@ export default function Projects() {
 
   const showcased = new Set(projects.map((project) => project.repo?.toLowerCase()).filter(Boolean))
   const repos = (github.repos ?? [])
-    .map((repo) => ({ ...repo, description: repo.description || repoNotes[repo.name.toLowerCase()] }))
+    .map((repo) => ({ ...repo, description: repoNotes[repo.name.toLowerCase()] ?? repo.description }))
     .filter(
       (repo) =>
-        repo.description &&
+        // une description d'un mot (souvent le nom du dépôt) n'apprend rien au visiteur
+        repo.description?.length >= 12 &&
         !showcased.has(repo.fullName.toLowerCase()) &&
         !hiddenRepos.includes(repo.name.toLowerCase()) &&
         repo.name !== 'octavebahoun',
@@ -154,7 +154,11 @@ export default function Projects() {
         <div className="container-site">
           <Filters value={filter} onChange={setFilter} counts={counts} />
 
-          <motion.div layout className="mt-10 grid gap-x-6 gap-y-14 md:grid-cols-2">
+          {/* Une carte seule sur sa ligne est centrée (2 colonnes) ou placée au milieu (3 colonnes) */}
+          <motion.div
+            layout
+            className="mt-10 grid gap-x-6 gap-y-14 md:grid-cols-2 xl:grid-cols-3 md:max-xl:[&>*:last-child:nth-child(odd)]:col-span-2 md:max-xl:[&>*:last-child:nth-child(odd)]:w-[calc(50%-0.75rem)] md:max-xl:[&>*:last-child:nth-child(odd)]:justify-self-center xl:[&>*:last-child:nth-child(3n+1)]:col-start-2"
+          >
             <AnimatePresence mode="popLayout">
               {visible.map((project, index) => (
                 <ProjectCard key={project.slug} project={project} index={index} />
@@ -165,7 +169,6 @@ export default function Projects() {
       </section>
 
       {repos.length > 0 && <RepoList repos={repos} />}
-      <CtaBand />
     </>
   )
 }

@@ -20,7 +20,7 @@ export function BrowserFrame({ src, alt, url, className, imgClassName, eager = f
           <span className="size-2.5 rounded-full bg-[#28c840]" />
         </span>
         {host && (
-          <span className="mx-auto max-w-[70%] truncate rounded-md bg-white/5 px-3 py-0.5 font-mono text-[11px] text-white/45">
+          <span aria-hidden="true" className="mx-auto max-w-[70%] truncate rounded-md bg-white/5 px-3 py-0.5 font-mono text-[11px] text-white/60">
             {host}
           </span>
         )}

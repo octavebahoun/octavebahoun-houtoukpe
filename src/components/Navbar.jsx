@@ -4,6 +4,7 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { EMAIL } from '../data/profile'
 import { cx } from '../lib/cx'
 import { anchorHandler } from '../lib/navigation'
+import { shortcutLabel } from '../lib/platform'
 import { prefetchProps } from '../lib/routes'
 import { socials } from '../lib/socials'
 import { useCommandPalette } from './CommandPalette'
@@ -23,7 +24,6 @@ const links = [
   { label: 'FAQ', to: '/faq' },
 ]
 
-const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform)
 
 function DesktopLinks() {
   return (
@@ -192,12 +192,14 @@ export default function Navbar() {
             <button
               type="button"
               onClick={palette.open}
-              aria-label="Ouvrir la recherche (Ctrl + K)"
+              aria-label={`Rechercher (${shortcutLabel})`}
               className="flex h-10 items-center gap-2 rounded-full border border-line bg-surface pr-1.5 pl-3 text-sm text-muted transition-colors hover:border-ink/30 hover:text-ink"
             >
               <Search className="size-4" />
               <span className="hidden xl:inline">Rechercher</span>
-              <Kbd className="hidden sm:inline-flex">{isMac ? '⌘K' : 'Ctrl K'}</Kbd>
+              <span className="hidden sm:inline-flex">
+                <Kbd>{shortcutLabel}</Kbd>
+              </span>
             </button>
 
             <ThemeToggle />

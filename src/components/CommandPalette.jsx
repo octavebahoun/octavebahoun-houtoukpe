@@ -108,7 +108,7 @@ function Palette({ onClose }) {
       },
       {
         group: 'Actions',
-        label: 'Réserver un appel de 30 min',
+        label: 'Réserver un appel de 30\u00a0min',
         keywords: 'rdv rendez-vous cal calendrier',
         icon: <Calendar className="size-4" />,
         run: open(CAL_URL),
@@ -157,9 +157,13 @@ function Palette({ onClose }) {
   useEffect(() => {
     const previous = document.activeElement
     inputRef.current?.focus()
-    window.__lenis?.stop()
+    // Bloque le défilement de la page derrière la palette (Lenis, ou natif sur écran tactile)
+    const lenis = window.__lenis
+    if (lenis) lenis.stop()
+    else document.documentElement.style.overflow = 'hidden'
     return () => {
-      window.__lenis?.start()
+      if (lenis) lenis.start()
+      else document.documentElement.style.overflow = ''
       if (previous instanceof HTMLElement) previous.focus()
     }
   }, [])

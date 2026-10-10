@@ -12,7 +12,7 @@ export const fallbackPosts = [
     featured: true,
     content: `## L'idée
 
-2 To de rushes, d'animes et de clips — et 40 minutes pour retrouver les 0,8 seconde qui tombent juste sur le drop. C'est le quotidien de n'importe quel monteur.
+Deux téraoctets de rushes, d'animes et de clips — et 40 minutes pour retrouver les 0,8 seconde qui tombent juste sur le drop. C'est le quotidien de n'importe quel monteur.
 
 Le génératif promet d'inventer, mais invente de travers, coûte une fortune en GPU et pose des questions de droits à chaque frame. Video Remix Studio fait l'inverse : il rend votre disque dur **interrogeable**.
 

@@ -13,6 +13,9 @@ export default function BlogTeaser({ index = '08' }) {
   const posts = usePosts()
   const recent = posts.slice(0, 4)
   const [hovered, setHovered] = useState(null)
+  // L'aperçu se place sous le curseur, à droite, ou à gauche quand on approche du bord :
+  // il ne masque ni le titre de la section ni la ligne survolée
+  const [side, setSide] = useState('right')
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const springX = useSpring(x, { stiffness: 260, damping: 26 })
@@ -20,12 +23,21 @@ export default function BlogTeaser({ index = '08' }) {
 
   function handleMove(event) {
     const rect = event.currentTarget.getBoundingClientRect()
-    x.set(event.clientX - rect.left)
-    y.set(event.clientY - rect.top)
+    const nextSide = event.clientX - rect.left > rect.width * 0.55 ? 'left' : 'right'
+    if (nextSide !== side) setSide(nextSide)
+    const left = event.clientX - rect.left
+    const top = event.clientY - rect.top
+    x.set(left)
+    y.set(top)
+    // À l'apparition, l'aperçu se pose directement au curseur au lieu de glisser depuis le coin
+    if (!hovered) {
+      springX.jump(left)
+      springY.jump(top)
+    }
   }
 
   return (
-    <section className="py-24 sm:py-32" aria-labelledby="blog-title">
+    <section className="py-16 sm:py-24 lg:py-28" aria-labelledby="blog-title">
       <div className="container-site">
         <SectionHeading
           index={index}
@@ -83,7 +95,11 @@ export default function BlogTeaser({ index = '08' }) {
                 transition={{ duration: 0.25 }}
                 className="pointer-events-none absolute top-0 left-0 z-20 hidden [@media(pointer:fine)]:lg:block"
               >
-                <div className="-translate-x-1/2 -translate-y-[115%] overflow-hidden rounded-2xl border border-line bg-surface shadow-lift">
+                <div
+                  className={`translate-y-7 overflow-hidden rounded-2xl border border-line bg-surface shadow-lift ${
+                    side === 'right' ? 'translate-x-6' : '-translate-x-[calc(100%+1.5rem)]'
+                  }`}
+                >
                   <img src={hovered.image} alt="" className="aspect-[16/10] w-72 object-cover" />
                 </div>
               </motion.div>

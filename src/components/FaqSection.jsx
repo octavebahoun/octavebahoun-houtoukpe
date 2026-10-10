@@ -11,7 +11,7 @@ export default function FaqSection({ limit, index = '09' }) {
   const navigate = useNavigate()
 
   return (
-    <section className="py-24 sm:py-32" aria-labelledby="faq-title">
+    <section className="py-16 sm:py-24 lg:py-28" aria-labelledby="faq-title">
       <div className="container-site grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <Reveal y={16}>
@@ -24,7 +24,7 @@ export default function FaqSection({ limit, index = '09' }) {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-5 max-w-sm text-[17px]">
-              Vous ne trouvez pas votre réponse ? Écrivez-moi, je réponds sous 24 h.
+              Vous ne trouvez pas votre réponse ? Écrivez-moi, je réponds sous 24&nbsp;h.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Button href="/#contact" onClick={anchorHandler(navigate, '/#contact')}>

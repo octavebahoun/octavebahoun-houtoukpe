@@ -28,7 +28,7 @@ function LogoRow({ reverse = false }) {
 
 export default function StackSection({ index = '04' }) {
   return (
-    <section className="py-24 sm:py-32" aria-labelledby="stack-title">
+    <section className="py-16 sm:py-24 lg:py-28" aria-labelledby="stack-title">
       <div className="container-site">
         <SectionHeading
           index={index}

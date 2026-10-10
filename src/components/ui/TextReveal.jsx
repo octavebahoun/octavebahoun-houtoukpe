@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform } from 'motion/react'
-import { useRef } from 'react'
+import { motion, useInView, useReducedMotion } from 'motion/react'
+import { Fragment, useRef } from 'react'
 import { cx } from '../../lib/cx'
 import { EASE_EXPO } from '../../lib/easing'
 
@@ -41,22 +41,13 @@ export function TextReveal({
   )
 }
 
-function HighlightWord({ word, progress, range }) {
-  const opacity = useTransform(progress, range, [0.16, 1])
-  return (
-    <motion.span style={{ opacity }} className="transition-none">
-      {word}{' '}
-    </motion.span>
-  )
-}
-
-// Les mots s'allument au fil du défilement
-export function ScrollHighlight({ text, className }) {
+// Les mots s'allument en cascade quand le paragraphe entre à l'écran, puis restent
+// pleinement lisibles (opacité de départ 0,5 : contraste AA « grand texte » respecté)
+export function WordsReveal({ text, className }) {
   const ref = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start 0.85', 'end 0.45'],
-  })
+  const inView = useInView(ref, { once: true, margin: '0px 0px -15% 0px' })
+  const reduced = useReducedMotion()
+  const shown = inView || reduced
   const words = text.split(' ')
 
   return (
@@ -64,12 +55,18 @@ export function ScrollHighlight({ text, className }) {
       <span className="sr-only">{text}</span>
       <span aria-hidden="true">
         {words.map((word, index) => (
-          <HighlightWord
-            key={`${word}-${index}`}
-            word={word}
-            progress={scrollYProgress}
-            range={[index / words.length, (index + 1) / words.length]}
-          />
+          <Fragment key={`${word}-${index}`}>
+            <span
+              className="inline-block transition-[opacity,transform] duration-700 ease-out-expo"
+              style={{
+                opacity: shown ? 1 : 0.5,
+                transform: shown ? 'none' : 'translateY(0.2em)',
+                transitionDelay: shown ? `${index * 22}ms` : '0ms',
+              }}
+            >
+              {word}
+            </span>{' '}
+          </Fragment>
         ))}
       </span>
     </p>

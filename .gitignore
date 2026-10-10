@@ -33,3 +33,7 @@ dist-ssr
 /portfolio-oktav-data-enrichi.md
 /design/
 /.claude/
+
+# Vercel CLI
+.vercel
+.env*

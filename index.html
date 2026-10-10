@@ -12,6 +12,7 @@
     <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
     <link rel="canonical" href="https://octave.excellenceteam.site/" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preload" as="image" href="/images/portrait-black.webp" type="image/webp" fetchpriority="high" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -60,7 +61,8 @@
       }
     </script>
 
-    <script src="/theme-init.js"></script>
+    <!-- Thème appliqué avant le premier rendu (empreinte autorisée dans la CSP de vercel.json) -->
+    <script>try{var s=localStorage.getItem('oktav-theme');document.documentElement.classList.toggle('dark',s?s==='dark':matchMedia('(prefers-color-scheme: dark)').matches)}catch(e){}</script>
   </head>
   <body>
     <div id="root"></div>

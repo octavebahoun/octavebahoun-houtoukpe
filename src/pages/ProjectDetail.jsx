@@ -2,7 +2,6 @@ import { motion, useScroll, useTransform } from 'motion/react'
 import { useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import AgentPipeline from '../components/AgentPipeline'
-import CtaBand from '../components/CtaBand'
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, GitHub, Globe, Star } from '../components/icons'
 import { ProjectCover } from '../components/ProjectCard'
 import { Reveal, Stagger, StaggerItem } from '../components/Reveal'
@@ -21,7 +20,7 @@ function Story({ index, title, children }) {
   return (
     <Reveal className="grid gap-4 border-t border-line py-10 md:grid-cols-[0.35fr_0.65fr] md:gap-12 md:py-14">
       <h2 className="flex items-baseline gap-4 text-2xl font-bold tracking-tight sm:text-3xl">
-        <span className="font-mono text-sm text-primary">{index}</span>
+        <span className="font-mono text-sm text-primary-ink">{index}</span>
         {title}
       </h2>
       <div className="text-lg leading-relaxed sm:text-xl sm:leading-relaxed">{children}</div>
@@ -78,7 +77,7 @@ export default function ProjectDetail() {
                 transition={{ duration: 0.7, ease: EASE_EXPO, delay: 0.05 }}
                 className="kicker"
               >
-                Étude de cas <span className="text-primary">·</span> {String(position + 1).padStart(2, '0')}
+                Étude de cas <span className="text-primary-ink">·</span> {String(position + 1).padStart(2, '0')}
               </motion.p>
               <h1 className="display mt-4 text-[clamp(3.2rem,9vw,8rem)] leading-[0.88] tracking-[-0.05em]">
                 <span className="inline-block overflow-hidden pb-[0.08em] align-bottom">
@@ -255,7 +254,6 @@ export default function ProjectDetail() {
         </section>
       )}
 
-      <CtaBand />
     </article>
   )
 }

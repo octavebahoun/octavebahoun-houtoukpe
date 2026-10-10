@@ -11,6 +11,9 @@ const LEVELS = [
   'bg-primary',
 ]
 
+// Écran tactile : pas de survol, on invite à toucher une case
+const touchScreen = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches
+
 const MONTHS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.']
 
 function level(count, max) {
@@ -49,6 +52,7 @@ const Grid = memo(function Grid({ weeks, max, visible, onHover }) {
                 key={day.date}
                 title={`${day.count} contribution${day.count > 1 ? 's' : ''} · ${formatDate(day.date)}`}
                 onMouseEnter={() => onHover(day)}
+                onClick={() => onHover(day)}
                 className={cx(
                   'size-[11px] rounded-[3px] transition-transform hover:scale-125 lg:size-[15px] lg:rounded-[4px]',
                   LEVELS[level(day.count, max)],
@@ -97,7 +101,7 @@ export default function Heatmap({ days }) {
   return (
     <div ref={ref}>
       <div
-        className="no-scrollbar overflow-x-auto pb-2"
+        className="no-scrollbar overflow-x-auto pb-2 max-lg:[mask-image:linear-gradient(to_right,transparent,#000_48px)]"
         ref={scroller}
         data-lenis-prevent-horizontal
       >
@@ -120,11 +124,16 @@ export default function Heatmap({ days }) {
         </div>
       </div>
 
+      <p className="mt-2 font-mono text-[11px] text-faint lg:hidden" aria-hidden="true">
+        ← Faites glisser pour remonter l&apos;année
+      </p>
       <div className="mt-4 flex flex-wrap items-center justify-between gap-4 text-xs text-faint">
         <p className="min-h-4 font-mono" aria-live="polite">
           {hovered
             ? `${formatNumber(hovered.count)} contribution${hovered.count > 1 ? 's' : ''} le ${formatDate(hovered.date)}`
-            : 'Survolez une case pour voir le détail'}
+            : touchScreen
+              ? 'Touchez une case pour voir le détail'
+              : 'Survolez une case pour voir le détail'}
         </p>
         <div className="flex items-center gap-1.5 font-mono">
           moins

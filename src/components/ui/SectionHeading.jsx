@@ -12,7 +12,7 @@ export function Kicker({ index, children, className, tone = 'default' }) {
         className,
       )}
     >
-      {index && <span className="text-primary">{index}</span>}
+      {index && <span className={tone === 'night' ? 'text-primary' : 'text-primary-ink'}>{index}</span>}
       <span className={cx('h-px w-8', tone === 'night' ? 'bg-white/20' : 'bg-line')} />
       {children}
     </p>
